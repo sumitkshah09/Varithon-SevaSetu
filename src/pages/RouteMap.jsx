@@ -1,87 +1,355 @@
 import { useEffect, useState } from 'react'
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  Polyline,
+  useMap,
+} from 'react-leaflet'
+
+import L from 'leaflet'
+
+import 'leaflet/dist/leaflet.css'
 import './RouteMap.css'
 
-export default function RouteMap({ onBack }) {
-  const [location, setLocation] = useState(null)
-  const [locationError, setLocationError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
 
-  const getCurrentLocation = () => {
-    if (!navigator.geolocation) {
-      setLocationError(
-        'Location services are not supported by your browser.'
-      )
+/* ======================================================
+   FIX LEAFLET DEFAULT MARKER ICONS
+====================================================== */
+
+delete L.Icon.Default.prototype._getIconUrl
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+
+  iconUrl:
+    'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+
+  shadowUrl:
+    'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+})
+
+
+/* ======================================================
+   WARI LOCATIONS
+====================================================== */
+
+const ALANDI = [18.6776, 73.8957]
+
+const PUNE = [18.5204, 73.8567]
+
+const PANDHARPUR = [17.6746, 75.3237]
+
+const VITTHAL_MANDIR = [17.6715, 75.3243]
+
+
+/* ======================================================
+   FOLLOW USER LOCATION
+====================================================== */
+
+function FollowUser({ location }) {
+
+  const map = useMap()
+
+  useEffect(() => {
+
+    if (!location) {
       return
     }
 
-    setIsLoading(true)
-    setLocationError('')
+    map.setView(
+      [location.latitude, location.longitude],
+      15,
+      {
+        animate: true,
+      }
+    )
 
-    navigator.geolocation.getCurrentPosition(
+  }, [location, map])
+
+  return null
+}
+
+
+/* ======================================================
+   LIVE USER ICON
+====================================================== */
+
+const userIcon = L.divIcon({
+
+  className: 'user-location-marker',
+
+  html: `
+    <div class="user-location-dot">
+      <div class="user-location-pulse"></div>
+    </div>
+  `,
+
+  iconSize: [30, 30],
+
+  iconAnchor: [15, 15],
+})
+
+
+/* ======================================================
+   DESTINATION ICON
+====================================================== */
+
+const destinationIcon = L.divIcon({
+
+  className: 'destination-marker',
+
+  html: `
+    <div class="destination-marker-inner">
+      🛕
+    </div>
+  `,
+
+  iconSize: [40, 40],
+
+  iconAnchor: [20, 40],
+})
+
+
+/* ======================================================
+   ROUTE MAP
+====================================================== */
+
+export default function RouteMap({ onBack }) {
+
+  const [location, setLocation] = useState(null)
+
+  const [locationError, setLocationError] = useState('')
+
+  const [isLoading, setIsLoading] = useState(true)
+
+
+  /* ======================================================
+     LIVE GPS TRACKING
+  ====================================================== */
+
+  useEffect(() => {
+
+    if (!navigator.geolocation) {
+
+      setLocationError(
+        'Location services are not supported by your browser.'
+      )
+
+      setIsLoading(false)
+
+      return
+    }
+
+
+    const watchId = navigator.geolocation.watchPosition(
+
       (position) => {
+
         setLocation({
+
           latitude: position.coords.latitude,
+
           longitude: position.coords.longitude,
+
           accuracy: position.coords.accuracy,
+
         })
 
+        setLocationError('')
+
         setIsLoading(false)
+
       },
 
+
       (error) => {
+
         setIsLoading(false)
 
         switch (error.code) {
+
           case error.PERMISSION_DENIED:
+
             setLocationError(
-              'Location permission was denied. Please allow location access.'
+              'Location permission was denied. Please allow location access in your browser settings.'
             )
+
             break
 
+
           case error.POSITION_UNAVAILABLE:
+
             setLocationError(
               'Your current location could not be determined.'
             )
+
             break
 
+
           case error.TIMEOUT:
+
             setLocationError(
               'Location request timed out. Please try again.'
             )
+
             break
 
+
           default:
+
             setLocationError(
               'Unable to get your current location.'
             )
+
         }
+
       },
+
 
       {
         enableHighAccuracy: true,
-        timeout: 10000,
+
+        timeout: 15000,
+
+        maximumAge: 5000,
+      }
+    )
+
+
+    return () => {
+
+      navigator.geolocation.clearWatch(watchId)
+
+    }
+
+  }, [])
+
+
+  /* ======================================================
+     MANUAL LOCATION UPDATE
+  ====================================================== */
+
+  const updateLocation = () => {
+
+    if (!navigator.geolocation) {
+
+      setLocationError(
+        'Location services are not supported by your browser.'
+      )
+
+      return
+    }
+
+
+    setIsLoading(true)
+
+    navigator.geolocation.getCurrentPosition(
+
+      (position) => {
+
+        setLocation({
+
+          latitude: position.coords.latitude,
+
+          longitude: position.coords.longitude,
+
+          accuracy: position.coords.accuracy,
+
+        })
+
+        setLocationError('')
+
+        setIsLoading(false)
+
+      },
+
+
+      (error) => {
+
+        setIsLoading(false)
+
+        if (error.code === error.PERMISSION_DENIED) {
+
+          setLocationError(
+            'Location permission was denied. Please allow location access.'
+          )
+
+        } else {
+
+          setLocationError(
+            'Unable to update your location. Please try again.'
+          )
+
+        }
+
+      },
+
+
+      {
+        enableHighAccuracy: true,
+
+        timeout: 15000,
+
         maximumAge: 0,
       }
     )
+
   }
 
-  useEffect(() => {
-    getCurrentLocation()
-  }, [])
+
+  /* ======================================================
+     WARI ROUTE
+  ====================================================== */
+
+  const journeyRoute = [
+
+    ALANDI,
+
+    PUNE,
+
+    PANDHARPUR,
+
+    VITTHAL_MANDIR,
+
+  ]
+
+
+  /* ======================================================
+     DEFAULT MAP POSITION
+  ====================================================== */
+
+  const defaultCenter = location
+
+    ? [
+        location.latitude,
+        location.longitude,
+      ]
+
+    : PANDHARPUR
+
 
   return (
+
     <main className="route-map-page">
 
-      {/* ================= HEADER ================= */}
+
+      {/* ==================================================
+         HEADER
+      ================================================== */}
 
       <header className="route-map-header">
 
         <button
+          type="button"
           className="route-back-button"
           onClick={onBack}
         >
           ←
         </button>
+
 
         <div className="route-header-title">
 
@@ -96,7 +364,7 @@ export default function RouteMap({ onBack }) {
             </h1>
 
             <p>
-              Navigate your Wari journey
+              Live map for your Wari journey
             </p>
 
           </div>
@@ -106,12 +374,16 @@ export default function RouteMap({ onBack }) {
       </header>
 
 
-      {/* ================= MAIN CONTENT ================= */}
+      {/* ==================================================
+         MAIN CONTENT
+      ================================================== */}
 
       <div className="route-map-container">
 
 
-        {/* ================= CURRENT LOCATION ================= */}
+        {/* ==================================================
+           LOCATION STATUS
+        ================================================== */}
 
         <section className="location-status-card">
 
@@ -119,54 +391,308 @@ export default function RouteMap({ onBack }) {
             📍
           </div>
 
+
           <div className="location-status-content">
 
             <span>
               YOUR CURRENT LOCATION
             </span>
 
+
             {location ? (
+
               <>
+
                 <h2>
-                  Location detected
+                  Live Location Active
                 </h2>
 
                 <p>
-                  Your GPS location is active.
+                  Your position is updating automatically.
                 </p>
+
               </>
+
             ) : (
+
               <>
+
                 <h2>
-                  Detecting location...
+                  {isLoading
+                    ? 'Detecting location...'
+                    : 'Location unavailable'}
                 </h2>
 
                 <p>
                   Please allow location access.
                 </p>
+
               </>
+
             )}
 
           </div>
 
+
           <div className="location-live">
 
-            {location ? (
-              <>
-                ● Live
-              </>
-            ) : (
-              <>
-                ● Waiting
-              </>
-            )}
+            {location
+              ? '● Live'
+              : '● Waiting'}
 
           </div>
 
         </section>
 
 
-        {/* ================= LOCATION DETAILS ================= */}
+        {/* ==================================================
+           LOCATION ERROR
+        ================================================== */}
+
+        {locationError && (
+
+          <section className="location-error-card">
+
+            <div className="location-error-icon">
+              ⚠️
+            </div>
+
+            <div>
+
+              <h3>
+                Location Access
+              </h3>
+
+              <p>
+                {locationError}
+              </p>
+
+            </div>
+
+          </section>
+
+        )}
+
+
+        {/* ==================================================
+           REAL MAP
+        ================================================== */}
+
+        <section className="map-section">
+
+          <div className="map-heading">
+
+            <h2>
+              Live Wari Map
+            </h2>
+
+            <p>
+              See your actual location and journey route.
+            </p>
+
+          </div>
+
+
+          <div className="real-map-container">
+
+            <MapContainer
+              center={defaultCenter}
+              zoom={12}
+              scrollWheelZoom={true}
+              className="real-leaflet-map"
+            >
+
+
+              {/* ==================================================
+                 OPENSTREETMAP
+              ================================================== */}
+
+              <TileLayer
+
+                attribution='&copy; OpenStreetMap contributors'
+
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+
+              />
+
+
+              {/* ==================================================
+                 FOLLOW LIVE LOCATION
+              ================================================== */}
+
+              <FollowUser
+                location={location}
+              />
+
+
+              {/* ==================================================
+                 WARI ROUTE
+              ================================================== */}
+
+              <Polyline
+                positions={journeyRoute}
+                pathOptions={{
+                  color: '#e07a2d',
+                  weight: 5,
+                  opacity: 0.8,
+                }}
+              />
+
+
+              {/* ==================================================
+                 ALANDI
+              ================================================== */}
+
+              <Marker position={ALANDI}>
+
+                <Popup>
+
+                  <strong>
+                    Alandi
+                  </strong>
+
+                  <br />
+
+                  Starting Point
+
+                </Popup>
+
+              </Marker>
+
+
+              {/* ==================================================
+                 PUNE
+              ================================================== */}
+
+              <Marker position={PUNE}>
+
+                <Popup>
+
+                  <strong>
+                    Pune
+                  </strong>
+
+                  <br />
+
+                  Journey Point
+
+                </Popup>
+
+              </Marker>
+
+
+              {/* ==================================================
+                 PANDHARPUR
+              ================================================== */}
+
+              <Marker position={PANDHARPUR}>
+
+                <Popup>
+
+                  <strong>
+                    Pandharpur
+                  </strong>
+
+                  <br />
+
+                  Yatra Area
+
+                </Popup>
+
+              </Marker>
+
+
+              {/* ==================================================
+                 VITTHAL MANDIR
+              ================================================== */}
+
+              <Marker
+                position={VITTHAL_MANDIR}
+                icon={destinationIcon}
+              >
+
+                <Popup>
+
+                  <strong>
+                    Shri Vitthal Rukmini Mandir
+                  </strong>
+
+                  <br />
+
+                  Final Destination
+
+                </Popup>
+
+              </Marker>
+
+
+              {/* ==================================================
+                 LIVE USER LOCATION
+              ================================================== */}
+
+              {location && (
+
+                <Marker
+
+                  position={[
+                    location.latitude,
+                    location.longitude,
+                  ]}
+
+                  icon={userIcon}
+
+                >
+
+                  <Popup>
+
+                    <strong>
+                      You are here
+                    </strong>
+
+                    <br />
+
+                    Live GPS location
+
+                    <br />
+
+                    Accuracy: ±
+                    {Math.round(location.accuracy)}
+                    m
+
+                  </Popup>
+
+                </Marker>
+
+              )}
+
+            </MapContainer>
+
+          </div>
+
+
+          {/* ==================================================
+             LOCATION BUTTON
+          ================================================== */}
+
+          <button
+            type="button"
+            className="location-button"
+            onClick={updateLocation}
+            disabled={isLoading}
+          >
+
+            {isLoading
+              ? '📍 Detecting Location...'
+              : '📍 Find My Location'}
+
+          </button>
+
+        </section>
+
+
+        {/* ==================================================
+           GPS DETAILS
+        ================================================== */}
 
         {location && (
 
@@ -175,11 +701,11 @@ export default function RouteMap({ onBack }) {
             <div className="coordinates-heading">
 
               <h2>
-                Your GPS Location
+                Live GPS Details
               </h2>
 
               <p>
-                Your device's current coordinates.
+                Your device's current location.
               </p>
 
             </div>
@@ -232,176 +758,9 @@ export default function RouteMap({ onBack }) {
         )}
 
 
-        {/* ================= LOCATION ERROR ================= */}
-
-        {locationError && (
-
-          <section className="location-error-card">
-
-            <div className="location-error-icon">
-              ⚠️
-            </div>
-
-            <div>
-
-              <h3>
-                Location Access
-              </h3>
-
-              <p>
-                {locationError}
-              </p>
-
-            </div>
-
-          </section>
-
-        )}
-
-
-        {/* ================= MAP ================= */}
-
-        <section className="map-section">
-
-          <div className="map-heading">
-
-            <h2>
-              Wari Route
-            </h2>
-
-            <p>
-              Important locations along your journey
-            </p>
-
-          </div>
-
-
-          <div className="map-placeholder">
-
-            <div className="map-route-line"></div>
-
-
-            {/* ALANDI */}
-
-            <div className="map-location location-one">
-
-              <div className="map-marker completed">
-                ✓
-              </div>
-
-              <div className="map-location-info">
-
-                <strong>
-                  Alandi
-                </strong>
-
-                <span>
-                  Starting Point
-                </span>
-
-              </div>
-
-            </div>
-
-
-            {/* PUNE */}
-
-            <div className="map-location location-two">
-
-              <div className="map-marker completed">
-                ✓
-              </div>
-
-              <div className="map-location-info">
-
-                <strong>
-                  Pune
-                </strong>
-
-                <span>
-                  Completed
-                </span>
-
-              </div>
-
-            </div>
-
-
-            {/* CURRENT LOCATION */}
-
-            <div className="map-location location-three">
-
-              <div className="map-marker current">
-                ●
-              </div>
-
-              <div className="map-location-info">
-
-                <strong>
-                  Your Location
-                </strong>
-
-                <span>
-                  {location
-                    ? 'You are here'
-                    : 'Location unavailable'}
-                </span>
-
-              </div>
-
-            </div>
-
-
-            {/* DESTINATION */}
-
-            <div className="map-location location-four">
-
-              <div className="map-marker destination">
-                🛕
-              </div>
-
-              <div className="map-location-info">
-
-                <strong>
-                  Vitthal Mandir
-                </strong>
-
-                <span>
-                  Final Destination
-                </span>
-
-              </div>
-
-            </div>
-
-
-            {/* COMPASS */}
-
-            <div className="map-compass">
-              N
-            </div>
-
-          </div>
-
-
-          {/* LOCATION BUTTON */}
-
-          <button
-            className="location-button"
-            onClick={getCurrentLocation}
-            disabled={isLoading}
-          >
-
-            {isLoading
-              ? '📍 Detecting Location...'
-              : '📍 Update My Location'}
-
-          </button>
-
-        </section>
-
-
-        {/* ================= NEARBY PLACES ================= */}
+        {/* ==================================================
+           NEARBY PLACES
+        ================================================== */}
 
         <section className="nearby-section">
 
@@ -424,6 +783,7 @@ export default function RouteMap({ onBack }) {
             {/* MEDICAL */}
 
             <button
+              type="button"
               className="nearby-card"
               onClick={() =>
                 alert(
@@ -455,9 +815,10 @@ export default function RouteMap({ onBack }) {
             </button>
 
 
-            {/* FOOD */}
+            {/* FOOD & WATER */}
 
             <button
+              type="button"
               className="nearby-card"
               onClick={() =>
                 alert(
@@ -492,6 +853,7 @@ export default function RouteMap({ onBack }) {
             {/* REST AREAS */}
 
             <button
+              type="button"
               className="nearby-card"
               onClick={() =>
                 alert(
@@ -526,6 +888,7 @@ export default function RouteMap({ onBack }) {
             {/* TOILETS */}
 
             <button
+              type="button"
               className="nearby-card"
               onClick={() =>
                 alert(
@@ -560,6 +923,7 @@ export default function RouteMap({ onBack }) {
             {/* VOLUNTEERS */}
 
             <button
+              type="button"
               className="nearby-card"
               onClick={() =>
                 alert(
@@ -594,6 +958,7 @@ export default function RouteMap({ onBack }) {
             {/* WARI CAMPS */}
 
             <button
+              type="button"
               className="nearby-card"
               onClick={() =>
                 alert(
@@ -629,7 +994,9 @@ export default function RouteMap({ onBack }) {
         </section>
 
 
-        {/* ================= JOURNEY SUMMARY ================= */}
+        {/* ==================================================
+           JOURNEY SUMMARY
+        ================================================== */}
 
         <section className="route-summary">
 
@@ -657,7 +1024,9 @@ export default function RouteMap({ onBack }) {
         </section>
 
 
-        {/* ================= SAFETY NOTICE ================= */}
+        {/* ==================================================
+           SAFETY NOTICE
+        ================================================== */}
 
         <section className="route-safety">
 
@@ -681,7 +1050,9 @@ export default function RouteMap({ onBack }) {
         </section>
 
 
-        {/* ================= FOOTER ================= */}
+        {/* ==================================================
+           FOOTER
+        ================================================== */}
 
         <footer className="route-footer">
 

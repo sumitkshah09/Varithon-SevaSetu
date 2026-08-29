@@ -5,7 +5,6 @@ export default function GetHelp({ onBack }) {
 
   /* ======================================================
      SOS POPUP
-     Opens automatically when Get Help page opens
   ====================================================== */
 
   const [showEmergency, setShowEmergency] = useState(true)
@@ -161,36 +160,6 @@ export default function GetHelp({ onBack }) {
       ================================================== */}
 
       <div className="get-help-container">
-
-
-        {/* ==================================================
-           WELCOME
-        ================================================== */}
-
-        <section className="help-welcome">
-
-          <div className="help-welcome-icon">
-            🙏
-          </div>
-
-          <div>
-
-            <span>
-              SEVA SETU SUPPORT
-            </span>
-
-            <h2>
-              How can we help you?
-            </h2>
-
-            <p>
-              Find assistance quickly and stay safe during
-              your Wari journey.
-            </p>
-
-          </div>
-
-        </section>
 
 
         {/* ==================================================
@@ -444,92 +413,6 @@ export default function GetHelp({ onBack }) {
               </span>
 
             </button>
-
-          </div>
-
-        </section>
-
-
-        {/* ==================================================
-           LOCATION
-        ================================================== */}
-
-        <section className="current-location-help">
-
-          <div className="location-help-icon">
-            📍
-          </div>
-
-          <div className="location-help-content">
-
-            <span>
-              YOUR CURRENT LOCATION
-            </span>
-
-            <h2>
-              Pandharpur
-            </h2>
-
-            <p>
-              Your location helps volunteers provide
-              assistance nearby.
-            </p>
-
-          </div>
-
-          <span className="location-help-status">
-            ● Live
-          </span>
-
-        </section>
-
-
-        {/* ==================================================
-           VOLUNTEER NOTICE
-        ================================================== */}
-
-        <section className="volunteer-notice">
-
-          <div className="volunteer-notice-icon">
-            💙
-          </div>
-
-          <div>
-
-            <h3>
-              Seva Setu Volunteers
-            </h3>
-
-            <p>
-              Our volunteers are here to support Warkaris.
-              If you need assistance, don't hesitate to ask.
-            </p>
-
-          </div>
-
-        </section>
-
-
-        {/* ==================================================
-           SAFETY
-        ================================================== */}
-
-        <section className="help-safety-card">
-
-          <div className="help-safety-icon">
-            ⚠️
-          </div>
-
-          <div>
-
-            <h3>
-              Stay Safe
-            </h3>
-
-            <p>
-              In a serious emergency, contact the appropriate
-              emergency services immediately.
-            </p>
 
           </div>
 
