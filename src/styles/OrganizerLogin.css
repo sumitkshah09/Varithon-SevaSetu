@@ -26,12 +26,10 @@
 
   overflow: hidden;
 
-  background:
-    linear-gradient(
-      135deg,
-      #8f4700,
-      #d4771b
-    );
+  background-image: url('../assets/org.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 
