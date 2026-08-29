@@ -63,63 +63,6 @@ export default function WarkariDashboard() {
     <main className="warkari-dashboard">
 
       {/* ==================================================
-         HEADER
-      ================================================== */}
-
-      <header className="dashboard-header">
-
-        <div className="brand">
-
-          <div className="brand-icon">
-            🙏
-          </div>
-
-          <div className="brand-text">
-
-            <h1>
-              Seva Setu
-            </h1>
-
-            <p>
-              Warkari Dashboard
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div className="header-actions">
-
-          {/* NOTIFICATIONS */}
-
-          <button
-            type="button"
-            className="header-button"
-            onClick={() => setActivePage('Updates')}
-            aria-label="Notifications"
-          >
-            🔔
-          </button>
-
-
-          {/* PROFILE */}
-
-          <button
-            type="button"
-            className="header-button"
-            onClick={() => setActivePage('Profile')}
-            aria-label="Profile"
-          >
-            👤
-          </button>
-
-        </div>
-
-      </header>
-
-
-      {/* ==================================================
          WELCOME SECTION
       ================================================== */}
 
@@ -142,7 +85,6 @@ export default function WarkariDashboard() {
 
         </div>
 
-
         <div className="welcome-symbol">
           🛕
         </div>
@@ -151,8 +93,7 @@ export default function WarkariDashboard() {
 
 
       {/* ==================================================
-         🚨 EMERGENCY / SOS
-         THIS APPEARS BEFORE TODAY'S YATRA
+         EMERGENCY / SOS
       ================================================== */}
 
       <section className="dashboard-section emergency-section">
@@ -303,57 +244,6 @@ export default function WarkariDashboard() {
 
           </div>
 
-
-          {/* SCHEDULE */}
-
-          <div className="yatra-card">
-
-            <div className="yatra-icon">
-              🕐
-            </div>
-
-            <div className="yatra-content">
-
-              <span className="yatra-label">
-                Today's Schedule
-              </span>
-
-              <h3>
-                6:00 AM – 8:00 PM
-              </h3>
-
-              <span className="yatra-status">
-                Yatra activities
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        {/* IMPORTANT NOTICE */}
-
-        <div className="notice-card">
-
-          <div className="notice-icon">
-            📢
-          </div>
-
-          <div className="notice-content">
-
-            <h3>
-              Important Notice
-            </h3>
-
-            <p>
-              Stay hydrated and follow the instructions
-              provided by Wari organizers and volunteers.
-            </p>
-
-          </div>
-
         </div>
 
       </section>
@@ -390,10 +280,6 @@ export default function WarkariDashboard() {
 
         </div>
 
-
-        {/* ==================================================
-           HELP GRID
-        ================================================== */}
 
         <div className="help-grid">
 
@@ -526,27 +412,6 @@ export default function WarkariDashboard() {
 
 
       {/* ==================================================
-         FOOTER
-      ================================================== */}
-
-      <section className="dashboard-footer">
-
-        <div className="footer-symbol">
-          🙏
-        </div>
-
-        <h3>
-          Jai Hari Vitthal
-        </h3>
-
-        <p>
-          Seva • Bhakti • Samaj
-        </p>
-
-      </section>
-
-
-      {/* ==================================================
          BOTTOM NAVIGATION
       ================================================== */}
 
@@ -640,3 +505,4 @@ export default function WarkariDashboard() {
     </main>
   )
 }
+
