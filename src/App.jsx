@@ -3,7 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import VarkariVolunteer from './pages/VarkariVolunteer';
 import Organisers from './pages/Organisers';
+import VolunteerLogin from './pages/VolunteerLogin';
+import VolunteerDashboard from './pages/VolunteerDashboard';
 import './App.css';
+
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -55,6 +58,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/varkari-volunteer" element={<VarkariVolunteer />} />
             <Route path="/organisers" element={<Organisers />} />
+            <Route path="/volunteer-login" element={<VolunteerLogin />} />
+            <Route path="/volunteer-dashboard" element={<VolunteerDashboard />} />
           </Routes>
         </main>
 
