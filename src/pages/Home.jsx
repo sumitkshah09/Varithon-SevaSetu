@@ -21,11 +21,7 @@ export default function Home() {
 
       <section className="quick-nav">
         <div className="nav-grid">
-          <div className="nav-card">
-            <h3>🙏 Varkari Volunteers</h3>
-            <p>Join our volunteer program and make a difference in your community.</p>
-            <a href="/varkari-volunteer" className="nav-link">Explore →</a>
-          </div>
+          
           <div className="nav-card">
             <h3>👥 Organisers</h3>
             <p>Meet the dedicated team organizing and coordinating our initiatives.</p>
