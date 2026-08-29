@@ -383,9 +383,10 @@ export default function VolunteerDashboard() {
 
 
           <button
-            type="button"
-            className="volunteer-profile-button"
-          >
+  type="button"
+  className="volunteer-profile-button"
+  onClick={() => navigate("/volunteer-profile")}
+>
 
             <span className="volunteer-avatar">
               V
