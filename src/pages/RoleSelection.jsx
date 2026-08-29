@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import VolunteerDashboard from './VolunteerDashboard'
 import WarkariLogin from './WarkariLogin'
+import OrganizerLogin from './OrganizerLogin'
+import OrganizerDashboard from './OrganizerDashboard'
 import './RoleSelection.css'
 
 export default function RoleSelection() {
@@ -14,24 +16,27 @@ export default function RoleSelection() {
     return <VolunteerDashboard />
   }
 
-  // -------------------------
-  // ORGANIZER
-  // -------------------------
-  if (selectedRole === 'organizer') {
-    return (
-      <div className="coming-soon">
-        <h1>Organizer Dashboard</h1>
+// -------------------------
+// ORGANIZER DASHBOARD
+// -------------------------
+if (selectedRole === 'organizer-dashboard') {
+  return <OrganizerDashboard />
+}
 
-        <p>
-          The Organizer section is coming soon.
-        </p>
-
-        <button onClick={() => setSelectedRole(null)}>
-          ← Back to roles
-        </button>
-      </div>
-    )
-  }
+// -------------------------
+// ORGANIZER LOGIN
+// -------------------------
+if (selectedRole === 'organizer') {
+  return (
+    <OrganizerLogin
+      onBack={() => setSelectedRole(null)}
+      onLogin={() => {
+        console.log('ORGANIZER LOGIN SUCCESS')
+        setSelectedRole('organizer-dashboard')
+      }}
+    />
+  )
+}
 
   // -------------------------
   // WARKARI LOGIN

@@ -1,0 +1,597 @@
+/* =====================================
+   MAIN PAGE
+===================================== */
+
+.organizer-login-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 48% 52%;
+
+  background: #fffaf4;
+
+  overflow: hidden;
+}
+
+
+/* =====================================
+   LEFT ORGANIZER VISUAL
+===================================== */
+
+.organizer-visual {
+  position: relative;
+
+  height: 100vh;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #8f4700,
+      #d4771b
+    );
+}
+
+
+/* Soft visual pattern */
+
+.organizer-visual::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  top: -170px;
+  left: -170px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.08);
+}
+
+
+.organizer-visual::after {
+  content: "";
+
+  position: absolute;
+
+  width: 600px;
+  height: 600px;
+
+  right: -250px;
+  bottom: -250px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+
+/* Overlay */
+
+.organizer-visual-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(50, 25, 5, 0.05),
+      rgba(50, 25, 5, 0.30)
+    );
+}
+
+
+/* =====================================
+   LEFT VISUAL CONTENT
+===================================== */
+
+.organizer-visual-content {
+  position: absolute;
+
+  left: 45px;
+  bottom: 55px;
+
+  z-index: 2;
+
+  color: white;
+}
+
+
+.organizer-visual-icon {
+  font-size: 35px;
+
+  margin-bottom: 5px;
+}
+
+
+.organizer-visual-content h2 {
+  margin: 0;
+
+  font-size: 40px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+
+.organizer-visual-content p {
+  margin-top: 8px;
+
+  font-size: 14px;
+
+  letter-spacing: 3px;
+
+  opacity: 0.95;
+}
+
+
+/* =====================================
+   RIGHT LOGIN AREA
+===================================== */
+
+.organizer-login-section {
+  position: relative;
+
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 50px 70px;
+
+  background: #fffdf9;
+}
+
+
+/* =====================================
+   BACK BUTTON
+===================================== */
+
+.organizer-back-button {
+  position: absolute;
+
+  top: 30px;
+  left: 45px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #76553a;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  padding: 8px;
+
+  transition: 0.2s ease;
+}
+
+
+.organizer-back-button:hover {
+  color: #b85c00;
+
+  transform: translateX(-3px);
+}
+
+
+/* =====================================
+   LOGIN CARD
+===================================== */
+
+.organizer-login-card {
+  width: 100%;
+
+  max-width: 430px;
+
+  text-align: center;
+}
+
+
+/* =====================================
+   ICON
+===================================== */
+
+.organizer-login-icon {
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 18px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fff0dc;
+
+  font-size: 30px;
+
+  box-shadow:
+    0 6px 18px rgba(180, 95, 22, 0.12);
+}
+
+
+/* =====================================
+   HEADING
+===================================== */
+
+.organizer-login-heading h1 {
+  margin: 0;
+
+  color: #392719;
+
+  font-size: 32px;
+
+  font-weight: 800;
+}
+
+
+.organizer-login-heading p {
+  margin: 10px 0 30px;
+
+  color: #8a7562;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================
+   FORM
+===================================== */
+
+.organizer-form-group {
+  margin-bottom: 17px;
+
+  text-align: left;
+}
+
+
+.organizer-form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #4d3928;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+
+.organizer-form-group input {
+  width: 100%;
+
+  height: 48px;
+
+  box-sizing: border-box;
+
+  padding: 0 15px;
+
+  border: 1px solid #ddd1c4;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  background: white;
+
+  color: #392719;
+
+  font-size: 14px;
+
+  transition: 0.2s ease;
+}
+
+
+.organizer-form-group input::placeholder {
+  color: #b4a69a;
+}
+
+
+.organizer-form-group input:focus {
+  border-color: #c66b1b;
+
+  box-shadow:
+    0 0 0 3px rgba(198, 107, 27, 0.1);
+}
+
+
+/* =====================================
+   PASSWORD
+===================================== */
+
+.organizer-password-wrapper {
+  position: relative;
+}
+
+
+.organizer-password-wrapper input {
+  padding-right: 65px;
+}
+
+
+.organizer-password-toggle {
+  position: absolute;
+
+  top: 50%;
+  right: 13px;
+
+  transform: translateY(-50%);
+
+  border: none;
+
+  padding: 4px;
+
+  background: transparent;
+
+  color: #b45f16;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.organizer-password-toggle:hover {
+  text-decoration: underline;
+}
+
+
+/* =====================================
+   REMEMBER / FORGOT
+===================================== */
+
+.organizer-login-options {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 2px 0 20px;
+
+  font-size: 12px;
+}
+
+
+.organizer-remember {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #806d5b;
+
+  cursor: pointer;
+}
+
+
+.organizer-remember input {
+  accent-color: #b85c00;
+}
+
+
+.organizer-forgot-password {
+  border: none;
+
+  padding: 0;
+
+  background: transparent;
+
+  color: #b45f16;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.organizer-forgot-password:hover {
+  text-decoration: underline;
+}
+
+
+/* =====================================
+   LOGIN BUTTON
+===================================== */
+
+.organizer-login-button {
+  width: 100%;
+
+  height: 48px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #b85c00,
+      #d4771b
+    );
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 16px rgba(184, 92, 0, 0.2);
+
+  transition: 0.2s ease;
+}
+
+
+.organizer-login-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 9px 20px rgba(184, 92, 0, 0.25);
+}
+
+
+/* =====================================
+   DIVIDER
+===================================== */
+
+.organizer-login-divider {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  margin: 23px 0;
+
+  color: #aa9a8b;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+
+.organizer-login-divider::before,
+.organizer-login-divider::after {
+  content: "";
+
+  flex: 1;
+
+  height: 1px;
+
+  background: #e6ddd4;
+}
+
+
+/* =====================================
+   CREATE ACCOUNT
+===================================== */
+
+.organizer-register-section {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  margin-top: 21px;
+
+  color: #89796a;
+
+  font-size: 12px;
+}
+
+
+.organizer-register-section p {
+  margin: 0;
+}
+
+
+.organizer-create-account {
+  border: none;
+
+  padding: 0;
+
+  background: transparent;
+
+  color: #b45f16;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.organizer-create-account:hover {
+  text-decoration: underline;
+}
+
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.organizer-login-footer {
+  margin-top: 18px;
+
+  color: #a59483;
+
+  font-size: 11px;
+}
+
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 900px) {
+
+  .organizer-login-page {
+    grid-template-columns: 42% 58%;
+  }
+
+  .organizer-login-section {
+    padding: 45px 40px;
+  }
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 700px) {
+
+  .organizer-login-page {
+    display: block;
+
+    min-height: 100vh;
+  }
+
+  .organizer-visual {
+    display: none;
+  }
+
+  .organizer-login-section {
+    min-height: 100vh;
+
+    padding: 75px 25px 40px;
+  }
+
+  .organizer-login-card {
+    max-width: 430px;
+  }
+
+}
