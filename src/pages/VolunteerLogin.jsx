@@ -1,82 +1,178 @@
 
-import { useNavigate } from 'react-router-dom';
-import '../styles/VolunteerLogin.css';
+import { useNavigate } from 'react-router-dom'
+import '../styles/VolunteerLogin.css'
+import heroImage from '../assets/volunteer1.jpeg'
 
 export default function VolunteerLogin() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleLogin = (e) => {
-    e.preventDefault();
-    navigate('/volunteer-dashboard');
-  };
+    e.preventDefault()
+    navigate('/volunteer-dashboard')
+  }
+
+  const handleForgotPassword = () => {
+    alert('Password reset coming soon!')
+  }
+
+  const handleBack = () => {
+    navigate('/')
+  }
 
   return (
-    <div className="volunteer-login-page">
-      <div className="volunteer-login-card">
+    <main className="volunteer-login-page">
 
-        <div className="volunteer-login-brand">
-          <span className="brand-mark">S</span>
-          <span>SevaSetu</span>
+      {/* LEFT IMAGE */}
+      <div className="volunteer-photo">
+        <img
+          src={heroImage}
+          alt="SevaSetu community service"
+        />
+
+        <div className="photo-overlay"></div>
+
+        <div className="photo-content">
+          <div className="photo-logo">🙏</div>
+
+          <h2>Seva Setu</h2>
+
+          <p>सेवा • सहयोग • सुरक्षा</p>
         </div>
+      </div>
 
-        <div className="volunteer-login-header">
-          <div className="volunteer-icon">🤝</div>
+      {/* RIGHT LOGIN AREA */}
+      <section className="volunteer-login-section">
 
+        <button
+          type="button"
+          className="volunteer-back-button"
+          onClick={handleBack}
+        >
+          ← Back to roles
+        </button>
+
+        <div className="volunteer-login-card">
+
+          {/* ICON */}
+          <div className="volunteer-icon">
+            🤝
+          </div>
+
+          {/* HEADER */}
           <h1>Welcome, Volunteer</h1>
 
-          <p>
+          <p className="volunteer-login-subtitle">
             Sign in to respond to people who need your help.
           </p>
-        </div>
 
-        <form onSubmit={handleLogin} className="volunteer-login-form">
+          {/* LOGIN FORM */}
+          <form onSubmit={handleLogin}>
 
-          <div className="form-group">
-            <label htmlFor="mobile">Mobile Number</label>
+            <div className="volunteer-form-group">
 
-            <input
-              id="mobile"
-              type="tel"
-              placeholder="Enter your mobile number"
-              required
-            />
-          </div>
+              <label htmlFor="mobile">
+                Mobile Number
+              </label>
 
-          <div className="form-group">
-            <div className="password-label-row">
-              <label htmlFor="password">Password</label>
+              <input
+                id="mobile"
+                type="tel"
+                placeholder="Enter your mobile number"
+                required
+              />
 
-              <button
-                type="button"
-                className="forgot-password"
-              >
-                Forgot password?
-              </button>
             </div>
 
-            <input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              required
-            />
+            <div className="volunteer-form-group">
+
+              <div className="volunteer-password-row">
+
+                <label htmlFor="password">
+                  Password
+                </label>
+
+                <button
+                  type="button"
+                  className="volunteer-forgot-password"
+                  onClick={handleForgotPassword}
+                >
+                  Forgot password?
+                </button>
+
+              </div>
+
+              <input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                required
+              />
+
+            </div>
+
+            <button
+              type="submit"
+              className="volunteer-login-button"
+            >
+              Login
+            </button>
+
+          </form>
+
+          {/* DIVIDER */}
+          <div className="volunteer-divider">
+            <span>OR</span>
           </div>
 
-          <button type="submit" className="volunteer-login-button">
-            Login
-            <span>→</span>
+          {/* GOOGLE LOGIN */}
+          <button
+            type="button"
+            className="volunteer-google-button"
+            onClick={() => alert('Google Login coming soon!')}
+          >
+            <span className="volunteer-google-logo">
+              G
+            </span>
+
+            Continue with Google
           </button>
 
-        </form>
+          {/* GUEST LOGIN */}
+          <button
+            type="button"
+            className="volunteer-guest-button"
+            onClick={() => alert('Guest access coming soon!')}
+          >
+            Continue as Guest
+          </button>
 
-        <div className="volunteer-login-footer">
-          <span className="security-dot"></span>
-          <span>Your information is securely handled by SevaSetu.</span>
+          {/* CREATE ACCOUNT */}
+          <div className="volunteer-signup-section">
+
+            <span>
+              Don't have an account?
+            </span>
+
+            <button
+              type="button"
+              className="volunteer-signup-button"
+              onClick={() => alert('Create Account coming soon!')}
+            >
+              Create Account
+            </button>
+
+          </div>
+
+          {/* FOOTER */}
+          <p className="volunteer-login-footer">
+            Seva through every step of the Wari.
+          </p>
+
         </div>
 
-      </div>
-    </div>
-  );
-}
+      </section>
 
+    </main>
+  )
+}
 

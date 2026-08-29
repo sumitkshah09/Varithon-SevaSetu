@@ -1,8 +1,11 @@
 import { useState } from 'react'
+
 import VolunteerDashboard from './VolunteerDashboard'
+import VolunteerLogin from './VolunteerLogin'
 import WarkariLogin from './WarkariLogin'
 import OrganizerLogin from './OrganizerLogin'
 import OrganizerDashboard from './OrganizerDashboard'
+
 import './RoleSelection.css'
 
 export default function RoleSelection() {
@@ -13,7 +16,7 @@ export default function RoleSelection() {
   // VOLUNTEER
   // -------------------------
   if (selectedRole === 'volunteer') {
-    return <VolunteerDashboard />
+    return <VolunteerLogin />
   }
 
 // -------------------------
