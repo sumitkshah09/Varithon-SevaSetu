@@ -54,16 +54,10 @@ export default function Home() {
             onClick={() => navigate("/role-selection")}
           >
             <span>🤝</span>
-            Become a Volunteer
+            Find a Service →
           </button>
 
-          <button
-            className="hero-btn secondary"
-            onClick={() => navigate("/signin")}
-          >
-            Find a Service
-            <span className="arrow">→</span>
-          </button>
+          
 
         </div>
 
@@ -105,11 +99,7 @@ export default function Home() {
 
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="scroll-indicator">
-        <span>Explore Seva Setu</span>
-        <div>↓</div>
-      </div>
+      
 
     </section>
   );
