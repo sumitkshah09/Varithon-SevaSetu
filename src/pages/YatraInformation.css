@@ -1,0 +1,916 @@
+/* =========================================================
+   YATRA INFORMATION PAGE
+   ========================================================= */
+
+.yatra-page {
+  min-height: 100vh;
+  background: #f8f5ef;
+  color: #2f2923;
+  padding-bottom: 40px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.yatra-header {
+  width: 100%;
+  min-height: 82px;
+  background: #ffffff;
+  border-bottom: 1px solid #e9e1d6;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 7%;
+
+  box-sizing: border-box;
+
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+
+.yatra-back-button {
+  width: 44px;
+  height: 44px;
+
+  border: 1px solid #ded4c7;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  font-size: 22px;
+  color: #5c5147;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.2s ease;
+}
+
+
+.yatra-back-button:hover {
+  background: #f7f1e8;
+  transform: translateX(-2px);
+}
+
+
+.yatra-header-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: 20px;
+}
+
+
+.yatra-header-icon {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 14px;
+
+  background: #f3e5cf;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 25px;
+}
+
+
+.yatra-header-title h1 {
+  margin: 0;
+
+  font-size: 22px;
+  font-weight: 700;
+
+  color: #302921;
+}
+
+
+.yatra-header-title p {
+  margin: 4px 0 0;
+
+  font-size: 13px;
+
+  color: #81766b;
+}
+
+
+.yatra-header-spacer {
+  flex: 1;
+}
+
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.yatra-container {
+  width: min(1100px, 88%);
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   WELCOME CARD
+   ========================================================= */
+
+.yatra-welcome-card {
+  margin-top: 34px;
+
+  min-height: 190px;
+
+  padding: 38px 44px;
+
+  border-radius: 24px;
+
+  background: linear-gradient(
+    135deg,
+    #f1dfc5,
+    #ead3b3
+  );
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  overflow: hidden;
+}
+
+
+.yatra-welcome-content {
+  max-width: 700px;
+}
+
+
+.yatra-small-text {
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #785d42;
+}
+
+
+.yatra-welcome-content h2 {
+  margin: 10px 0 8px;
+
+  font-size: 34px;
+  line-height: 1.15;
+
+  color: #342a22;
+}
+
+
+.yatra-welcome-content p {
+  margin: 0;
+
+  max-width: 650px;
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  color: #675a4e;
+}
+
+
+.yatra-welcome-icon {
+  width: 110px;
+  height: 110px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 52px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.yatra-section {
+  margin-top: 38px;
+}
+
+
+.yatra-section-heading {
+  margin-bottom: 18px;
+}
+
+
+.yatra-section-heading h2 {
+  margin: 0;
+
+  font-size: 24px;
+
+  color: #302921;
+}
+
+
+.yatra-section-heading p {
+  margin: 6px 0 0;
+
+  font-size: 14px;
+
+  color: #84786d;
+}
+
+
+/* =========================================================
+   JOURNEY STATUS
+   ========================================================= */
+
+.journey-status-card {
+  background: #ffffff;
+
+  border: 1px solid #e7dfd5;
+
+  border-radius: 20px;
+
+  padding: 28px;
+
+  box-shadow: 0 6px 25px rgba(61, 48, 35, 0.05);
+}
+
+
+.journey-status-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.status-label {
+  display: block;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  color: #978a7e;
+}
+
+
+.journey-status-top h3 {
+  margin: 7px 0 0;
+
+  font-size: 25px;
+
+  color: #302921;
+}
+
+
+.journey-active {
+  padding: 8px 13px;
+
+  border-radius: 30px;
+
+  background: #eaf5e9;
+
+  color: #4d7d4b;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+.journey-progress {
+  margin-top: 30px;
+
+  position: relative;
+}
+
+
+.progress-line {
+  height: 5px;
+
+  background: #e8e0d7;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+
+.progress-filled {
+  width: 72%;
+  height: 100%;
+
+  background: #b48a58;
+
+  border-radius: 10px;
+}
+
+
+.progress-points {
+  position: absolute;
+
+  top: 50%;
+  left: 0;
+
+  width: 100%;
+
+  transform: translateY(-50%);
+
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.progress-point {
+  width: 27px;
+  height: 27px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  border: 3px solid #ddd3c8;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  color: #9a8e82;
+}
+
+
+.progress-point.completed {
+  background: #b48a58;
+  border-color: #b48a58;
+
+  color: #ffffff;
+}
+
+
+.progress-point.current {
+  background: #ffffff;
+  border-color: #b48a58;
+
+  color: #b48a58;
+}
+
+
+.journey-locations {
+  margin-top: 25px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 15px;
+}
+
+
+.journey-locations div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+
+.journey-locations strong {
+  font-size: 13px;
+
+  color: #4a4037;
+}
+
+
+.journey-locations span {
+  font-size: 11px;
+
+  color: #9a8e82;
+}
+
+
+/* =========================================================
+   SCHEDULE
+   ========================================================= */
+
+.schedule-list {
+  background: #ffffff;
+
+  border: 1px solid #e7dfd5;
+
+  border-radius: 20px;
+
+  padding: 8px 25px;
+
+  box-shadow: 0 6px 25px rgba(61, 48, 35, 0.05);
+}
+
+
+.schedule-card {
+  min-height: 110px;
+
+  display: grid;
+  grid-template-columns: 80px 30px 1fr;
+
+  align-items: center;
+
+  position: relative;
+}
+
+
+.schedule-card:not(:last-child) {
+  border-bottom: 1px solid #eee8e0;
+}
+
+
+.schedule-time {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+
+.schedule-time span {
+  font-size: 17px;
+  font-weight: 700;
+
+  color: #4b4036;
+}
+
+
+.schedule-time small {
+  margin-top: 2px;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  color: #a09284;
+}
+
+
+.schedule-line {
+  height: 100%;
+
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+}
+
+
+.schedule-line::before {
+  content: '';
+
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  width: 2px;
+
+  background: #e3d8cb;
+}
+
+
+.schedule-card:first-child .schedule-line::before {
+  top: 50%;
+}
+
+
+.schedule-card:last-child .schedule-line::before {
+  bottom: 50%;
+}
+
+
+.schedule-dot {
+  width: 13px;
+  height: 13px;
+
+  border-radius: 50%;
+
+  background: #b48a58;
+
+  border: 4px solid #f3e7d8;
+
+  position: relative;
+
+  z-index: 2;
+
+  margin-top: 48px;
+}
+
+
+.schedule-content {
+  padding: 20px 0 20px 15px;
+}
+
+
+.schedule-content h3 {
+  margin: 0 0 5px;
+
+  font-size: 16px;
+
+  color: #40362e;
+}
+
+
+.schedule-content p {
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  color: #897c70;
+}
+
+
+.schedule-status {
+  display: inline-block;
+
+  margin-top: 8px;
+
+  padding: 4px 9px;
+
+  border-radius: 20px;
+
+  background: #f5eee6;
+
+  color: #866b4d;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   INFORMATION CARDS
+   ========================================================= */
+
+.information-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 16px;
+}
+
+
+.information-card {
+  padding: 22px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7dfd5;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  gap: 16px;
+
+  box-shadow: 0 5px 20px rgba(61, 48, 35, 0.04);
+}
+
+
+.information-icon {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 13px;
+
+  background: #f4e9dc;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 23px;
+
+  flex-shrink: 0;
+}
+
+
+.information-card h3 {
+  margin: 2px 0 6px;
+
+  font-size: 16px;
+
+  color: #40362e;
+}
+
+
+.information-card p {
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.6;
+
+  color: #897c70;
+}
+
+
+/* =========================================================
+   DESTINATION
+   ========================================================= */
+
+.destination-card {
+  margin-top: 38px;
+
+  padding: 25px 28px;
+
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e3d7c8;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  box-shadow: 0 6px 25px rgba(61, 48, 35, 0.05);
+}
+
+
+.destination-icon {
+  width: 58px;
+  height: 58px;
+
+  border-radius: 15px;
+
+  background: #f2e2cd;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 28px;
+
+  flex-shrink: 0;
+}
+
+
+.destination-content {
+  flex: 1;
+}
+
+
+.destination-content > span {
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  color: #a18f7e;
+}
+
+
+.destination-content h2 {
+  margin: 5px 0 3px;
+
+  font-size: 19px;
+
+  color: #3b3028;
+}
+
+
+.destination-content p {
+  margin: 0;
+
+  font-size: 13px;
+
+  color: #897c70;
+}
+
+
+.destination-arrow {
+  font-size: 25px;
+
+  color: #a88661;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.yatra-footer {
+  text-align: center;
+
+  padding: 55px 20px 20px;
+}
+
+
+.yatra-footer-icon {
+  font-size: 28px;
+}
+
+
+.yatra-footer h3 {
+  margin: 10px 0 5px;
+
+  font-size: 17px;
+
+  color: #55483d;
+}
+
+
+.yatra-footer p {
+  margin: 0;
+
+  font-size: 12px;
+
+  color: #a09284;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .yatra-header {
+    padding: 0 5%;
+  }
+
+
+  .yatra-container {
+    width: 90%;
+  }
+
+
+  .yatra-welcome-card {
+    padding: 30px;
+
+    min-height: 170px;
+  }
+
+
+  .yatra-welcome-content h2 {
+    font-size: 28px;
+  }
+
+
+  .yatra-welcome-icon {
+    width: 85px;
+    height: 85px;
+
+    font-size: 40px;
+  }
+
+
+  .journey-locations {
+    grid-template-columns: repeat(2, 1fr);
+
+    row-gap: 18px;
+  }
+
+
+  .information-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .yatra-header {
+    min-height: 70px;
+  }
+
+
+  .yatra-header-title {
+    margin-left: 12px;
+  }
+
+
+  .yatra-header-icon {
+    width: 40px;
+    height: 40px;
+
+    font-size: 20px;
+  }
+
+
+  .yatra-header-title h1 {
+    font-size: 17px;
+  }
+
+
+  .yatra-header-title p {
+    font-size: 11px;
+  }
+
+
+  .yatra-back-button {
+    width: 40px;
+    height: 40px;
+  }
+
+
+  .yatra-welcome-card {
+    margin-top: 20px;
+
+    padding: 25px;
+
+    border-radius: 19px;
+  }
+
+
+  .yatra-welcome-content h2 {
+    font-size: 25px;
+  }
+
+
+  .yatra-welcome-content p {
+    font-size: 13px;
+  }
+
+
+  .yatra-welcome-icon {
+    display: none;
+  }
+
+
+  .yatra-section {
+    margin-top: 28px;
+  }
+
+
+  .yatra-section-heading h2 {
+    font-size: 21px;
+  }
+
+
+  .journey-status-card {
+    padding: 20px;
+  }
+
+
+  .journey-status-top h3 {
+    font-size: 21px;
+  }
+
+
+  .journey-locations {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+  }
+
+
+  .schedule-list {
+    padding: 5px 12px;
+  }
+
+
+  .schedule-card {
+    grid-template-columns: 65px 22px 1fr;
+  }
+
+
+  .schedule-content {
+    padding-left: 10px;
+  }
+
+
+  .schedule-content h3 {
+    font-size: 14px;
+  }
+
+
+  .schedule-content p {
+    font-size: 12px;
+  }
+
+
+  .destination-card {
+    padding: 20px;
+  }
+
+
+  .destination-content h2 {
+    font-size: 16px;
+  }
+
+}

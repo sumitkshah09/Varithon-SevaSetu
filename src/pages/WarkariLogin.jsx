@@ -1,100 +1,80 @@
 import { useState } from 'react'
+import WarkariDashboard from './WarkariDashboard'
 import wariImage from '../assets/wari1.jpeg'
 import './WarkariLogin.css'
 
-export default function WarkariLogin({ onBack }) {
+export default function WarkariLogin() {
   const [emailOrPhone, setEmailOrPhone] = useState('')
   const [password, setPassword] = useState('')
+  const [loggedIn, setLoggedIn] = useState(false)
 
   const handleLogin = (e) => {
     e.preventDefault()
-    alert('Login submitted!')
-  }
-
-  const handleGoogleLogin = () => {
-    alert('Google Login coming soon!')
+    setLoggedIn(true)
   }
 
   const handleGuestLogin = () => {
-    alert('Guest access coming soon!')
+    setLoggedIn(true)
   }
 
-  const handleCreateAccount = () => {
-    alert('Create Account coming soon!')
+  if (loggedIn) {
+    return <WarkariDashboard />
   }
 
   return (
     <main className="warkari-login-page">
 
-      {/* LEFT IMAGE */}
-      <div className="wari-photo">
+      {/* Left Image */}
+      <section className="login-image-section">
         <img
           src={wariImage}
-          alt="Warkari pilgrimage"
+          alt="Wari pilgrimage"
+          className="login-image"
         />
 
-        <div className="photo-overlay"></div>
-
-        <div className="photo-content">
-          <div className="photo-logo">🙏</div>
-
-          <h2>Seva Setu</h2>
-
-          <p>सेवा • भक्ती • वारकरी</p>
+        <div className="image-overlay">
+          <h2>Jai Hari Vitthal 🙏</h2>
+          <p>
+            Your journey of seva, devotion and community begins here.
+          </p>
         </div>
-      </div>
+      </section>
 
+      {/* Login Section */}
+      <section className="login-form-section">
 
-      {/* RIGHT LOGIN AREA */}
-      <section className="login-section">
+        <div className="login-box">
 
-        <button
-          type="button"
-          className="back-button"
-          onClick={onBack}
-        >
-          ← Back to roles
-        </button>
+          <div className="login-header">
+            <div className="login-logo">🙏</div>
 
+            <h1>Welcome, Warkari</h1>
 
-        <div className="login-card">
-
-          <div className="login-icon">
-            🙏
+            <p>
+              Sign in to continue your Seva Setu journey.
+            </p>
           </div>
 
-          <h1>Welcome, Warkari</h1>
-
-          <p className="login-subtitle">
-            Sign in to continue your Wari journey
-          </p>
-
-
-          {/* LOGIN FORM */}
           <form onSubmit={handleLogin}>
 
+            {/* Email / Phone */}
             <div className="form-group">
-
               <label htmlFor="emailOrPhone">
-                Email or Mobile Number
+                Email or Phone Number
               </label>
 
               <input
                 id="emailOrPhone"
                 type="text"
-                placeholder="Enter email or mobile number"
+                placeholder="Enter your email or phone number"
                 value={emailOrPhone}
-                onChange={(e) =>
-                  setEmailOrPhone(e.target.value)
-                }
+                onChange={(e) => setEmailOrPhone(e.target.value)}
                 required
               />
-
             </div>
 
-
+            {/* Password */}
             <div className="form-group">
-
               <label htmlFor="password">
                 Password
               </label>
@@ -104,15 +84,12 @@ export default function WarkariLogin({ onBack }) {
                 type="password"
                 placeholder="Enter your password"
                 value={password}
-                onChange={(e) =>
-                  setPassword(e.target.value)
-                }
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
-
             </div>
 
-
+            {/* Remember + Forgot */}
             <div className="login-options">
 
               <label className="remember-me">
@@ -123,16 +100,14 @@ export default function WarkariLogin({ onBack }) {
               <button
                 type="button"
                 className="forgot-password"
-                onClick={() =>
-                  alert('Password reset coming soon!')
-                }
+                onClick={() => alert('Password reset coming soon.')}
               >
-                Forgot password?
+                Forgot Password?
               </button>
 
             </div>
 
-
+            {/* Login */}
             <button
               type="submit"
               className="login-button"
@@ -142,58 +117,50 @@ export default function WarkariLogin({ onBack }) {
 
           </form>
 
-
-          {/* DIVIDER */}
+          {/* Divider */}
           <div className="divider">
             <span>OR</span>
           </div>
 
-
-          {/* GOOGLE LOGIN */}
+          {/* Google Login */}
           <button
             type="button"
-            className="google-button"
-            onClick={handleGoogleLogin}
+            className="google-login-button"
+            onClick={() => alert('Google login will be connected with Firebase later.')}
           >
-            <span className="google-logo">
-              G
-            </span>
-
+            <span className="google-icon">G</span>
             Continue with Google
           </button>
 
-
-          {/* GUEST LOGIN */}
+          {/* Guest Login */}
           <button
             type="button"
-            className="guest-button"
+            className="guest-login-button"
             onClick={handleGuestLogin}
           >
             Continue as Guest
           </button>
 
-
-          {/* CREATE ACCOUNT */}
-          <div className="signup-section">
-
-            <span>
-              Don't have an account?
-            </span>
-
+          {/* Register */}
+          <p className="register-text">
+            Don't have an account?{' '}
             <button
               type="button"
-              className="signup-button"
-              onClick={handleCreateAccount}
+              className="register-button"
+              onClick={() => alert('Registration coming soon.')}
             >
               Create Account
             </button>
-
-          </div>
-
-
-          <p className="login-footer">
-            Seva through every step of the Wari.
           </p>
+
+          {/* Back */}
+          <button
+            type="button"
+            className="back-button"
+            onClick={() => window.history.back()}
+          >
+            ← Back to Role Selection
+          </button>
 
         </div>
 
