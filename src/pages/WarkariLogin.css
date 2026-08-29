@@ -1,0 +1,585 @@
+/* =====================================
+   MAIN PAGE
+===================================== */
+
+.warkari-login-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 48% 52%;
+
+  background: #fffaf4;
+
+  overflow: hidden;
+}
+
+
+/* =====================================
+   LEFT IMAGE
+===================================== */
+
+.wari-photo {
+  position: relative;
+
+  height: 100vh;
+
+  overflow: hidden;
+}
+
+.wari-photo img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  object-position: center;
+}
+
+
+/* Image overlay */
+
+.photo-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(50, 25, 5, 0.05),
+      rgba(50, 25, 5, 0.45)
+    );
+}
+
+
+/* =====================================
+   TEXT ON IMAGE
+===================================== */
+
+.photo-content {
+  position: absolute;
+
+  left: 45px;
+  bottom: 55px;
+
+  z-index: 2;
+
+  color: white;
+}
+
+.photo-logo {
+  font-size: 35px;
+
+  margin-bottom: 5px;
+}
+
+.photo-content h2 {
+  margin: 0;
+
+  font-size: 40px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.photo-content p {
+  margin-top: 8px;
+
+  font-size: 14px;
+
+  letter-spacing: 3px;
+
+  opacity: 0.95;
+}
+
+
+/* =====================================
+   RIGHT LOGIN AREA
+===================================== */
+
+.login-section {
+  position: relative;
+
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 50px 70px;
+
+  background: #fffdf9;
+}
+
+
+/* =====================================
+   BACK BUTTON
+===================================== */
+
+.back-button {
+  position: absolute;
+
+  top: 30px;
+  left: 45px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #76553a;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  padding: 8px;
+
+  transition: 0.2s ease;
+}
+
+.back-button:hover {
+  color: #b85c00;
+
+  transform: translateX(-3px);
+}
+
+
+/* =====================================
+   LOGIN CARD
+===================================== */
+
+.login-card {
+  width: 100%;
+
+  max-width: 430px;
+
+  text-align: center;
+}
+
+
+/* =====================================
+   ICON
+===================================== */
+
+.login-icon {
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 18px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fff0dc;
+
+  font-size: 30px;
+
+  box-shadow:
+    0 6px 18px rgba(180, 95, 22, 0.12);
+}
+
+
+/* =====================================
+   HEADING
+===================================== */
+
+.login-card h1 {
+  margin: 0;
+
+  color: #392719;
+
+  font-size: 32px;
+
+  font-weight: 800;
+}
+
+.login-subtitle {
+  margin: 10px 0 30px;
+
+  color: #8a7562;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================
+   FORM
+===================================== */
+
+.form-group {
+  margin-bottom: 17px;
+
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #4d3928;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.form-group input {
+  width: 100%;
+
+  height: 48px;
+
+  box-sizing: border-box;
+
+  padding: 0 15px;
+
+  border: 1px solid #ddd1c4;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  background: white;
+
+  color: #392719;
+
+  font-size: 14px;
+
+  transition: 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #b4a69a;
+}
+
+.form-group input:focus {
+  border-color: #c66b1b;
+
+  box-shadow:
+    0 0 0 3px rgba(198, 107, 27, 0.1);
+}
+
+
+/* =====================================
+   REMEMBER / FORGOT
+===================================== */
+
+.login-options {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 2px 0 20px;
+
+  font-size: 12px;
+}
+
+.remember-me {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #806d5b;
+
+  cursor: pointer;
+}
+
+.remember-me input {
+  accent-color: #b85c00;
+}
+
+.forgot-password {
+  border: none;
+
+  padding: 0;
+
+  background: transparent;
+
+  color: #b45f16;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+
+/* =====================================
+   LOGIN BUTTON
+===================================== */
+
+.login-button {
+  width: 100%;
+
+  height: 48px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #b85c00,
+      #d4771b
+    );
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 16px rgba(184, 92, 0, 0.2);
+
+  transition: 0.2s ease;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 9px 20px rgba(184, 92, 0, 0.25);
+}
+
+
+/* =====================================
+   DIVIDER
+===================================== */
+
+.divider {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  margin: 23px 0;
+
+  color: #aa9a8b;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+
+  flex: 1;
+
+  height: 1px;
+
+  background: #e6ddd4;
+}
+
+
+/* =====================================
+   GOOGLE BUTTON
+===================================== */
+
+.google-button {
+  width: 100%;
+
+  height: 47px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  border: 1px solid #ddd6cf;
+
+  border-radius: 10px;
+
+  background: white;
+
+  color: #40362e;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.google-button:hover {
+  background: #faf8f5;
+
+  border-color: #cfc4ba;
+
+  transform: translateY(-1px);
+}
+
+.google-logo {
+  font-size: 18px;
+
+  font-weight: 800;
+
+  color: #4285f4;
+}
+
+
+/* =====================================
+   GUEST BUTTON
+===================================== */
+
+.guest-button {
+  width: 100%;
+
+  height: 47px;
+
+  margin-top: 11px;
+
+  border: 1px solid #c87529;
+
+  border-radius: 10px;
+
+  background: #fffaf4;
+
+  color: #a95409;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.guest-button:hover {
+  background: #fff1df;
+
+  transform: translateY(-1px);
+}
+
+
+/* =====================================
+   SIGN UP
+===================================== */
+
+.signup-section {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  margin-top: 21px;
+
+  color: #89796a;
+
+  font-size: 12px;
+}
+
+.signup-button {
+  border: none;
+
+  padding: 0;
+
+  background: transparent;
+
+  color: #b45f16;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.signup-button:hover {
+  text-decoration: underline;
+}
+
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.login-footer {
+  margin-top: 18px;
+
+  color: #a59483;
+
+  font-size: 11px;
+}
+
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 900px) {
+
+  .warkari-login-page {
+    grid-template-columns: 42% 58%;
+  }
+
+  .login-section {
+    padding: 45px 40px;
+  }
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 700px) {
+
+  .warkari-login-page {
+    display: block;
+
+    min-height: 100vh;
+  }
+
+  .wari-photo {
+    display: none;
+  }
+
+  .login-section {
+    min-height: 100vh;
+
+    padding: 75px 25px 40px;
+  }
+
+  .login-card {
+    max-width: 430px;
+  }
+
+}
