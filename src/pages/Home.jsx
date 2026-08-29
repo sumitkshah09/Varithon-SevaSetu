@@ -1,10 +1,17 @@
-
 import "./Home.css";
+
 import { useNavigate } from "react-router-dom";
+
 import wariImage from "../assets/warkari.jpeg";
+
+import { useLanguage } from "../language/languageContext";
+import { translations } from "../language.js";
 
 export default function Home() {
   const navigate = useNavigate();
+
+  const { language } = useLanguage();
+  const t = translations[language];
 
   return (
     <div className="home-page">
@@ -18,34 +25,59 @@ export default function Home() {
           style={{ backgroundImage: `url(${wariImage})` }}
         ></div>
 
-        {/* Dark Overlay */}
+        {/* DARK OVERLAY */}
         <div className="hero-overlay"></div>
 
         {/* ================= NAVBAR ================= */}
         <nav className="home-navbar">
 
           <div className="home-logo">
+
             <div className="logo-icon">से</div>
 
             <div>
               <div className="logo-name">
                 <span>सेवा</span>Setu
               </div>
-              <small>Wari Seva Network</small>
+
+              <small>{t.brandSubtitle}</small>
             </div>
+
           </div>
 
           <div className="nav-links">
-            <a href="#services">Services</a>
-            <a href="#map">Nearby Help</a>
-            <a href="#about">About</a>
+
+            <a href="#services">
+              {language === "mr"
+                ? "सेवा"
+                : language === "hi"
+                ? "सेवाएं"
+                : "Services"}
+            </a>
+
+            <a href="#map">
+              {t.nearbyHelp}
+            </a>
+
+            <a href="#about">
+              {language === "mr"
+                ? "आमच्याबद्दल"
+                : language === "hi"
+                ? "हमारे बारे में"
+                : "About"}
+            </a>
+
           </div>
 
           <button
             className="nav-button"
             onClick={() => navigate("/role-selection")}
           >
-            Get Started →
+            {language === "mr"
+              ? "सुरुवात करा →"
+              : language === "hi"
+              ? "शुरू करें →"
+              : "Get Started →"}
           </button>
 
         </nav>
@@ -53,48 +85,76 @@ export default function Home() {
         {/* ================= HERO CONTENT ================= */}
         <div className="hero-content">
 
+          {/* CULTURAL BADGE */}
           <div className="hero-badge">
-            ॥ जय हरी विठ्ठल ॥
+            {t.badge}
           </div>
 
+          {/* BRAND */}
           <div className="brand-name">
-            <span className="brand-marathi">सेवा</span>
-            <span className="brand-setu">Setu</span>
+
+            <span className="brand-marathi">
+              {language === "en" ? "सेवा" : "सेवा"}
+            </span>
+
+            <span className="brand-setu">
+              {language === "mr"
+                ? "सेतू"
+                : language === "hi"
+                ? "सेतु"
+                : "Setu"}
+            </span>
+
           </div>
 
+          {/* TAGLINE */}
           <h1 className="main-tagline">
-            Connecting Helping Hands
+
+            {t.tagline1}
+
             <br />
-            <span>with Every Warkari</span>
+
+            <span>
+              {t.tagline2}
+            </span>
+
           </h1>
 
+          {/* DESCRIPTION */}
           <p className="hero-description">
-            A digital platform that connects Warkaris with
-            trusted volunteers and essential services —
-            making every step of the Wari safer, easier
-            and more connected.
+            {t.description}
           </p>
 
-          
-{/* BUTTONS */}
-<div className="hero-buttons">
-  <button
-    className="hero-btn primary"
-    onClick={() => navigate("/role-selection")}
-  >
-    🤝 Find a Service →
-  </button>
-</div>
+          {/* BUTTON */}
+          <div className="hero-buttons">
 
+            <button
+              className="hero-btn primary"
+              onClick={() => navigate("/role-selection")}
+            >
+              {t.findService}
+            </button>
+
+          </div>
 
           {/* QUICK TRUST INFO */}
           <div className="hero-trust">
 
-            <span>✓ Verified Volunteers</span>
+            <span>
+              {t.verifiedVolunteers}
+            </span>
+
             <span>•</span>
-            <span>📍 Nearby Help</span>
+
+            <span>
+              {t.nearbyHelp}
+            </span>
+
             <span>•</span>
-            <span>🚨 Emergency Support</span>
+
+            <span>
+              {t.emergencySupport}
+            </span>
 
           </div>
 
@@ -104,82 +164,247 @@ export default function Home() {
         <div className="live-status">
 
           <div className="live-indicator">
+
             <span></span>
-            LIVE
+
+            {language === "mr"
+              ? "लाईव्ह"
+              : language === "hi"
+              ? "लाइव"
+              : "LIVE"}
+
           </div>
 
           <div className="status-text">
-            SevaSetu Network is Active
+            {t.networkActive}
           </div>
 
           <div className="status-stat">
+
             <strong>24+</strong>
-            <small>Active Volunteers</small>
+
+            <small>
+              {t.activeVolunteers}
+            </small>
+
           </div>
 
           <div className="status-stat">
+
             <strong>18</strong>
-            <small>Nearby Services</small>
+
+            <small>
+              {t.nearbyServices}
+            </small>
+
           </div>
 
           <div className="status-stat">
+
             <strong>7</strong>
-            <small>Medical Points</small>
+
+            <small>
+              {t.medicalPoints}
+            </small>
+
           </div>
 
         </div>
 
       </section>
 
+
+      {/* ================= SERVICES ================= */}
+      <section
+        className="services-section"
+        id="services"
+      >
+
+        <div className="services-heading">
+
+          <span className="section-label">
+            {language === "mr"
+              ? "आवश्यक सेवा"
+              : language === "hi"
+              ? "आवश्यक सेवाएं"
+              : "ESSENTIAL SERVICES"}
+          </span>
+
+          <h2>
+            {t.servicesTitle}
+
+            <br />
+
+            <strong>
+              {t.servicesTitle2}
+            </strong>
+          </h2>
+
+          <p>
+            {t.servicesDescription}
+          </p>
+
+        </div>
+
+
+        <div className="services-grid">
+
+          <div className="service-card">
+
+            <div className="service-icon">
+              🏥
+            </div>
+
+            <h3>
+              {t.medicalHelp}
+            </h3>
+
+            <p>
+              {t.medicalDescription}
+            </p>
+
+          </div>
+
+
+          <div className="service-card">
+
+            <div className="service-icon">
+              🍱
+            </div>
+
+            <h3>
+              {t.foodWater}
+            </h3>
+
+            <p>
+              {t.foodDescription}
+            </p>
+
+          </div>
+
+
+          <div className="service-card">
+
+            <div className="service-icon">
+              🚻
+            </div>
+
+            <h3>
+              {t.toilets}
+            </h3>
+
+            <p>
+              {t.toiletDescription}
+            </p>
+
+          </div>
+
+
+          <div className="service-card">
+
+            <div className="service-icon">
+              🧭
+            </div>
+
+            <h3>
+              {t.navigation}
+            </h3>
+
+            <p>
+              {t.navigationDescription}
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
       {/* ================= MAP PREVIEW ================= */}
-      <section className="map-section" id="map">
+      <section
+        className="map-section"
+        id="map"
+      >
 
         <div className="map-content">
 
           <span className="section-label">
-            NEARBY SEVA NETWORK
+            {t.nearbyNetwork}
           </span>
 
           <h2>
-            Find help
+
+            {t.findHelp}
+
             <br />
-            <strong>around you.</strong>
+
+            <strong>
+              {t.aroundYou}
+            </strong>
+
           </h2>
 
           <p>
-            Use your location to discover nearby volunteers,
-            medical centres, food camps, water points and
-            other essential services along the Wari route.
+            {t.mapDescription}
           </p>
 
           <button
             className="map-button"
             onClick={() => navigate("/role-selection")}
           >
-            📍 Explore Nearby Services →
+            {t.exploreServices}
           </button>
 
         </div>
 
-        {/* Fake map-style preview */}
+
+        {/* MAP PREVIEW */}
         <div className="map-preview">
 
           <div className="map-grid"></div>
 
           <div className="map-route"></div>
 
-          <div className="map-pin pin-one">🏥</div>
-          <div className="map-pin pin-two">🍱</div>
-          <div className="map-pin pin-three">💧</div>
-          <div className="map-pin pin-four">🤝</div>
 
-          <div className="map-location">
-            <span></span>
-            Your Location
+          <div className="map-pin pin-one">
+            🏥
           </div>
 
+          <div className="map-pin pin-two">
+            🍱
+          </div>
+
+          <div className="map-pin pin-three">
+            💧
+          </div>
+
+          <div className="map-pin pin-four">
+            🤝
+          </div>
+
+
+          <div className="map-location">
+
+            <span></span>
+
+            {language === "mr"
+              ? "तुमचे स्थान"
+              : language === "hi"
+              ? "आपका स्थान"
+              : "Your Location"}
+
+          </div>
+
+
           <div className="map-label">
-            Nearby Seva
+
+            {language === "mr"
+              ? "जवळची सेवा"
+              : language === "hi"
+              ? "आसपास की सेवा"
+              : "Nearby Seva"}
+
           </div>
 
         </div>
@@ -188,58 +413,103 @@ export default function Home() {
 
 
       {/* ================= WHY SEVASETU ================= */}
-      <section className="why-section" id="about">
+      <section
+        className="why-section"
+        id="about"
+      >
 
         <div className="why-heading">
 
           <span className="section-label">
-            WHY SEVASETU
+            {t.whySevaSetu}
           </span>
 
           <h2>
-            Technology with a
+
+            {t.technologyPurpose}
+
             <br />
-            <strong>human purpose.</strong>
+
+            <strong>
+              {t.humanPurpose}
+            </strong>
+
           </h2>
 
         </div>
 
+
         <div className="why-grid">
 
+          {/* CARD 1 */}
           <div className="why-card">
-            <div>🛡️</div>
-            <h3>Verified Volunteers</h3>
+
+            <div>
+              🛡️
+            </div>
+
+            <h3>
+              {t.verifiedTitle}
+            </h3>
+
             <p>
-              Connect with trusted volunteers who are
-              ready to provide assistance.
+              {t.verifiedDescription}
             </p>
+
           </div>
 
+
+          {/* CARD 2 */}
           <div className="why-card">
-            <div>📍</div>
-            <h3>Location Based</h3>
+
+            <div>
+              📍
+            </div>
+
+            <h3>
+              {t.locationTitle}
+            </h3>
+
             <p>
-              Find the services and support closest
-              to your current location.
+              {t.locationDescription}
             </p>
+
           </div>
 
+
+          {/* CARD 3 */}
           <div className="why-card">
-            <div>🚨</div>
-            <h3>Emergency Ready</h3>
+
+            <div>
+              🚨
+            </div>
+
+            <h3>
+              {t.emergencyTitle}
+            </h3>
+
             <p>
-              Quickly reach assistance when you need
-              urgent support during the Wari.
+              {t.emergencyDescription}
             </p>
+
           </div>
 
+
+          {/* CARD 4 */}
           <div className="why-card">
-            <div>🌐</div>
-            <h3>One Connected Network</h3>
+
+            <div>
+              🌐
+            </div>
+
+            <h3>
+              {t.networkTitle}
+            </h3>
+
             <p>
-              Bring Warkaris, volunteers and service
-              providers onto one platform.
+              {t.networkDescription}
             </p>
+
           </div>
 
         </div>
@@ -251,23 +521,33 @@ export default function Home() {
       <section className="final-cta">
 
         <div>
-          <span>SEVA • SAHYOG • SAMARPAN</span>
+
+          <span>
+            SEVA • SAHYOG • SAMARPAN
+          </span>
 
           <h2>
-            Be a part of the
+
+            {t.ctaTitle}
+
             <br />
-            <strong>Seva Network.</strong>
+
+            <strong>
+              {t.ctaTitle2}
+            </strong>
+
           </h2>
 
           <p>
-            Every helping hand can make someone's journey easier.
+            {t.ctaDescription}
           </p>
 
           <button
             onClick={() => navigate("/role-selection")}
           >
-            Join SevaSetu →
+            {t.join}
           </button>
+
         </div>
 
       </section>
@@ -277,18 +557,32 @@ export default function Home() {
       <footer className="home-footer">
 
         <div>
+
           <strong>
-            <span>सेवा</span>Setu
+
+            <span>
+              सेवा
+            </span>
+
+            {language === "mr"
+              ? "सेतू"
+              : language === "hi"
+              ? "सेतु"
+              : "Setu"}
+
           </strong>
 
           <p>
-            Connecting Helping Hands with Every Warkari.
+            {t.footerText}
           </p>
+
         </div>
 
+
         <div className="footer-center">
-          ॥ जय हरी विठ्ठल ॥
+          {t.badge}
         </div>
+
 
         <small>
           © 2026 SevaSetu
