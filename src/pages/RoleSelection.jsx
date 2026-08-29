@@ -91,8 +91,7 @@ if (selectedRole === 'organizer') {
           </h2>
 
           <p>
-            Manage Wari operations, coordinate volunteers
-            and organize essential resources.
+            Manage Wari operations and coordinate volunteers.
           </p>
 
           <button

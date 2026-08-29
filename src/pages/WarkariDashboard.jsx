@@ -1,15 +1,21 @@
 import { useState } from 'react'
+
 import YatraInformation from './YatraInformation'
+import GetHelp from './GetHelp'
+import RouteMap from './RouteMap'
+import LatestUpdates from './LatestUpdates'
+import Profile from './Profile'
+import Seva from './Seva'
+
 import './WarkariDashboard.css'
 
 export default function WarkariDashboard() {
   const [activePage, setActivePage] = useState('Home')
 
-  const handleComingSoon = (name) => {
-    alert(`${name} feature will be connected soon.`)
-  }
+  /* ======================================================
+     PAGE NAVIGATION
+  ====================================================== */
 
-  // Open Yatra Information page
   if (activePage === 'Yatra') {
     return (
       <YatraInformation
@@ -18,10 +24,56 @@ export default function WarkariDashboard() {
     )
   }
 
+  if (activePage === 'Help') {
+    return (
+      <GetHelp
+        onBack={() => setActivePage('Home')}
+      />
+    )
+  }
+
+  if (activePage === 'RouteMap') {
+    return (
+      <RouteMap
+        onBack={() => setActivePage('Home')}
+      />
+    )
+  }
+
+  if (activePage === 'Updates') {
+    return (
+      <LatestUpdates
+        onBack={() => setActivePage('Home')}
+      />
+    )
+  }
+
+  if (activePage === 'Seva') {
+    return (
+      <Seva
+        onBack={() => setActivePage('Home')}
+      />
+    )
+  }
+
+  if (activePage === 'Profile') {
+    return (
+      <Profile
+        onBack={() => setActivePage('Home')}
+      />
+    )
+  }
+
+  /* ======================================================
+     DASHBOARD
+  ====================================================== */
+
   return (
     <main className="warkari-dashboard">
 
-      {/* ================= HEADER ================= */}
+      {/* ==================================================
+         HEADER
+      ================================================== */}
 
       <header className="dashboard-header">
 
@@ -32,25 +84,38 @@ export default function WarkariDashboard() {
           </div>
 
           <div className="brand-text">
-            <h1>Seva Setu</h1>
-            <p>Warkari Dashboard</p>
+
+            <h1>
+              Seva Setu
+            </h1>
+
+            <p>
+              Warkari Dashboard
+            </p>
+
           </div>
 
         </div>
 
         <div className="header-actions">
 
+          {/* NOTIFICATIONS */}
+
           <button
+            type="button"
             className="header-button"
-            onClick={() => handleComingSoon('Notifications')}
+            onClick={() => setActivePage('Updates')}
             aria-label="Notifications"
           >
             🔔
           </button>
 
+          {/* PROFILE */}
+
           <button
+            type="button"
             className="header-button"
-            onClick={() => handleComingSoon('Profile')}
+            onClick={() => setActivePage('Profile')}
             aria-label="Profile"
           >
             👤
@@ -61,7 +126,9 @@ export default function WarkariDashboard() {
       </header>
 
 
-      {/* ================= WELCOME ================= */}
+      {/* ==================================================
+         WELCOME SECTION
+      ================================================== */}
 
       <section className="welcome-section">
 
@@ -89,13 +156,16 @@ export default function WarkariDashboard() {
       </section>
 
 
-      {/* ================= QUICK ACTIONS ================= */}
+      {/* ==================================================
+         QUICK ACTIONS
+      ================================================== */}
 
       <section className="dashboard-section">
 
         <div className="section-heading">
 
           <div>
+
             <h2>
               Quick Actions
             </h2>
@@ -103,6 +173,7 @@ export default function WarkariDashboard() {
             <p>
               Everything you need during your Wari journey.
             </p>
+
           </div>
 
         </div>
@@ -110,9 +181,10 @@ export default function WarkariDashboard() {
 
         <div className="quick-actions-grid">
 
-          {/* YATRA */}
+          {/* YATRA INFORMATION */}
 
           <button
+            type="button"
             className="action-card"
             onClick={() => setActivePage('Yatra')}
           >
@@ -140,8 +212,9 @@ export default function WarkariDashboard() {
           {/* GET HELP */}
 
           <button
+            type="button"
             className="action-card"
-            onClick={() => handleComingSoon('Get Help')}
+            onClick={() => setActivePage('Help')}
           >
 
             <div className="action-icon">
@@ -167,8 +240,9 @@ export default function WarkariDashboard() {
           {/* ROUTE MAP */}
 
           <button
+            type="button"
             className="action-card"
-            onClick={() => handleComingSoon('Route Map')}
+            onClick={() => setActivePage('RouteMap')}
           >
 
             <div className="action-icon">
@@ -191,11 +265,12 @@ export default function WarkariDashboard() {
           </button>
 
 
-          {/* UPDATES */}
+          {/* LATEST UPDATES */}
 
           <button
+            type="button"
             className="action-card"
-            onClick={() => handleComingSoon('Latest Updates')}
+            onClick={() => setActivePage('Updates')}
           >
 
             <div className="action-icon">
@@ -222,7 +297,9 @@ export default function WarkariDashboard() {
       </section>
 
 
-      {/* ================= TODAY'S YATRA ================= */}
+      {/* ==================================================
+         TODAY'S YATRA
+      ================================================== */}
 
       <section className="dashboard-section">
 
@@ -242,6 +319,7 @@ export default function WarkariDashboard() {
           </div>
 
           <button
+            type="button"
             className="text-button"
             onClick={() => setActivePage('Yatra')}
           >
@@ -252,6 +330,8 @@ export default function WarkariDashboard() {
 
 
         <div className="yatra-grid">
+
+          {/* CURRENT LOCATION */}
 
           <div className="yatra-card">
 
@@ -278,6 +358,8 @@ export default function WarkariDashboard() {
           </div>
 
 
+          {/* NEXT DESTINATION */}
+
           <div className="yatra-card">
 
             <div className="yatra-icon">
@@ -302,6 +384,8 @@ export default function WarkariDashboard() {
 
           </div>
 
+
+          {/* SCHEDULE */}
 
           <div className="yatra-card">
 
@@ -356,7 +440,9 @@ export default function WarkariDashboard() {
       </section>
 
 
-      {/* ================= NEED HELP ================= */}
+      {/* ==================================================
+         NEED HELP
+      ================================================== */}
 
       <section className="dashboard-section">
 
@@ -374,8 +460,18 @@ export default function WarkariDashboard() {
 
           </div>
 
+          <button
+            type="button"
+            className="text-button"
+            onClick={() => setActivePage('Help')}
+          >
+            View Help →
+          </button>
+
         </div>
 
+
+        {/* EMERGENCY */}
 
         <div className="emergency-card">
 
@@ -400,12 +496,10 @@ export default function WarkariDashboard() {
 
           </div>
 
-
           <button
+            type="button"
             className="emergency-button"
-            onClick={() =>
-              handleComingSoon('Emergency Assistance')
-            }
+            onClick={() => setActivePage('Help')}
           >
             Get Emergency Help
           </button>
@@ -413,11 +507,16 @@ export default function WarkariDashboard() {
         </div>
 
 
+        {/* HELP GRID */}
+
         <div className="help-grid">
 
+          {/* MEDICAL */}
+
           <button
+            type="button"
             className="help-card"
-            onClick={() => handleComingSoon('Medical Help')}
+            onClick={() => setActivePage('Help')}
           >
 
             <div className="help-icon">
@@ -443,9 +542,12 @@ export default function WarkariDashboard() {
           </button>
 
 
+          {/* VOLUNTEER */}
+
           <button
+            type="button"
             className="help-card"
-            onClick={() => handleComingSoon('Volunteer Help')}
+            onClick={() => setActivePage('Help')}
           >
 
             <div className="help-icon">
@@ -471,9 +573,12 @@ export default function WarkariDashboard() {
           </button>
 
 
+          {/* FOOD */}
+
           <button
+            type="button"
             className="help-card"
-            onClick={() => handleComingSoon('Food and Water')}
+            onClick={() => setActivePage('Help')}
           >
 
             <div className="help-icon">
@@ -499,9 +604,12 @@ export default function WarkariDashboard() {
           </button>
 
 
+          {/* FACILITIES */}
+
           <button
+            type="button"
             className="help-card"
-            onClick={() => handleComingSoon('Nearby Facilities')}
+            onClick={() => setActivePage('Help')}
           >
 
             <div className="help-icon">
@@ -531,7 +639,9 @@ export default function WarkariDashboard() {
       </section>
 
 
-      {/* ================= SEVA ================= */}
+      {/* ==================================================
+         SEVA
+      ================================================== */}
 
       <section className="dashboard-section seva-section">
 
@@ -550,8 +660,9 @@ export default function WarkariDashboard() {
           </div>
 
           <button
+            type="button"
             className="text-button"
-            onClick={() => handleComingSoon('Seva')}
+            onClick={() => setActivePage('Seva')}
           >
             View Seva →
           </button>
@@ -579,8 +690,9 @@ export default function WarkariDashboard() {
           </div>
 
           <button
+            type="button"
             className="seva-button"
-            onClick={() => handleComingSoon('Seva Opportunities')}
+            onClick={() => setActivePage('Seva')}
           >
             Explore Seva
           </button>
@@ -590,7 +702,9 @@ export default function WarkariDashboard() {
       </section>
 
 
-      {/* ================= FOOTER ================= */}
+      {/* ==================================================
+         FOOTER
+      ================================================== */}
 
       <section className="dashboard-footer">
 
@@ -609,11 +723,16 @@ export default function WarkariDashboard() {
       </section>
 
 
-      {/* ================= BOTTOM NAVIGATION ================= */}
+      {/* ==================================================
+         BOTTOM NAVIGATION
+      ================================================== */}
 
       <nav className="bottom-navigation">
 
+        {/* HOME */}
+
         <button
+          type="button"
           className={`nav-item ${
             activePage === 'Home' ? 'active' : ''
           }`}
@@ -631,8 +750,13 @@ export default function WarkariDashboard() {
         </button>
 
 
+        {/* YATRA */}
+
         <button
-          className="nav-item"
+          type="button"
+          className={`nav-item ${
+            activePage === 'Yatra' ? 'active' : ''
+          }`}
           onClick={() => setActivePage('Yatra')}
         >
 
@@ -647,9 +771,14 @@ export default function WarkariDashboard() {
         </button>
 
 
+        {/* SEVA */}
+
         <button
-          className="nav-item"
-          onClick={() => handleComingSoon('Seva')}
+          type="button"
+          className={`nav-item ${
+            activePage === 'Seva' ? 'active' : ''
+          }`}
+          onClick={() => setActivePage('Seva')}
         >
 
           <span className="nav-icon">
@@ -663,9 +792,14 @@ export default function WarkariDashboard() {
         </button>
 
 
+        {/* UPDATES */}
+
         <button
-          className="nav-item"
-          onClick={() => handleComingSoon('Updates')}
+          type="button"
+          className={`nav-item ${
+            activePage === 'Updates' ? 'active' : ''
+          }`}
+          onClick={() => setActivePage('Updates')}
         >
 
           <span className="nav-icon">
@@ -679,9 +813,14 @@ export default function WarkariDashboard() {
         </button>
 
 
+        {/* PROFILE */}
+
         <button
-          className="nav-item"
-          onClick={() => handleComingSoon('Profile')}
+          type="button"
+          className={`nav-item ${
+            activePage === 'Profile' ? 'active' : ''
+          }`}
+          onClick={() => setActivePage('Profile')}
         >
 
           <span className="nav-icon">

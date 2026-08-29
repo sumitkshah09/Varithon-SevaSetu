@@ -1,0 +1,574 @@
+/* ======================================================
+   SEVA REGISTRATION PAGE
+====================================================== */
+
+.seva-registration-page {
+  min-height: 100vh;
+
+  background: #fffaf4;
+
+  color: #3f2b20;
+
+  padding-bottom: 40px;
+}
+
+
+/* ======================================================
+   HEADER
+====================================================== */
+
+.seva-registration-header {
+  min-height: 82px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #eadfd5;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 16px 6%;
+}
+
+.registration-back-button {
+  width: 46px;
+  height: 46px;
+
+  border: 1px solid #eadfd5;
+
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  color: #5b3a29;
+
+  font-size: 26px;
+
+  cursor: pointer;
+}
+
+.registration-back-button:hover {
+  background: #fff3e6;
+}
+
+.registration-header-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+.registration-header-icon {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #fff0df;
+
+  border-radius: 14px;
+
+  font-size: 25px;
+}
+
+.registration-header-title h1 {
+  margin: 0;
+
+  font-size: 24px;
+}
+
+.registration-header-title p {
+  margin: 4px 0 0;
+
+  color: #806d61;
+}
+
+
+/* ======================================================
+   CONTAINER
+====================================================== */
+
+.registration-container {
+  width: min(850px, 90%);
+
+  margin: 0 auto;
+}
+
+
+/* ======================================================
+   INFO CARD
+====================================================== */
+
+.registration-info-card {
+  margin-top: 30px;
+
+  padding: 26px;
+
+  background: #ffffff;
+
+  border: 1px solid #eadfd5;
+
+  border-radius: 20px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 18px;
+}
+
+.registration-info-icon {
+  width: 62px;
+  height: 62px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #fff0df;
+
+  border-radius: 17px;
+
+  font-size: 30px;
+}
+
+.registration-info-card span {
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  color: #b4672c;
+}
+
+.registration-info-card h2 {
+  margin: 5px 0 7px;
+
+  font-size: 25px;
+}
+
+.registration-info-card p {
+  margin: 0;
+
+  color: #806d61;
+
+  line-height: 1.55;
+}
+
+
+/* ======================================================
+   DETAILS
+====================================================== */
+
+.registration-details-card {
+  margin-top: 20px;
+
+  padding: 25px;
+
+  background: #ffffff;
+
+  border: 1px solid #eadfd5;
+
+  border-radius: 18px;
+}
+
+.registration-details-card h2 {
+  margin: 0 0 18px;
+
+  font-size: 21px;
+}
+
+.details-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 15px;
+}
+
+.detail-item {
+  padding: 16px;
+
+  background: #fffaf4;
+
+  border-radius: 13px;
+}
+
+.detail-item span {
+  display: block;
+
+  color: #806d61;
+
+  font-size: 13px;
+
+  margin-bottom: 6px;
+}
+
+.detail-item strong {
+  display: block;
+
+  color: #4a3326;
+
+  font-size: 15px;
+}
+
+
+/* ======================================================
+   FORM
+====================================================== */
+
+.registration-form-card {
+  margin-top: 20px;
+
+  padding: 28px;
+
+  background: #ffffff;
+
+  border: 1px solid #eadfd5;
+
+  border-radius: 18px;
+}
+
+.form-heading {
+  margin-bottom: 22px;
+}
+
+.form-heading h2 {
+  margin: 0 0 5px;
+
+  font-size: 22px;
+}
+
+.form-heading p {
+  margin: 0;
+
+  color: #806d61;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  color: #4a3326;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 13px 14px;
+
+  border: 1px solid #dccfc5;
+
+  border-radius: 11px;
+
+  background: #fffdfb;
+
+  color: #3f2b20;
+
+  font-size: 14px;
+
+  font-family: inherit;
+
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #c8874d;
+
+  box-shadow: 0 0 0 3px rgba(200, 135, 77, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.registration-submit-button {
+  width: 100%;
+
+  margin-top: 5px;
+
+  padding: 15px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #b4672c;
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.registration-submit-button:hover {
+  background: #9e5925;
+}
+
+
+/* ======================================================
+   NOTICE
+====================================================== */
+
+.registration-notice {
+  margin-top: 20px;
+
+  padding: 20px;
+
+  background: #fff3df;
+
+  border: 1px solid #ead5b5;
+
+  border-radius: 16px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+}
+
+.registration-notice > div:first-child {
+  font-size: 22px;
+}
+
+.registration-notice h3 {
+  margin: 0 0 5px;
+
+  font-size: 16px;
+}
+
+.registration-notice p {
+  margin: 0;
+
+  color: #756557;
+
+  line-height: 1.5;
+
+  font-size: 14px;
+}
+
+
+/* ======================================================
+   SUCCESS
+====================================================== */
+
+.success-card {
+  margin-top: 50px;
+
+  padding: 40px 30px;
+
+  background: #ffffff;
+
+  border: 1px solid #eadfd5;
+
+  border-radius: 22px;
+
+  text-align: center;
+}
+
+.success-icon {
+  width: 70px;
+  height: 70px;
+
+  margin: 0 auto 18px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #eaf7ec;
+
+  color: #318043;
+
+  font-size: 38px;
+
+  font-weight: 800;
+}
+
+.success-label {
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  color: #318043;
+}
+
+.success-card h2 {
+  max-width: 600px;
+
+  margin: 10px auto;
+
+  font-size: 27px;
+}
+
+.success-card > p {
+  max-width: 600px;
+
+  margin: 0 auto;
+
+  color: #806d61;
+
+  line-height: 1.6;
+}
+
+.success-details {
+  max-width: 500px;
+
+  margin: 25px auto;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+}
+
+.success-details div {
+  padding: 15px;
+
+  background: #fffaf4;
+
+  border-radius: 12px;
+}
+
+.success-details span {
+  display: block;
+
+  color: #806d61;
+
+  font-size: 12px;
+
+  margin-bottom: 5px;
+}
+
+.success-details strong {
+  font-size: 14px;
+}
+
+.registration-primary-button {
+  padding: 13px 25px;
+
+  border: none;
+
+  border-radius: 11px;
+
+  background: #b4672c;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* ======================================================
+   FOOTERS
+====================================================== */
+
+.registration-footer,
+.registration-footer-message {
+  padding: 35px 0;
+
+  text-align: center;
+
+  color: #806d61;
+}
+
+.registration-footer > div,
+.registration-footer-message > div {
+  font-size: 30px;
+}
+
+.registration-footer h3,
+.registration-footer-message h3 {
+  margin: 7px 0 3px;
+
+  color: #5b3a29;
+}
+
+.registration-footer p,
+.registration-footer-message p {
+  margin: 0;
+}
+
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media (max-width: 700px) {
+
+  .seva-registration-header {
+    padding: 14px 5%;
+  }
+
+  .registration-container {
+    width: 92%;
+  }
+
+  .registration-info-card {
+    padding: 21px;
+  }
+
+  .registration-details-card,
+  .registration-form-card {
+    padding: 21px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .success-card {
+    margin-top: 30px;
+
+    padding: 32px 20px;
+  }
+
+  .success-card h2 {
+    font-size: 23px;
+  }
+
+  .success-details {
+    grid-template-columns: 1fr;
+  }
+
+}
