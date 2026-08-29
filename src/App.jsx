@@ -1,5 +1,6 @@
-import RoleSelection from './pages/RoleSelection'
+import "./testlocation";
+import RoleSelection from "./pages/RoleSelection";
 
 export default function App() {
-  return <RoleSelection />
+  return <RoleSelection />;
 }
