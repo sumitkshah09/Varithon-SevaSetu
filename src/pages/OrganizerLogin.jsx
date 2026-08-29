@@ -1,6 +1,25 @@
+import { loginUser } from "../services/authService";
 import { useState } from 'react';
 import '../styles/OrganizerLogin.css';
+const handleLogin = async (e) => {
+  e.preventDefault();
 
+  try {
+    const user = await loginUser(email, password);
+
+    console.log("Logged in user:", user);
+
+    if (user.role === "volunteer") {
+      navigate("/volunteer");
+    } else if (user.role === "warkari") {
+      navigate("/warkari");
+    } else if (user.role === "admin") {
+      navigate("/admin");
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+};
 export default function OrganizerLogin({ onBack, onLogin }) {
   const [emailOrMobile, setEmailOrMobile] = useState('');
   const [password, setPassword] = useState('');
