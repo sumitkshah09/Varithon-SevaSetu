@@ -1,21 +1,29 @@
 import { useState } from 'react'
 import VolunteerDashboard from './VolunteerDashboard'
+import WarkariLogin from './WarkariLogin'
 import './RoleSelection.css'
 
 export default function RoleSelection() {
   const [selectedRole, setSelectedRole] = useState(null)
 
-  // Volunteer
+  // -------------------------
+  // VOLUNTEER
+  // -------------------------
   if (selectedRole === 'volunteer') {
     return <VolunteerDashboard />
   }
 
-  // Organizer
+  // -------------------------
+  // ORGANIZER
+  // -------------------------
   if (selectedRole === 'organizer') {
     return (
       <div className="coming-soon">
         <h1>Organizer Dashboard</h1>
-        <p>The Organizer section is coming soon.</p>
+
+        <p>
+          The Organizer section is coming soon.
+        </p>
 
         <button onClick={() => setSelectedRole(null)}>
           ← Back to roles
@@ -24,87 +32,125 @@ export default function RoleSelection() {
     )
   }
 
-  // Warkari
+  // -------------------------
+  // WARKARI LOGIN
+  // -------------------------
   if (selectedRole === 'warkari') {
     return (
-      <div className="coming-soon">
-        <h1>Warkari</h1>
-        <p>The Warkari section is coming soon.</p>
-
-        <button onClick={() => setSelectedRole(null)}>
-          ← Back to roles
-        </button>
-      </div>
+      <WarkariLogin
+        onBack={() => setSelectedRole(null)}
+      />
     )
   }
 
+  // -------------------------
+  // ROLE SELECTION PAGE
+  // -------------------------
   return (
     <main className="role-page">
-      <div className="role-header">
-        <span className="logo-mark">🙏</span>
 
-        <h1>Welcome to Seva Setu</h1>
+      <div className="role-header">
+
+        <span className="logo-mark">
+          🙏
+        </span>
+
+        <h1>
+          Welcome to Seva Setu
+        </h1>
 
         <p>
           Choose your role to begin your journey of seva.
         </p>
+
       </div>
 
       <div className="roles">
 
-        {/* Organizer */}
-        <div className="role-card">
-          <div className="role-icon">🏛️</div>
+        {/* ORGANIZER */}
 
-          <h2>Organizer</h2>
+        <div className="role-card">
+
+          <div className="role-icon">
+            🏛️
+          </div>
+
+          <h2>
+            Organizer
+          </h2>
 
           <p>
-            Manage Wari operations, coordinate volunteers and
-            organize essential resources.
+            Manage Wari operations, coordinate volunteers
+            and organize essential resources.
           </p>
 
-          <button onClick={() => setSelectedRole('organizer')}>
+          <button
+            onClick={() => setSelectedRole('organizer')}
+          >
             Continue as Organizer
           </button>
+
         </div>
 
-        {/* Warkari */}
-        <div className="role-card">
-          <div className="role-icon">🙏</div>
 
-          <h2>Warkari</h2>
+        {/* WARKARI */}
+
+        <div className="role-card">
+
+          <div className="role-icon">
+            🙏
+          </div>
+
+          <h2>
+            Warkari
+          </h2>
 
           <p>
             Find help, services and assistance throughout
             your Wari journey.
           </p>
 
-          <button onClick={() => setSelectedRole('warkari')}>
+          <button
+            onClick={() => setSelectedRole('warkari')}
+          >
             Continue as Warkari
           </button>
+
         </div>
 
-        {/* Volunteer */}
-        <div className="role-card">
-          <div className="role-icon">🤝</div>
 
-          <h2>Volunteer</h2>
+        {/* VOLUNTEER */}
+
+        <div className="role-card">
+
+          <div className="role-icon">
+            🤝
+          </div>
+
+          <h2>
+            Volunteer
+          </h2>
 
           <p>
             Offer your time, skills and seva to support
             fellow Warkaris.
           </p>
 
-          <button onClick={() => setSelectedRole('volunteer')}>
+          <button
+            onClick={() => setSelectedRole('volunteer')}
+          >
             Continue as Volunteer
           </button>
+
         </div>
 
       </div>
 
+
       <p className="role-footer">
         Seva through every step of the Wari.
       </p>
+
     </main>
   )
 }
