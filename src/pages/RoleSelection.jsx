@@ -5,6 +5,7 @@ import './RoleSelection.css'
 
 export default function RoleSelection() {
   const [selectedRole, setSelectedRole] = useState(null)
+  
 
   // -------------------------
   // VOLUNTEER
@@ -48,6 +49,10 @@ export default function RoleSelection() {
   // -------------------------
   return (
     <main className="role-page">
+
+      <div className="role-switcher">
+        
+      </div>
 
       <div className="role-header">
 

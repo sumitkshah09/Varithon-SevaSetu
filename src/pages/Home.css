@@ -1,0 +1,712 @@
+@import url("https://fonts.googleapis.com/css2?family=Merienda:wght@500;600;700&family=Yatra+One&display=swap");
+
+
+/* =========================================
+   RESET
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero-section {
+  position: relative;
+
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  background: #17110d;
+}
+
+
+/* =========================================
+   MOVING BACKGROUND
+========================================= */
+
+.hero-background {
+  position: absolute;
+
+  top: -8%;
+  left: -8%;
+
+  width: 116%;
+  height: 116%;
+
+  background-size: cover;
+  background-position: center;
+
+  z-index: 0;
+
+  animation: cinematicMove 20s ease-in-out infinite alternate;
+}
+
+
+@keyframes cinematicMove {
+
+  0% {
+    transform: scale(1);
+
+    background-position: center center;
+  }
+
+  50% {
+    transform: scale(1.06);
+
+    background-position: 53% 47%;
+  }
+
+  100% {
+    transform: scale(1.12);
+
+    background-position: 47% 53%;
+  }
+}
+
+
+/* =========================================
+   OVERLAY
+========================================= */
+
+.hero-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.82) 0%,
+      rgba(0, 0, 0, 0.52) 45%,
+      rgba(0, 0, 0, 0.68) 100%
+    );
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.hero-content {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(1000px, 92%);
+
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  animation: contentAppear 1.2s ease-out;
+}
+
+
+@keyframes contentAppear {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(35px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================
+   JAI HARI VITTHAL
+========================================= */
+
+.hero-badge {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 22px;
+
+  margin-bottom: 22px;
+
+  border: 1px solid rgba(255, 255, 255, 0.45);
+
+  border-radius: 50px;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  backdrop-filter: blur(12px);
+
+  color: white;
+
+  font-family:
+    "Merienda",
+    cursive;
+
+  font-size: 14px;
+
+  letter-spacing: 1px;
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================
+   SEVA SETU BRAND
+========================================= */
+
+.brand-name {
+  display: flex;
+
+  align-items: baseline;
+  justify-content: center;
+
+  color: white;
+
+  line-height: 0.95;
+
+  margin: 0;
+
+  text-shadow:
+    3px 4px 0 rgba(0, 0, 0, 0.18),
+    0 8px 30px rgba(0, 0, 0, 0.55);
+
+  transform: rotate(-1deg);
+
+  white-space: nowrap;
+}
+
+
+/* Marathi SEVA */
+
+.brand-marathi {
+  font-family:
+    "Yatra One",
+    cursive;
+
+  font-size: clamp(75px, 10vw, 125px);
+
+  font-weight: 400;
+
+  color: white;
+}
+
+
+/* English SETU */
+
+.brand-setu {
+  font-family:
+    "Yatra One",
+    cursive;
+
+  font-size: clamp(58px, 8vw, 100px);
+
+  font-weight: 700;
+
+  color: white;
+
+  margin-left: 14px;
+
+  letter-spacing: -3px;
+}
+
+
+/* Small hand-drawn underline */
+
+.brand-name::after {
+  content: "";
+
+  position: absolute;
+
+  left: 3%;
+  right: 3%;
+
+  bottom: -14px;
+
+  height: 3px;
+
+  background: rgba(255, 255, 255, 0.75);
+
+  border-radius: 50%;
+
+  transform: rotate(-1deg);
+
+  opacity: 0.8;
+}
+
+
+/* =========================================
+   TAGLINE
+========================================= */
+
+.main-tagline {
+  margin: 32px 0 14px;
+
+  color: rgb(233, 238, 241);
+
+  font-family:
+    "Roboto",
+    cursive;
+
+  font-size: clamp(24px, 3.5vw, 40px);
+
+  font-weight: 500;
+
+  line-height: 1.3;
+
+  letter-spacing: 0;
+
+  text-shadow:
+    0 3px 15px rgba(0, 0, 0, 0.5);
+}
+
+
+.main-tagline span {
+  font-weight: 700;
+}
+
+
+/* =========================================
+   DESCRIPTION
+========================================= */
+
+.hero-description {
+  width: min(720px, 95%);
+
+  margin: 8px auto 30px;
+
+  color: rgba(255, 255, 255, 0.88);
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 15px;
+
+  line-height: 1.75;
+
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.55);
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.hero-buttons {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+
+  flex-wrap: wrap;
+}
+
+
+.hero-btn {
+  min-width: 205px;
+
+  padding: 15px 27px;
+
+  border-radius: 50px;
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+
+/* Primary */
+
+.hero-btn.primary {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  border: none;
+
+  background: #e87522;
+
+  color: white;
+
+  box-shadow:
+    0 8px 28px rgba(232, 117, 34, 0.38);
+}
+
+
+.hero-btn.primary:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 13px 35px rgba(232, 117, 34, 0.55);
+}
+
+
+/* Secondary */
+
+.hero-btn.secondary {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.55);
+
+  background: rgba(255, 255, 255, 0.1);
+
+  backdrop-filter: blur(12px);
+
+  color: white;
+}
+
+
+.hero-btn.secondary:hover {
+  transform: translateY(-4px);
+
+  background: rgba(255, 255, 255, 0.2);
+
+  border-color: white;
+}
+
+
+.arrow {
+  font-size: 20px;
+
+  transition: transform 0.3s ease;
+}
+
+
+.hero-btn.secondary:hover .arrow {
+  transform: translateX(5px);
+}
+
+
+/* =========================================
+   FEATURE STRIP
+========================================= */
+
+.hero-features {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 25px;
+
+  margin-top: 45px;
+
+  padding: 16px 25px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  border-radius: 18px;
+
+  background: rgba(0, 0, 0, 0.28);
+
+  backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.25);
+}
+
+
+.feature-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  text-align: left;
+}
+
+
+.feature-icon {
+  font-size: 21px;
+}
+
+
+.feature-item strong {
+  display: block;
+
+  color: white;
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+
+.feature-item small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: rgba(255, 255, 255, 0.6);
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 9px;
+}
+
+
+.feature-line {
+  width: 1px;
+
+  height: 35px;
+
+  background: rgba(255, 255, 255, 0.25);
+}
+
+
+/* =========================================
+   SCROLL
+========================================= */
+
+.scroll-indicator {
+  position: absolute;
+
+  z-index: 3;
+
+  bottom: 18px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 3px;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
+}
+
+
+.scroll-indicator div {
+  font-size: 20px;
+
+  animation: scrollBounce 1.5s infinite;
+}
+
+
+@keyframes scrollBounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 850px) {
+
+  .hero-features {
+    gap: 16px;
+
+    padding: 14px 18px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .hero-section {
+    min-height: 680px;
+  }
+
+
+  .hero-content {
+    width: 92%;
+  }
+
+
+  .hero-badge {
+    font-size: 12px;
+
+    padding: 7px 17px;
+
+    margin-bottom: 18px;
+  }
+
+
+  .brand-marathi {
+    font-size: clamp(58px, 17vw, 82px);
+  }
+
+
+  .brand-setu {
+    font-size: clamp(45px, 13vw, 70px);
+
+    margin-left: 8px;
+
+    letter-spacing: -2px;
+  }
+
+
+  .brand-name::after {
+    bottom: -9px;
+  }
+
+
+  .main-tagline {
+    font-size: 21px;
+
+    margin-top: 25px;
+  }
+
+
+  .hero-description {
+    font-size: 13px;
+
+    line-height: 1.65;
+
+    margin-bottom: 23px;
+  }
+
+
+  .hero-buttons {
+    width: 100%;
+
+    gap: 10px;
+  }
+
+
+  .hero-btn {
+    width: 100%;
+
+    max-width: 285px;
+
+    padding: 13px 22px;
+
+    font-size: 14px;
+  }
+
+
+  .hero-features {
+    width: 100%;
+
+    gap: 9px;
+
+    margin-top: 30px;
+
+    padding: 12px 8px;
+
+    border-radius: 14px;
+  }
+
+
+  .feature-item {
+    flex-direction: column;
+
+    gap: 3px;
+
+    text-align: center;
+  }
+
+
+  .feature-icon {
+    font-size: 18px;
+  }
+
+
+  .feature-item strong {
+    font-size: 9px;
+  }
+
+
+  .feature-item small {
+    display: none;
+  }
+
+
+  .feature-line {
+    height: 30px;
+  }
+
+
+  .scroll-indicator {
+    display: none;
+  }
+
+}
