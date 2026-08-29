@@ -2,7 +2,7 @@
    MAIN PAGE
 ===================================== */
 
-.volunteer-login-page {
+.organizer-login-page {
   min-height: 100vh;
   width: 100%;
 
@@ -16,40 +16,62 @@
 
 
 /* =====================================
-   LEFT IMAGE
+   LEFT ORGANIZER VISUAL
 ===================================== */
 
-.volunteer-photo {
+.organizer-visual {
   position: relative;
 
-  /* Important:
-     Do NOT use height: 100vh here.
-     The right section can be slightly taller
-     than the viewport, so the image needs to
-     stretch with the complete grid row. */
-  min-height: 100%;
-  height: auto;
+  height: 100vh;
 
   overflow: hidden;
-  align-self: stretch;
-}
 
-.volunteer-photo img {
-  width: 100%;
-  height: 100%;
-
-  display: block;
-
-  object-fit: cover;
-  object-position: center;
+  background-image: url('../assets/org.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 
-/* =====================================
-   IMAGE OVERLAY
-===================================== */
+/* Soft visual pattern */
 
-.photo-overlay {
+.organizer-visual::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  top: -170px;
+  left: -170px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.08);
+}
+
+
+.organizer-visual::after {
+  content: "";
+
+  position: absolute;
+
+  width: 600px;
+  height: 600px;
+
+  right: -250px;
+  bottom: -250px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+
+/* Overlay */
+
+.organizer-visual-overlay {
   position: absolute;
 
   inset: 0;
@@ -58,16 +80,16 @@
     linear-gradient(
       to bottom,
       rgba(50, 25, 5, 0.05),
-      rgba(50, 25, 5, 0.45)
+      rgba(50, 25, 5, 0.30)
     );
 }
 
 
 /* =====================================
-   TEXT ON IMAGE
+   LEFT VISUAL CONTENT
 ===================================== */
 
-.photo-content {
+.organizer-visual-content {
   position: absolute;
 
   left: 45px;
@@ -78,13 +100,15 @@
   color: white;
 }
 
-.photo-logo {
+
+.organizer-visual-icon {
   font-size: 35px;
 
   margin-bottom: 5px;
 }
 
-.photo-content h2 {
+
+.organizer-visual-content h2 {
   margin: 0;
 
   font-size: 40px;
@@ -94,7 +118,8 @@
   letter-spacing: 1px;
 }
 
-.photo-content p {
+
+.organizer-visual-content p {
   margin-top: 8px;
 
   font-size: 14px;
@@ -109,7 +134,7 @@
    RIGHT LOGIN AREA
 ===================================== */
 
-.volunteer-login-section {
+.organizer-login-section {
   position: relative;
 
   min-height: 100vh;
@@ -121,8 +146,6 @@
 
   padding: 50px 70px;
 
-  box-sizing: border-box;
-
   background: #fffdf9;
 }
 
@@ -131,7 +154,7 @@
    BACK BUTTON
 ===================================== */
 
-.volunteer-back-button {
+.organizer-back-button {
   position: absolute;
 
   top: 30px;
@@ -154,7 +177,8 @@
   transition: 0.2s ease;
 }
 
-.volunteer-back-button:hover {
+
+.organizer-back-button:hover {
   color: #b85c00;
 
   transform: translateX(-3px);
@@ -165,7 +189,7 @@
    LOGIN CARD
 ===================================== */
 
-.volunteer-login-card {
+.organizer-login-card {
   width: 100%;
 
   max-width: 430px;
@@ -178,7 +202,7 @@
    ICON
 ===================================== */
 
-.volunteer-icon {
+.organizer-login-icon {
   width: 64px;
   height: 64px;
 
@@ -204,7 +228,7 @@
    HEADING
 ===================================== */
 
-.volunteer-login-card h1 {
+.organizer-login-heading h1 {
   margin: 0;
 
   color: #392719;
@@ -214,7 +238,8 @@
   font-weight: 800;
 }
 
-.volunteer-login-subtitle {
+
+.organizer-login-heading p {
   margin: 10px 0 30px;
 
   color: #8a7562;
@@ -229,17 +254,14 @@
    FORM
 ===================================== */
 
-.volunteer-login-card form {
-  width: 100%;
-}
-
-.volunteer-form-group {
+.organizer-form-group {
   margin-bottom: 17px;
 
   text-align: left;
 }
 
-.volunteer-form-group label {
+
+.organizer-form-group label {
   display: block;
 
   margin-bottom: 7px;
@@ -251,7 +273,8 @@
   font-weight: 700;
 }
 
-.volunteer-form-group input {
+
+.organizer-form-group input {
   width: 100%;
 
   height: 48px;
@@ -275,11 +298,13 @@
   transition: 0.2s ease;
 }
 
-.volunteer-form-group input::placeholder {
+
+.organizer-form-group input::placeholder {
   color: #b4a69a;
 }
 
-.volunteer-form-group input:focus {
+
+.organizer-form-group input:focus {
   border-color: #c66b1b;
 
   box-shadow:
@@ -288,17 +313,83 @@
 
 
 /* =====================================
-   PASSWORD / FORGOT PASSWORD
+   PASSWORD
 ===================================== */
 
-.volunteer-password-row {
+.organizer-password-wrapper {
+  position: relative;
+}
+
+
+.organizer-password-wrapper input {
+  padding-right: 65px;
+}
+
+
+.organizer-password-toggle {
+  position: absolute;
+
+  top: 50%;
+  right: 13px;
+
+  transform: translateY(-50%);
+
+  border: none;
+
+  padding: 4px;
+
+  background: transparent;
+
+  color: #b45f16;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.organizer-password-toggle:hover {
+  text-decoration: underline;
+}
+
+
+/* =====================================
+   REMEMBER / FORGOT
+===================================== */
+
+.organizer-login-options {
   display: flex;
 
   align-items: center;
   justify-content: space-between;
+
+  margin: 2px 0 20px;
+
+  font-size: 12px;
 }
 
-.volunteer-forgot-password {
+
+.organizer-remember {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #806d5b;
+
+  cursor: pointer;
+}
+
+
+.organizer-remember input {
+  accent-color: #b85c00;
+}
+
+
+.organizer-forgot-password {
   border: none;
 
   padding: 0;
@@ -314,7 +405,8 @@
   cursor: pointer;
 }
 
-.volunteer-forgot-password:hover {
+
+.organizer-forgot-password:hover {
   text-decoration: underline;
 }
 
@@ -323,7 +415,7 @@
    LOGIN BUTTON
 ===================================== */
 
-.volunteer-login-button {
+.organizer-login-button {
   width: 100%;
 
   height: 48px;
@@ -351,19 +443,14 @@
     0 6px 16px rgba(184, 92, 0, 0.2);
 
   transition: 0.2s ease;
-
-  margin-top: 4px;
 }
 
-.volunteer-login-button:hover {
+
+.organizer-login-button:hover {
   transform: translateY(-2px);
 
   box-shadow:
     0 9px 20px rgba(184, 92, 0, 0.25);
-}
-
-.volunteer-login-button:active {
-  transform: scale(0.98);
 }
 
 
@@ -371,7 +458,7 @@
    DIVIDER
 ===================================== */
 
-.volunteer-divider {
+.organizer-login-divider {
   display: flex;
 
   align-items: center;
@@ -389,8 +476,9 @@
   letter-spacing: 1px;
 }
 
-.volunteer-divider::before,
-.volunteer-divider::after {
+
+.organizer-login-divider::before,
+.organizer-login-divider::after {
   content: "";
 
   flex: 1;
@@ -402,95 +490,10 @@
 
 
 /* =====================================
-   GOOGLE BUTTON
+   CREATE ACCOUNT
 ===================================== */
 
-.volunteer-google-button {
-  width: 100%;
-
-  height: 47px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 10px;
-
-  border: 1px solid #ddd6cf;
-
-  border-radius: 10px;
-
-  background: white;
-
-  color: #40362e;
-
-  font-size: 14px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: 0.2s ease;
-}
-
-.volunteer-google-button:hover {
-  background: #faf8f5;
-
-  border-color: #cfc4ba;
-
-  transform: translateY(-1px);
-}
-
-.volunteer-google-logo {
-  font-size: 18px;
-
-  font-weight: 800;
-
-  color: #4285f4;
-}
-
-
-/* =====================================
-   GUEST BUTTON
-===================================== */
-
-.volunteer-guest-button {
-  width: 100%;
-
-  height: 47px;
-
-  margin-top: 11px;
-
-  border: 1px solid #c87529;
-
-  border-radius: 10px;
-
-  background: #fffaf4;
-
-  color: #a95409;
-
-  font-size: 14px;
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  transition: 0.2s ease;
-}
-
-.volunteer-guest-button:hover {
-  background: #fff1df;
-
-  transform: translateY(-1px);
-}
-
-
-/* =====================================
-   SIGN UP
-===================================== */
-
-.volunteer-signup-section {
+.organizer-register-section {
   display: flex;
 
   align-items: center;
@@ -505,7 +508,13 @@
   font-size: 12px;
 }
 
-.volunteer-signup-button {
+
+.organizer-register-section p {
+  margin: 0;
+}
+
+
+.organizer-create-account {
   border: none;
 
   padding: 0;
@@ -521,7 +530,8 @@
   cursor: pointer;
 }
 
-.volunteer-signup-button:hover {
+
+.organizer-create-account:hover {
   text-decoration: underline;
 }
 
@@ -530,14 +540,12 @@
    FOOTER
 ===================================== */
 
-.volunteer-login-footer {
+.organizer-login-footer {
   margin-top: 18px;
 
   color: #a59483;
 
   font-size: 11px;
-
-  text-align: center;
 }
 
 
@@ -547,11 +555,11 @@
 
 @media (max-width: 900px) {
 
-  .volunteer-login-page {
+  .organizer-login-page {
     grid-template-columns: 42% 58%;
   }
 
-  .volunteer-login-section {
+  .organizer-login-section {
     padding: 45px 40px;
   }
 
@@ -564,41 +572,24 @@
 
 @media (max-width: 700px) {
 
-  .volunteer-login-page {
+  .organizer-login-page {
     display: block;
 
     min-height: 100vh;
   }
 
-  .volunteer-photo {
+  .organizer-visual {
     display: none;
   }
 
-  .volunteer-login-section {
+  .organizer-login-section {
     min-height: 100vh;
 
     padding: 75px 25px 40px;
   }
 
-  .volunteer-login-card {
+  .organizer-login-card {
     max-width: 430px;
-  }
-
-}
-
-
-/* =====================================
-   SMALL MOBILE
-===================================== */
-
-@media (max-width: 520px) {
-
-  .volunteer-login-section {
-    padding: 65px 20px 35px;
-  }
-
-  .volunteer-login-card h1 {
-    font-size: 27px;
   }
 
 }
