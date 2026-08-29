@@ -2,40 +2,136 @@ import { useState } from 'react'
 import './GetHelp.css'
 
 export default function GetHelp({ onBack }) {
-  const [showEmergency, setShowEmergency] = useState(false)
+
+  /* ======================================================
+     SOS POPUP
+     Opens automatically when Get Help page opens
+  ====================================================== */
+
+  const [showEmergency, setShowEmergency] = useState(true)
+
+  const [selectedAssistance, setSelectedAssistance] = useState(null)
   const [requestSent, setRequestSent] = useState(false)
 
+
+  /* ======================================================
+     EMERGENCY OPTIONS
+  ====================================================== */
+
+  const emergencyOptions = [
+    {
+      id: 'medical',
+      icon: '🏥',
+      title: 'Medical Assistance',
+      description:
+        'Get immediate medical support from nearby services.'
+    },
+    {
+      id: 'food',
+      icon: '🍲',
+      title: 'Food Assistance',
+      description:
+        'Get help finding food and meal distribution points.'
+    },
+    {
+      id: 'water',
+      icon: '💧',
+      title: 'Water Assistance',
+      description:
+        'Get help finding clean drinking water nearby.'
+    },
+    {
+      id: 'navigation',
+      icon: '🧭',
+      title: 'Navigation Assistance',
+      description:
+        'Get help with directions and finding your route.'
+    },
+    {
+      id: 'shelter',
+      icon: '🏕️',
+      title: 'Shelter Assistance',
+      description:
+        'Find nearby camps, rest areas and shelter facilities.'
+    }
+  ]
+
+
+  /* ======================================================
+     OPEN EMERGENCY
+  ====================================================== */
+
   const handleEmergency = () => {
+    setSelectedAssistance(null)
     setRequestSent(false)
     setShowEmergency(true)
   }
 
+
+  /* ======================================================
+     SELECT ASSISTANCE
+  ====================================================== */
+
+  const handleSelectAssistance = (option) => {
+    setSelectedAssistance(option)
+    setRequestSent(false)
+  }
+
+
+  /* ======================================================
+     REQUEST HELP
+  ====================================================== */
+
   const handleRequestHelp = () => {
+
+    if (!selectedAssistance) {
+      return
+    }
+
     setRequestSent(true)
   }
 
+
+  /* ======================================================
+     CLOSE EMERGENCY
+  ====================================================== */
+
   const handleClose = () => {
+
     setShowEmergency(false)
+    setSelectedAssistance(null)
     setRequestSent(false)
   }
+
+
+  /* ======================================================
+     NORMAL HELP OPTIONS
+  ====================================================== */
 
   const handleNormalHelp = (type) => {
     alert(`${type} request feature will be connected soon.`)
   }
 
+
   return (
     <main className="get-help-page">
 
-      {/* ================= HEADER ================= */}
+
+      {/* ==================================================
+         HEADER
+      ================================================== */}
 
       <header className="get-help-header">
 
         <button
+          type="button"
           className="get-help-back-button"
           onClick={onBack}
+          aria-label="Go back"
         >
           ←
         </button>
+
 
         <div className="get-help-header-title">
 
@@ -44,8 +140,15 @@ export default function GetHelp({ onBack }) {
           </div>
 
           <div>
-            <h1>Get Help</h1>
-            <p>Support for your Wari journey</p>
+
+            <h1>
+              Get Help
+            </h1>
+
+            <p>
+              Support for your Wari journey
+            </p>
+
           </div>
 
         </div>
@@ -53,11 +156,16 @@ export default function GetHelp({ onBack }) {
       </header>
 
 
-      {/* ================= CONTENT ================= */}
+      {/* ==================================================
+         CONTENT
+      ================================================== */}
 
       <div className="get-help-container">
 
-        {/* WELCOME */}
+
+        {/* ==================================================
+           WELCOME
+        ================================================== */}
 
         <section className="help-welcome">
 
@@ -85,7 +193,9 @@ export default function GetHelp({ onBack }) {
         </section>
 
 
-        {/* ================= EMERGENCY ================= */}
+        {/* ==================================================
+           EMERGENCY CARD
+        ================================================== */}
 
         <section className="emergency-help-card">
 
@@ -116,6 +226,7 @@ export default function GetHelp({ onBack }) {
 
 
           <button
+            type="button"
             className="emergency-help-button"
             onClick={handleEmergency}
           >
@@ -125,7 +236,9 @@ export default function GetHelp({ onBack }) {
         </section>
 
 
-        {/* ================= HELP OPTIONS ================= */}
+        {/* ==================================================
+           HELP OPTIONS
+        ================================================== */}
 
         <section className="help-options-section">
 
@@ -148,6 +261,7 @@ export default function GetHelp({ onBack }) {
             {/* MEDICAL */}
 
             <button
+              type="button"
               className="help-option-card"
               onClick={() => handleNormalHelp('Medical Help')}
             >
@@ -179,6 +293,7 @@ export default function GetHelp({ onBack }) {
             {/* VOLUNTEER */}
 
             <button
+              type="button"
               className="help-option-card"
               onClick={() => handleNormalHelp('Volunteer Help')}
             >
@@ -206,9 +321,10 @@ export default function GetHelp({ onBack }) {
             </button>
 
 
-            {/* FOOD */}
+            {/* FOOD & WATER */}
 
             <button
+              type="button"
               className="help-option-card"
               onClick={() => handleNormalHelp('Food & Water')}
             >
@@ -237,9 +353,10 @@ export default function GetHelp({ onBack }) {
             </button>
 
 
-            {/* REST */}
+            {/* REST AREAS */}
 
             <button
+              type="button"
               className="help-option-card"
               onClick={() => handleNormalHelp('Rest Areas')}
             >
@@ -270,6 +387,7 @@ export default function GetHelp({ onBack }) {
             {/* TOILETS */}
 
             <button
+              type="button"
               className="help-option-card"
               onClick={() => handleNormalHelp('Toilets')}
             >
@@ -300,6 +418,7 @@ export default function GetHelp({ onBack }) {
             {/* LOST & FOUND */}
 
             <button
+              type="button"
               className="help-option-card"
               onClick={() => handleNormalHelp('Lost & Found')}
             >
@@ -331,7 +450,9 @@ export default function GetHelp({ onBack }) {
         </section>
 
 
-        {/* ================= LOCATION ================= */}
+        {/* ==================================================
+           LOCATION
+        ================================================== */}
 
         <section className="current-location-help">
 
@@ -363,7 +484,9 @@ export default function GetHelp({ onBack }) {
         </section>
 
 
-        {/* ================= VOLUNTEER ================= */}
+        {/* ==================================================
+           VOLUNTEER NOTICE
+        ================================================== */}
 
         <section className="volunteer-notice">
 
@@ -387,7 +510,9 @@ export default function GetHelp({ onBack }) {
         </section>
 
 
-        {/* ================= SAFETY ================= */}
+        {/* ==================================================
+           SAFETY
+        ================================================== */}
 
         <section className="help-safety-card">
 
@@ -411,7 +536,9 @@ export default function GetHelp({ onBack }) {
         </section>
 
 
-        {/* ================= FOOTER ================= */}
+        {/* ==================================================
+           FOOTER
+        ================================================== */}
 
         <footer className="get-help-footer">
 
@@ -433,7 +560,7 @@ export default function GetHelp({ onBack }) {
 
 
       {/* ==================================================
-          EMERGENCY MODAL
+         EMERGENCY MODAL
       ================================================== */}
 
       {showEmergency && (
@@ -442,9 +569,12 @@ export default function GetHelp({ onBack }) {
 
           <div className="emergency-modal">
 
-            {!requestSent ? (
 
-              /* ================= CONFIRMATION ================= */
+            {/* ==================================================
+               STEP 1 — SELECT ASSISTANCE
+            ================================================== */}
+
+            {!selectedAssistance ? (
 
               <>
 
@@ -453,13 +583,106 @@ export default function GetHelp({ onBack }) {
                 </div>
 
                 <h2>
-                  Emergency Assistance
+                  What assistance do you need?
                 </h2>
 
                 <p>
-                  Are you sure you need immediate emergency
-                  assistance?
+                  Select the type of emergency assistance
+                  you need.
                 </p>
+
+
+                <div className="emergency-options">
+
+                  {emergencyOptions.map((option) => (
+
+                    <button
+                      type="button"
+                      key={option.id}
+                      className="emergency-option"
+                      onClick={() => handleSelectAssistance(option)}
+                    >
+
+                      <div className="emergency-option-icon">
+                        {option.icon}
+                      </div>
+
+
+                      <div className="emergency-option-content">
+
+                        <h3>
+                          {option.title}
+                        </h3>
+
+                        <p>
+                          {option.description}
+                        </p>
+
+                      </div>
+
+
+                      <span className="emergency-option-arrow">
+                        →
+                      </span>
+
+                    </button>
+
+                  ))}
+
+                </div>
+
+
+                <button
+                  type="button"
+                  className="emergency-cancel-button"
+                  onClick={handleClose}
+                >
+                  Cancel
+                </button>
+
+              </>
+
+            ) : !requestSent ? (
+
+
+              /* ==================================================
+                 STEP 2 — CONFIRMATION
+              ================================================== */
+
+              <>
+
+                <div className="emergency-modal-icon">
+                  {selectedAssistance.icon}
+                </div>
+
+
+                <span className="emergency-label">
+                  EMERGENCY ASSISTANCE
+                </span>
+
+
+                <h2>
+                  {selectedAssistance.title}
+                </h2>
+
+
+                <p>
+                  You are requesting immediate help for:
+                </p>
+
+
+                <div className="selected-assistance-box">
+
+                  <span>
+                    {selectedAssistance.icon}
+                  </span>
+
+                  <strong>
+                    {selectedAssistance.title}
+                  </strong>
+
+                </div>
+
 
                 <p className="emergency-modal-note">
                   Your request will be sent to available
@@ -472,17 +695,18 @@ export default function GetHelp({ onBack }) {
                   <button
                     type="button"
                     className="emergency-cancel-button"
-                    onClick={handleClose}
+                    onClick={() => setSelectedAssistance(null)}
                   >
-                    Cancel
+                    Back
                   </button>
+
 
                   <button
                     type="button"
                     className="emergency-confirm-button"
                     onClick={handleRequestHelp}
                   >
-                    Yes, Request Help
+                    🆘 Request Help
                   </button>
 
                 </div>
@@ -491,7 +715,10 @@ export default function GetHelp({ onBack }) {
 
             ) : (
 
-              /* ================= SUCCESS ================= */
+
+              /* ==================================================
+                 STEP 3 — SUCCESS
+              ================================================== */
 
               <div className="emergency-success">
 
@@ -499,14 +726,19 @@ export default function GetHelp({ onBack }) {
                   ✓
                 </div>
 
+
                 <h2>
                   Help Request Sent
                 </h2>
 
+
                 <p className="success-main-text">
-                  Your emergency assistance request has
-                  been successfully registered.
+
+                  Your {selectedAssistance.title.toLowerCase()}
+                  request has been successfully registered.
+
                 </p>
+
 
                 <div className="request-status-box">
 
@@ -514,9 +746,11 @@ export default function GetHelp({ onBack }) {
                     REQUEST STATUS
                   </span>
 
+
                   <strong>
                     🟢 Volunteers are being notified
                   </strong>
+
 
                   <p>
                     Please stay at your current location
@@ -524,6 +758,7 @@ export default function GetHelp({ onBack }) {
                   </p>
 
                 </div>
+
 
                 <button
                   type="button"

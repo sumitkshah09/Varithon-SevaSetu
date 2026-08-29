@@ -5,7 +5,6 @@ import GetHelp from './GetHelp'
 import RouteMap from './RouteMap'
 import LatestUpdates from './LatestUpdates'
 import Profile from './Profile'
-import Seva from './Seva'
 
 import './WarkariDashboard.css'
 
@@ -48,14 +47,6 @@ export default function WarkariDashboard() {
     )
   }
 
-  if (activePage === 'Seva') {
-    return (
-      <Seva
-        onBack={() => setActivePage('Home')}
-      />
-    )
-  }
-
   if (activePage === 'Profile') {
     return (
       <Profile
@@ -65,7 +56,7 @@ export default function WarkariDashboard() {
   }
 
   /* ======================================================
-     DASHBOARD
+     DASHBOARD HOME
   ====================================================== */
 
   return (
@@ -97,6 +88,7 @@ export default function WarkariDashboard() {
 
         </div>
 
+
         <div className="header-actions">
 
           {/* NOTIFICATIONS */}
@@ -109,6 +101,7 @@ export default function WarkariDashboard() {
           >
             🔔
           </button>
+
 
           {/* PROFILE */}
 
@@ -149,6 +142,7 @@ export default function WarkariDashboard() {
 
         </div>
 
+
         <div className="welcome-symbol">
           🛕
         </div>
@@ -157,21 +151,22 @@ export default function WarkariDashboard() {
 
 
       {/* ==================================================
-         QUICK ACTIONS
+         🚨 EMERGENCY / SOS
+         THIS APPEARS BEFORE TODAY'S YATRA
       ================================================== */}
 
-      <section className="dashboard-section">
+      <section className="dashboard-section emergency-section">
 
         <div className="section-heading">
 
           <div>
 
             <h2>
-              Quick Actions
+              🚨 Emergency Assistance
             </h2>
 
             <p>
-              Everything you need during your Wari journey.
+              Get immediate assistance during your Wari journey.
             </p>
 
           </div>
@@ -179,117 +174,40 @@ export default function WarkariDashboard() {
         </div>
 
 
-        <div className="quick-actions-grid">
+        <div className="emergency-card">
 
-          {/* YATRA INFORMATION */}
+          <div className="emergency-left">
 
-          <button
-            type="button"
-            className="action-card"
-            onClick={() => setActivePage('Yatra')}
-          >
-
-            <div className="action-icon">
-              🛕
+            <div className="emergency-icon">
+              🆘
             </div>
 
-            <h3>
-              Yatra Information
-            </h3>
+            <div>
 
-            <p>
-              View your route, schedule and important
-              Yatra information.
-            </p>
+              <span className="emergency-label">
+                EMERGENCY
+              </span>
 
-            <span>
-              Explore →
-            </span>
+              <h3>
+                Need Immediate Help?
+              </h3>
 
-          </button>
+              <p>
+                Request emergency assistance from available
+                Seva Setu support services.
+              </p>
 
+            </div>
 
-          {/* GET HELP */}
+          </div>
+
 
           <button
             type="button"
-            className="action-card"
+            className="emergency-button"
             onClick={() => setActivePage('Help')}
           >
-
-            <div className="action-icon">
-              🤝
-            </div>
-
-            <h3>
-              Get Help
-            </h3>
-
-            <p>
-              Find nearby volunteers and request
-              assistance.
-            </p>
-
-            <span>
-              Get Assistance →
-            </span>
-
-          </button>
-
-
-          {/* ROUTE MAP */}
-
-          <button
-            type="button"
-            className="action-card"
-            onClick={() => setActivePage('RouteMap')}
-          >
-
-            <div className="action-icon">
-              📍
-            </div>
-
-            <h3>
-              Route Map
-            </h3>
-
-            <p>
-              Find your location and important places
-              along the route.
-            </p>
-
-            <span>
-              View Map →
-            </span>
-
-          </button>
-
-
-          {/* LATEST UPDATES */}
-
-          <button
-            type="button"
-            className="action-card"
-            onClick={() => setActivePage('Updates')}
-          >
-
-            <div className="action-icon">
-              📢
-            </div>
-
-            <h3>
-              Latest Updates
-            </h3>
-
-            <p>
-              Stay informed about announcements
-              and Yatra updates.
-            </p>
-
-            <span>
-              View Updates →
-            </span>
-
+            🆘 Get Emergency Help
           </button>
 
         </div>
@@ -317,6 +235,7 @@ export default function WarkariDashboard() {
             </p>
 
           </div>
+
 
           <button
             type="button"
@@ -460,6 +379,7 @@ export default function WarkariDashboard() {
 
           </div>
 
+
           <button
             type="button"
             className="text-button"
@@ -471,43 +391,9 @@ export default function WarkariDashboard() {
         </div>
 
 
-        {/* EMERGENCY */}
-
-        <div className="emergency-card">
-
-          <div className="emergency-left">
-
-            <div className="emergency-icon">
-              🆘
-            </div>
-
-            <div>
-
-              <h3>
-                Emergency Assistance
-              </h3>
-
-              <p>
-                Need urgent help? Get immediate assistance
-                from available support services.
-              </p>
-
-            </div>
-
-          </div>
-
-          <button
-            type="button"
-            className="emergency-button"
-            onClick={() => setActivePage('Help')}
-          >
-            Get Emergency Help
-          </button>
-
-        </div>
-
-
-        {/* HELP GRID */}
+        {/* ==================================================
+           HELP GRID
+        ================================================== */}
 
         <div className="help-grid">
 
@@ -573,7 +459,7 @@ export default function WarkariDashboard() {
           </button>
 
 
-          {/* FOOD */}
+          {/* FOOD & WATER */}
 
           <button
             type="button"
@@ -632,69 +518,6 @@ export default function WarkariDashboard() {
               →
             </span>
 
-          </button>
-
-        </div>
-
-      </section>
-
-
-      {/* ==================================================
-         SEVA
-      ================================================== */}
-
-      <section className="dashboard-section seva-section">
-
-        <div className="section-heading">
-
-          <div>
-
-            <h2>
-              Seva
-            </h2>
-
-            <p>
-              Participate in the spirit of service.
-            </p>
-
-          </div>
-
-          <button
-            type="button"
-            className="text-button"
-            onClick={() => setActivePage('Seva')}
-          >
-            View Seva →
-          </button>
-
-        </div>
-
-
-        <div className="seva-card">
-
-          <div className="seva-icon">
-            🤲
-          </div>
-
-          <div className="seva-content">
-
-            <h3>
-              Serve the Wari Community
-            </h3>
-
-            <p>
-              Discover opportunities to help fellow
-              Warkaris, volunteers and the community.
-            </p>
-
-          </div>
-
-          <button
-            type="button"
-            className="seva-button"
-            onClick={() => setActivePage('Seva')}
-          >
-            Explore Seva
           </button>
 
         </div>
@@ -766,27 +589,6 @@ export default function WarkariDashboard() {
 
           <span className="nav-label">
             Yatra
-          </span>
-
-        </button>
-
-
-        {/* SEVA */}
-
-        <button
-          type="button"
-          className={`nav-item ${
-            activePage === 'Seva' ? 'active' : ''
-          }`}
-          onClick={() => setActivePage('Seva')}
-        >
-
-          <span className="nav-icon">
-            🤝
-          </span>
-
-          <span className="nav-label">
-            Seva
           </span>
 
         </button>
