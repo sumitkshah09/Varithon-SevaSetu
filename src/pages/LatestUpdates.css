@@ -1,0 +1,492 @@
+/* ======================================================
+   LATEST UPDATES PAGE
+====================================================== */
+
+.latest-updates-page {
+  min-height: 100vh;
+  background: #fffaf4;
+  color: #3f2b20;
+  padding-bottom: 40px;
+}
+
+
+/* ======================================================
+   HEADER
+====================================================== */
+
+.latest-updates-header {
+  min-height: 82px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #eadfd5;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 16px 6%;
+}
+
+.updates-back-button {
+  width: 46px;
+  height: 46px;
+
+  border: 1px solid #eadfd5;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  color: #5b3a29;
+
+  font-size: 26px;
+
+  cursor: pointer;
+}
+
+.updates-back-button:hover {
+  background: #fff3e6;
+}
+
+.updates-header-title {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+}
+
+.updates-header-icon {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff0df;
+
+  border-radius: 14px;
+
+  font-size: 25px;
+}
+
+.updates-header-title h1 {
+  margin: 0;
+
+  font-size: 25px;
+}
+
+.updates-header-title p {
+  margin: 4px 0 0;
+
+  color: #806d61;
+}
+
+
+/* ======================================================
+   CONTAINER
+====================================================== */
+
+.latest-updates-container {
+  width: min(1050px, 90%);
+
+  margin: 0 auto;
+}
+
+
+/* ======================================================
+   INTRO
+====================================================== */
+
+.updates-intro {
+  margin-top: 32px;
+
+  padding: 28px;
+
+  background: #ffffff;
+
+  border: 1px solid #eadfd5;
+
+  border-radius: 20px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+}
+
+.updates-intro-icon {
+  width: 65px;
+  height: 65px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff0df;
+
+  border-radius: 18px;
+
+  font-size: 32px;
+}
+
+.updates-intro span {
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  color: #b4672c;
+}
+
+.updates-intro h2 {
+  margin: 5px 0;
+
+  font-size: 27px;
+}
+
+.updates-intro p {
+  margin: 0;
+
+  color: #806d61;
+
+  line-height: 1.5;
+}
+
+
+/* ======================================================
+   FEATURED UPDATE
+====================================================== */
+
+.featured-update {
+  margin-top: 25px;
+
+  padding: 28px;
+
+  background: #fff3df;
+
+  border: 1px solid #e9d1a6;
+
+  border-radius: 20px;
+}
+
+.featured-update-top {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 14px;
+}
+
+.important-badge {
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  background: #c9692c;
+
+  color: #ffffff;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.8px;
+}
+
+.update-time {
+  color: #876f5e;
+
+  font-size: 13px;
+}
+
+.featured-update h2 {
+  margin: 0 0 10px;
+
+  font-size: 23px;
+}
+
+.featured-update > p {
+  margin: 0;
+
+  color: #705e50;
+
+  line-height: 1.6;
+}
+
+.update-footer {
+  margin-top: 20px;
+
+  padding-top: 15px;
+
+  border-top: 1px solid #ead5b5;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  color: #80634d;
+
+  font-size: 13px;
+}
+
+
+/* ======================================================
+   UPDATES SECTION
+====================================================== */
+
+.updates-section {
+  margin-top: 40px;
+}
+
+.updates-section-heading h2 {
+  margin: 0 0 5px;
+
+  font-size: 24px;
+}
+
+.updates-section-heading p {
+  margin: 0;
+
+  color: #806d61;
+}
+
+
+/* ======================================================
+   UPDATE LIST
+====================================================== */
+
+.updates-list {
+  margin-top: 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.update-card {
+  padding: 22px;
+
+  background: #ffffff;
+
+  border: 1px solid #eadfd5;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  gap: 18px;
+
+  transition: transform 0.15s ease;
+}
+
+.update-card:hover {
+  transform: translateY(-2px);
+
+  border-color: #d8c0ab;
+}
+
+.update-card-icon {
+  width: 55px;
+  height: 55px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff3e5;
+
+  border-radius: 15px;
+
+  font-size: 26px;
+}
+
+.update-card-content {
+  flex: 1;
+}
+
+.update-card-meta {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 7px;
+
+  font-size: 12px;
+
+  color: #8a786d;
+}
+
+.update-category {
+  padding: 4px 8px;
+
+  border-radius: 20px;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.6px;
+}
+
+.update-category.route {
+  background: #e9f0ff;
+  color: #4568a7;
+}
+
+.update-category.camp {
+  background: #eaf6eb;
+  color: #4f8657;
+}
+
+.update-category.medical {
+  background: #ffeaea;
+  color: #b55454;
+}
+
+.update-category.seva {
+  background: #f0eaff;
+  color: #7157a9;
+}
+
+.update-category.location {
+  background: #fff1df;
+  color: #a56c32;
+}
+
+.update-card-content h3 {
+  margin: 0 0 7px;
+
+  font-size: 18px;
+}
+
+.update-card-content p {
+  margin: 0;
+
+  color: #806d61;
+
+  line-height: 1.55;
+}
+
+
+/* ======================================================
+   SAFETY
+====================================================== */
+
+.updates-safety {
+  margin-top: 30px;
+
+  padding: 22px;
+
+  background: #fff8df;
+
+  border: 1px solid #eadba9;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  gap: 15px;
+}
+
+.updates-safety-icon {
+  font-size: 25px;
+}
+
+.updates-safety h3 {
+  margin: 0 0 6px;
+}
+
+.updates-safety p {
+  margin: 0;
+
+  color: #756c50;
+
+  line-height: 1.5;
+}
+
+
+/* ======================================================
+   FOOTER
+====================================================== */
+
+.latest-updates-footer {
+  text-align: center;
+
+  padding: 45px 0 25px;
+
+  color: #806d61;
+}
+
+.latest-updates-footer > div {
+  font-size: 30px;
+}
+
+.latest-updates-footer h3 {
+  margin: 8px 0 3px;
+
+  color: #5b3a29;
+}
+
+.latest-updates-footer p {
+  margin: 0;
+}
+
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media (max-width: 700px) {
+
+  .latest-updates-header {
+    padding: 14px 5%;
+  }
+
+  .latest-updates-container {
+    width: 92%;
+  }
+
+  .updates-intro {
+    align-items: flex-start;
+
+    padding: 22px;
+  }
+
+  .featured-update {
+    padding: 22px;
+  }
+
+  .update-card {
+    padding: 18px;
+  }
+
+  .update-card-icon {
+    width: 48px;
+    height: 48px;
+
+    font-size: 23px;
+  }
+
+  .update-card-content h3 {
+    font-size: 16px;
+  }
+
+  .update-footer {
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+}
