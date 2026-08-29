@@ -4,9 +4,16 @@
 
 .yatra-page {
   min-height: 100vh;
-  background: #f8f5ef;
-  color: #2f2923;
-  padding-bottom: 40px;
+  background:
+    linear-gradient(
+      180deg,
+      #fffaf2 0%,
+      #fff7ed 45%,
+      #ffffff 100%
+    );
+
+  color: #3b2417;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 
@@ -15,189 +22,175 @@
    ========================================================= */
 
 .yatra-header {
-  width: 100%;
-  min-height: 82px;
-  background: #ffffff;
-  border-bottom: 1px solid #e9e1d6;
+  position: relative;
 
-  display: flex;
-  align-items: center;
+  padding: 32px 24px 48px;
 
-  padding: 0 7%;
+  text-align: center;
 
-  box-sizing: border-box;
+  background:
+    linear-gradient(
+      135deg,
+      #fff0d9,
+      #fff8ed
+    );
 
-  position: sticky;
-  top: 0;
-  z-index: 20;
+  border-bottom:
+    1px solid rgba(120, 70, 30, 0.12);
 }
 
 
-.yatra-back-button {
-  width: 44px;
-  height: 44px;
+.back-button {
+  position: absolute;
 
-  border: 1px solid #ded4c7;
+  left: 24px;
+  top: 28px;
+
+  border: none;
+
+  background: white;
+
+  color: #7b451f;
+
+  padding: 10px 18px;
+
   border-radius: 12px;
 
-  background: #ffffff;
+  font-size: 14px;
 
-  font-size: 22px;
-  color: #5c5147;
+  font-weight: 600;
 
   cursor: pointer;
 
+  box-shadow:
+    0 4px 15px rgba(70, 40, 10, 0.08);
+
+  transition: 0.2s ease;
+}
+
+
+.back-button:hover {
+  transform: translateX(-3px);
+
+  box-shadow:
+    0 6px 18px rgba(70, 40, 10, 0.13);
+}
+
+
+.header-title {
+  max-width: 800px;
+
+  margin: auto;
+}
+
+
+.header-blessing {
+  color: #a75b22;
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+  margin-bottom: 10px;
+}
+
+
+.header-title h1 {
+  margin: 0;
+
+  font-size: 42px;
+
+  font-weight: 800;
+
+  color: #542b17;
+}
+
+
+.header-title p {
+  margin-top: 10px;
+
+  color: #80634f;
+
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.yatra-container {
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 0 auto;
+
+  padding: 40px 0 50px;
+}
+
+
+/* =========================================================
+   INTRO CARD
+   ========================================================= */
+
+.intro-card {
   display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 28px;
+
+  margin-bottom: 45px;
+
+  background: white;
+
+  border-radius: 22px;
+
+  border:
+    1px solid rgba(130, 75, 30, 0.1);
+
+  box-shadow:
+    0 12px 35px rgba(80, 45, 15, 0.07);
+}
+
+
+.intro-icon {
+  width: 70px;
+  height: 70px;
+
+  display: flex;
+
   align-items: center;
   justify-content: center;
 
-  transition: all 0.2s ease;
+  flex-shrink: 0;
+
+  background: #fff0dc;
+
+  border-radius: 20px;
+
+  font-size: 34px;
 }
 
 
-.yatra-back-button:hover {
-  background: #f7f1e8;
-  transform: translateX(-2px);
-}
+.intro-card h2 {
+  margin: 0 0 8px;
 
-
-.yatra-header-title {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-left: 20px;
-}
-
-
-.yatra-header-icon {
-  width: 48px;
-  height: 48px;
-
-  border-radius: 14px;
-
-  background: #f3e5cf;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: #542b17;
 
   font-size: 25px;
 }
 
 
-.yatra-header-title h1 {
+.intro-card p {
   margin: 0;
 
-  font-size: 22px;
-  font-weight: 700;
+  color: #80634f;
 
-  color: #302921;
-}
-
-
-.yatra-header-title p {
-  margin: 4px 0 0;
-
-  font-size: 13px;
-
-  color: #81766b;
-}
-
-
-.yatra-header-spacer {
-  flex: 1;
-}
-
-
-/* =========================================================
-   CONTAINER
-   ========================================================= */
-
-.yatra-container {
-  width: min(1100px, 88%);
-  margin: 0 auto;
-}
-
-
-/* =========================================================
-   WELCOME CARD
-   ========================================================= */
-
-.yatra-welcome-card {
-  margin-top: 34px;
-
-  min-height: 190px;
-
-  padding: 38px 44px;
-
-  border-radius: 24px;
-
-  background: linear-gradient(
-    135deg,
-    #f1dfc5,
-    #ead3b3
-  );
-
-  box-sizing: border-box;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  overflow: hidden;
-}
-
-
-.yatra-welcome-content {
-  max-width: 700px;
-}
-
-
-.yatra-small-text {
-  font-size: 14px;
-  font-weight: 600;
-
-  color: #785d42;
-}
-
-
-.yatra-welcome-content h2 {
-  margin: 10px 0 8px;
-
-  font-size: 34px;
-  line-height: 1.15;
-
-  color: #342a22;
-}
-
-
-.yatra-welcome-content p {
-  margin: 0;
-
-  max-width: 650px;
-
-  font-size: 15px;
   line-height: 1.7;
 
-  color: #675a4e;
-}
-
-
-.yatra-welcome-icon {
-  width: 110px;
-  height: 110px;
-
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, 0.45);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 52px;
-
-  flex-shrink: 0;
+  font-size: 15px;
 }
 
 
@@ -205,203 +198,182 @@
    SECTIONS
    ========================================================= */
 
-.yatra-section {
-  margin-top: 38px;
+.section {
+  margin-bottom: 55px;
 }
 
 
-.yatra-section-heading {
-  margin-bottom: 18px;
+.section-heading {
+  margin-bottom: 22px;
 }
 
 
-.yatra-section-heading h2 {
+.section-heading h2 {
   margin: 0;
 
-  font-size: 24px;
+  color: #542b17;
 
-  color: #302921;
+  font-size: 28px;
 }
 
 
-.yatra-section-heading p {
-  margin: 6px 0 0;
+.section-heading p {
+  margin-top: 8px;
 
-  font-size: 14px;
+  color: #80634f;
 
-  color: #84786d;
+  font-size: 15px;
 }
 
 
 /* =========================================================
-   JOURNEY STATUS
+   JOURNEY CARD
    ========================================================= */
 
-.journey-status-card {
-  background: #ffffff;
+.journey-card {
+  background: white;
 
-  border: 1px solid #e7dfd5;
-
-  border-radius: 20px;
+  border-radius: 22px;
 
   padding: 28px;
 
-  box-shadow: 0 6px 25px rgba(61, 48, 35, 0.05);
+  border:
+    1px solid rgba(130, 75, 30, 0.1);
+
+  box-shadow:
+    0 12px 35px rgba(80, 45, 15, 0.07);
 }
 
 
-.journey-status-top {
+.journey-point {
   display: flex;
+
   align-items: center;
-  justify-content: space-between;
+
+  gap: 18px;
+
+  position: relative;
+
+  padding: 14px 0;
 }
 
 
-.status-label {
+.point-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #eee4dc;
+
+  color: #76533c;
+
+  font-size: 18px;
+
+  font-weight: bold;
+}
+
+
+.point-icon.completed {
+  background: #f0dfcf;
+
+  color: #7e421d;
+}
+
+
+.point-icon.destination {
+  background: #fff0d5;
+
+  font-size: 22px;
+}
+
+
+.point-content {
+  flex: 1;
+}
+
+
+.point-label {
   display: block;
 
+  color: #a36b43;
+
   font-size: 11px;
-  font-weight: 700;
+
+  font-weight: 800;
 
   letter-spacing: 1px;
 
-  color: #978a7e;
+  margin-bottom: 3px;
 }
 
 
-.journey-status-top h3 {
-  margin: 7px 0 0;
+.point-content h3 {
+  margin: 0;
 
-  font-size: 25px;
+  color: #542b17;
 
-  color: #302921;
+  font-size: 18px;
 }
 
 
-.journey-active {
-  padding: 8px 13px;
+.status {
+  display: inline-block;
 
-  border-radius: 30px;
+  margin-top: 5px;
 
-  background: #eaf5e9;
-
-  color: #4d7d4b;
+  color: #8b725e;
 
   font-size: 13px;
-  font-weight: 600;
 }
 
 
-.journey-progress {
-  margin-top: 30px;
+.status.active {
+  color: #6c8a50;
+
+  font-weight: 700;
+}
+
+
+.destination-status {
+  color: #a65c21;
+
+  font-weight: 700;
+}
+
+
+/* Journey line */
+
+.journey-line {
+  height: 32px;
+
+  margin-left: 23px;
+
+  border-left:
+    2px dashed #d6bca6;
 
   position: relative;
 }
 
 
-.progress-line {
-  height: 5px;
-
-  background: #e8e0d7;
-
-  border-radius: 10px;
-
-  overflow: hidden;
-}
-
-
-.progress-filled {
-  width: 72%;
-  height: 100%;
-
-  background: #b48a58;
-
-  border-radius: 10px;
-}
-
-
-.progress-points {
+.line-progress {
   position: absolute;
 
-  top: 50%;
-  left: 0;
+  left: -2px;
 
-  width: 100%;
+  top: 0;
 
-  transform: translateY(-50%);
+  height: 100%;
 
-  display: flex;
-  justify-content: space-between;
-}
-
-
-.progress-point {
-  width: 27px;
-  height: 27px;
-
-  border-radius: 50%;
-
-  background: #ffffff;
-
-  border: 3px solid #ddd3c8;
-
-  box-sizing: border-box;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 10px;
-  font-weight: 700;
-
-  color: #9a8e82;
-}
-
-
-.progress-point.completed {
-  background: #b48a58;
-  border-color: #b48a58;
-
-  color: #ffffff;
-}
-
-
-.progress-point.current {
-  background: #ffffff;
-  border-color: #b48a58;
-
-  color: #b48a58;
-}
-
-
-.journey-locations {
-  margin-top: 25px;
-
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-
-  gap: 15px;
-}
-
-
-.journey-locations div {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-
-.journey-locations strong {
-  font-size: 13px;
-
-  color: #4a4037;
-}
-
-
-.journey-locations span {
-  font-size: 11px;
-
-  color: #9a8e82;
+  border-left:
+    2px solid #a8612a;
 }
 
 
@@ -410,301 +382,273 @@
    ========================================================= */
 
 .schedule-list {
-  background: #ffffff;
+  display: flex;
 
-  border: 1px solid #e7dfd5;
+  flex-direction: column;
 
-  border-radius: 20px;
-
-  padding: 8px 25px;
-
-  box-shadow: 0 6px 25px rgba(61, 48, 35, 0.05);
+  gap: 15px;
 }
 
 
 .schedule-card {
-  min-height: 110px;
-
-  display: grid;
-  grid-template-columns: 80px 30px 1fr;
+  display: flex;
 
   align-items: center;
 
-  position: relative;
+  gap: 20px;
+
+  padding: 20px 22px;
+
+  background: white;
+
+  border-radius: 18px;
+
+  border:
+    1px solid rgba(130, 75, 30, 0.09);
+
+  box-shadow:
+    0 8px 25px rgba(80, 45, 15, 0.05);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 
-.schedule-card:not(:last-child) {
-  border-bottom: 1px solid #eee8e0;
+.schedule-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 30px rgba(80, 45, 15, 0.09);
 }
 
 
 .schedule-time {
-  display: flex;
-  flex-direction: column;
+  width: 75px;
 
-  align-items: center;
+  text-align: center;
+
+  flex-shrink: 0;
+}
+
+
+.schedule-time strong {
+  display: block;
+
+  color: #542b17;
+
+  font-size: 20px;
 }
 
 
 .schedule-time span {
-  font-size: 17px;
-  font-weight: 700;
+  display: block;
 
-  color: #4b4036;
+  color: #a06c47;
+
+  font-size: 12px;
+
+  margin-top: 3px;
 }
 
 
-.schedule-time small {
-  margin-top: 2px;
-
-  font-size: 10px;
-  font-weight: 600;
-
-  color: #a09284;
-}
-
-
-.schedule-line {
-  height: 100%;
-
-  position: relative;
+.schedule-icon {
+  width: 52px;
+  height: 52px;
 
   display: flex;
+
+  align-items: center;
   justify-content: center;
-}
 
+  flex-shrink: 0;
 
-.schedule-line::before {
-  content: '';
+  border-radius: 16px;
 
-  position: absolute;
+  background: #fff0dc;
 
-  top: 0;
-  bottom: 0;
-
-  width: 2px;
-
-  background: #e3d8cb;
-}
-
-
-.schedule-card:first-child .schedule-line::before {
-  top: 50%;
-}
-
-
-.schedule-card:last-child .schedule-line::before {
-  bottom: 50%;
-}
-
-
-.schedule-dot {
-  width: 13px;
-  height: 13px;
-
-  border-radius: 50%;
-
-  background: #b48a58;
-
-  border: 4px solid #f3e7d8;
-
-  position: relative;
-
-  z-index: 2;
-
-  margin-top: 48px;
+  font-size: 25px;
 }
 
 
 .schedule-content {
-  padding: 20px 0 20px 15px;
+  flex: 1;
 }
 
 
 .schedule-content h3 {
-  margin: 0 0 5px;
+  margin: 0;
 
-  font-size: 16px;
+  color: #542b17;
 
-  color: #40362e;
+  font-size: 18px;
 }
 
 
 .schedule-content p {
-  margin: 0;
+  margin: 6px 0 8px;
 
-  font-size: 13px;
+  color: #80634f;
+
+  font-size: 14px;
+
   line-height: 1.5;
-
-  color: #897c70;
 }
 
 
-.schedule-status {
+.schedule-tag {
   display: inline-block;
 
-  margin-top: 8px;
+  padding: 4px 10px;
 
-  padding: 4px 9px;
+  background: #f8eadc;
+
+  color: #915124;
 
   border-radius: 20px;
 
-  background: #f5eee6;
+  font-size: 11px;
 
-  color: #866b4d;
-
-  font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 
 /* =========================================================
-   INFORMATION CARDS
+   INFORMATION GRID
    ========================================================= */
 
 .information-grid {
   display: grid;
 
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns:
+    repeat(2, 1fr);
 
-  gap: 16px;
+  gap: 18px;
 }
 
 
-.information-card {
+.info-card {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 16px;
+
   padding: 22px;
 
-  background: #ffffff;
-
-  border: 1px solid #e7dfd5;
+  background: white;
 
   border-radius: 18px;
 
-  display: flex;
+  border:
+    1px solid rgba(130, 75, 30, 0.09);
 
-  gap: 16px;
-
-  box-shadow: 0 5px 20px rgba(61, 48, 35, 0.04);
+  box-shadow:
+    0 8px 25px rgba(80, 45, 15, 0.05);
 }
 
 
-.information-icon {
+.info-icon {
   width: 48px;
   height: 48px;
 
-  border-radius: 13px;
-
-  background: #f4e9dc;
-
   display: flex;
+
   align-items: center;
   justify-content: center;
 
-  font-size: 23px;
-
   flex-shrink: 0;
+
+  border-radius: 14px;
+
+  background: #fff0dc;
+
+  font-size: 23px;
 }
 
 
-.information-card h3 {
-  margin: 2px 0 6px;
+.info-card h3 {
+  margin: 2px 0 7px;
 
-  font-size: 16px;
+  color: #542b17;
 
-  color: #40362e;
+  font-size: 17px;
 }
 
 
-.information-card p {
+.info-card p {
   margin: 0;
 
-  font-size: 13px;
-  line-height: 1.6;
+  color: #80634f;
 
-  color: #897c70;
+  font-size: 13px;
+
+  line-height: 1.6;
 }
 
 
 /* =========================================================
-   DESTINATION
+   FINAL DESTINATION
    ========================================================= */
 
-.destination-card {
-  margin-top: 38px;
+.final-destination {
+  text-align: center;
 
-  padding: 25px 28px;
+  padding: 45px 25px;
 
-  border-radius: 20px;
+  margin-top: 10px;
 
-  background: #ffffff;
+  background:
+    linear-gradient(
+      135deg,
+      #fff1dc,
+      #fff9ef
+    );
 
-  border: 1px solid #e3d7c8;
+  border-radius: 25px;
 
-  display: flex;
-  align-items: center;
-
-  gap: 18px;
-
-  box-shadow: 0 6px 25px rgba(61, 48, 35, 0.05);
+  border:
+    1px solid rgba(130, 75, 30, 0.1);
 }
 
 
-.destination-icon {
-  width: 58px;
-  height: 58px;
+.final-icon {
+  font-size: 42px;
 
-  border-radius: 15px;
+  margin-bottom: 12px;
+}
 
-  background: #f2e2cd;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.final-destination > span {
+  display: block;
+
+  color: #a15b27;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+
+.final-destination h2 {
+  margin: 10px 0;
+
+  color: #542b17;
 
   font-size: 28px;
-
-  flex-shrink: 0;
 }
 
 
-.destination-content {
-  flex: 1;
-}
-
-
-.destination-content > span {
-  font-size: 10px;
-  font-weight: 700;
-
-  letter-spacing: 1px;
-
-  color: #a18f7e;
-}
-
-
-.destination-content h2 {
-  margin: 5px 0 3px;
-
-  font-size: 19px;
-
-  color: #3b3028;
-}
-
-
-.destination-content p {
+.final-destination p {
   margin: 0;
 
-  font-size: 13px;
+  color: #a05c29;
 
-  color: #897c70;
-}
+  font-weight: 600;
 
-
-.destination-arrow {
-  font-size: 25px;
-
-  color: #a88661;
+  font-size: 15px;
 }
 
 
@@ -715,73 +659,70 @@
 .yatra-footer {
   text-align: center;
 
-  padding: 55px 20px 20px;
-}
+  padding: 30px 0 10px;
 
+  color: #9b765b;
 
-.yatra-footer-icon {
-  font-size: 28px;
-}
-
-
-.yatra-footer h3 {
-  margin: 10px 0 5px;
-
-  font-size: 17px;
-
-  color: #55483d;
-}
-
-
-.yatra-footer p {
-  margin: 0;
-
-  font-size: 12px;
-
-  color: #a09284;
+  font-size: 14px;
 }
 
 
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE DESIGN
    ========================================================= */
 
-@media (max-width: 800px) {
+@media (max-width: 768px) {
 
   .yatra-header {
-    padding: 0 5%;
+    padding:
+      80px 20px 40px;
+  }
+
+
+  .back-button {
+    top: 20px;
+
+    left: 20px;
+  }
+
+
+  .header-title h1 {
+    font-size: 32px;
   }
 
 
   .yatra-container {
-    width: 90%;
+    width: min(
+      100% - 28px,
+      650px
+    );
+
+    padding-top: 25px;
   }
 
 
-  .yatra-welcome-card {
-    padding: 30px;
+  .intro-card {
+    padding: 22px;
 
-    min-height: 170px;
+    align-items: flex-start;
   }
 
 
-  .yatra-welcome-content h2 {
-    font-size: 28px;
+  .intro-icon {
+    width: 55px;
+    height: 55px;
+
+    font-size: 27px;
   }
 
 
-  .yatra-welcome-icon {
-    width: 85px;
-    height: 85px;
-
-    font-size: 40px;
+  .intro-card h2 {
+    font-size: 21px;
   }
 
 
-  .journey-locations {
-    grid-template-columns: repeat(2, 1fr);
-
-    row-gap: 18px;
+  .section-heading h2 {
+    font-size: 24px;
   }
 
 
@@ -789,128 +730,91 @@
     grid-template-columns: 1fr;
   }
 
-}
 
+  .schedule-card {
+    gap: 13px;
 
-@media (max-width: 600px) {
-
-  .yatra-header {
-    min-height: 70px;
+    padding: 17px;
   }
 
 
-  .yatra-header-title {
-    margin-left: 12px;
+  .schedule-time {
+    width: 55px;
   }
 
 
-  .yatra-header-icon {
-    width: 40px;
-    height: 40px;
-
-    font-size: 20px;
-  }
-
-
-  .yatra-header-title h1 {
+  .schedule-time strong {
     font-size: 17px;
   }
 
 
-  .yatra-header-title p {
-    font-size: 11px;
-  }
+  .schedule-icon {
+    width: 45px;
+    height: 45px;
 
-
-  .yatra-back-button {
-    width: 40px;
-    height: 40px;
-  }
-
-
-  .yatra-welcome-card {
-    margin-top: 20px;
-
-    padding: 25px;
-
-    border-radius: 19px;
-  }
-
-
-  .yatra-welcome-content h2 {
-    font-size: 25px;
-  }
-
-
-  .yatra-welcome-content p {
-    font-size: 13px;
-  }
-
-
-  .yatra-welcome-icon {
-    display: none;
-  }
-
-
-  .yatra-section {
-    margin-top: 28px;
-  }
-
-
-  .yatra-section-heading h2 {
     font-size: 21px;
-  }
-
-
-  .journey-status-card {
-    padding: 20px;
-  }
-
-
-  .journey-status-top h3 {
-    font-size: 21px;
-  }
-
-
-  .journey-locations {
-    grid-template-columns: 1fr 1fr;
-
-    gap: 15px;
-  }
-
-
-  .schedule-list {
-    padding: 5px 12px;
-  }
-
-
-  .schedule-card {
-    grid-template-columns: 65px 22px 1fr;
-  }
-
-
-  .schedule-content {
-    padding-left: 10px;
   }
 
 
   .schedule-content h3 {
-    font-size: 14px;
+    font-size: 16px;
   }
 
 
   .schedule-content p {
-    font-size: 12px;
+    font-size: 13px;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .header-title h1 {
+    font-size: 28px;
   }
 
 
-  .destination-card {
+  .header-title p {
+    font-size: 14px;
+  }
+
+
+  .intro-card {
+    flex-direction: column;
+  }
+
+
+  .journey-card {
     padding: 20px;
   }
 
 
-  .destination-content h2 {
-    font-size: 16px;
+  .schedule-card {
+    align-items: flex-start;
+  }
+
+
+  .schedule-time {
+    width: 48px;
+  }
+
+
+  .schedule-icon {
+    width: 40px;
+    height: 40px;
+
+    font-size: 18px;
+  }
+
+
+  .schedule-content h3 {
+    font-size: 15px;
+  }
+
+
+  .final-destination h2 {
+    font-size: 22px;
   }
 
 }

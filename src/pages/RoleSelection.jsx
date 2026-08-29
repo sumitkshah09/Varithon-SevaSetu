@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { useLanguage } from '../language/languageContext'
+import { translations } from '../language/translations'
+
 import VolunteerLogin from './VolunteerLogin'
 import WarkariLogin from './WarkariLogin'
 import OrganizerLogin from './OrganizerLogin'
@@ -8,7 +11,9 @@ import './RoleSelection.css'
 
 export default function RoleSelection() {
   const [selectedRole, setSelectedRole] = useState(null)
-  
+
+  const { language } = useLanguage()
+  const t = translations[language]
 
   // -------------------------
   // VOLUNTEER
@@ -67,11 +72,19 @@ if (selectedRole === 'organizer') {
         </span>
 
         <h1>
-          Welcome to Seva Setu
+          {language === 'mr'
+            ? 'सेवा सेतूमध्ये आपले स्वागत आहे'
+            : language === 'hi'
+              ? 'सेवा सेतु में आपका स्वागत है'
+              : 'Welcome to Seva Setu'}
         </h1>
 
         <p>
-          Choose your role to begin your journey of seva.
+          {language === 'mr'
+            ? 'सेवेच्या प्रवासासाठी आपली भूमिका निवडा.'
+            : language === 'hi'
+              ? 'अपनी सेवा यात्रा शुरू करने के लिए अपनी भूमिका चुनें।'
+              : 'Choose your role to begin your journey of seva.'}
         </p>
 
       </div>
@@ -87,17 +100,29 @@ if (selectedRole === 'organizer') {
           </div>
 
           <h2>
-            Organizer
+            {language === 'mr'
+              ? 'संगठक'
+              : language === 'hi'
+                ? 'आयोजक'
+                : 'Organizer'}
           </h2>
 
           <p>
-            Manage Wari operations and coordinate volunteers.
+            {language === 'mr'
+              ? 'वारीचे व्यवस्थापन करा आणि स्वयंसेवकांचे समन्वय साधा.'
+              : language === 'hi'
+                ? 'वारी का प्रबंधन करें और स्वयंसेवकों का समन्वय करें।'
+                : 'Manage Wari operations and coordinate volunteers.'}
           </p>
 
           <button
             onClick={() => setSelectedRole('organizer')}
           >
-            Continue as Organizer
+            {language === 'mr'
+              ? 'संगठक म्हणून पुढे जा'
+              : language === 'hi'
+                ? 'आयोजक के रूप में आगे बढ़ें'
+                : 'Continue as Organizer'}
           </button>
 
         </div>
@@ -112,18 +137,29 @@ if (selectedRole === 'organizer') {
           </div>
 
           <h2>
-            Warkari
+            {language === 'mr'
+              ? 'वारकरी'
+              : language === 'hi'
+                ? 'वारकरी'
+                : 'Warkari'}
           </h2>
 
           <p>
-            Find help, services and assistance throughout
-            your Wari journey.
+            {language === 'mr'
+              ? 'तुमच्या वारीच्या प्रवासात मदत, सेवा आणि सहाय्य मिळवा.'
+              : language === 'hi'
+                ? 'अपनी वारी यात्रा के दौरान मदद, सेवाएं और सहायता प्राप्त करें।'
+                : 'Find help, services and assistance throughout your Wari journey.'}
           </p>
 
           <button
             onClick={() => setSelectedRole('warkari')}
           >
-            Continue as Warkari
+            {language === 'mr'
+              ? 'वारकरी म्हणून पुढे जा'
+              : language === 'hi'
+                ? 'वारकरी के रूप में आगे बढ़ें'
+                : 'Continue as Warkari'}
           </button>
 
         </div>
@@ -138,18 +174,29 @@ if (selectedRole === 'organizer') {
           </div>
 
           <h2>
-            Volunteer
+            {language === 'mr'
+              ? 'स्वयंसेवक'
+              : language === 'hi'
+                ? 'स्वयंसेवक'
+                : 'Volunteer'}
           </h2>
 
           <p>
-            Offer your time, skills and seva to support
-            fellow Warkaris.
+            {language === 'mr'
+              ? 'तुमचा वेळ, कौशल्य आणि सेवा इतर वारकऱ्यांना मदत करण्यासाठी द्या.'
+              : language === 'hi'
+                ? 'अपने समय, कौशल और सेवा से साथी वारकरियों की सहायता करें।'
+                : 'Offer your time, skills and seva to support fellow Warkaris.'}
           </p>
 
           <button
             onClick={() => setSelectedRole('volunteer')}
           >
-            Continue as Volunteer
+            {language === 'mr'
+              ? 'स्वयंसेवक म्हणून पुढे जा'
+              : language === 'hi'
+                ? 'स्वयंसेवक के रूप में आगे बढ़ें'
+                : 'Continue as Volunteer'}
           </button>
 
         </div>
@@ -158,7 +205,11 @@ if (selectedRole === 'organizer') {
 
 
       <p className="role-footer">
-        Seva through every step of the Wari.
+        {language === 'mr'
+          ? 'वारीच्या प्रत्येक पावलावर सेवा.'
+          : language === 'hi'
+            ? 'वारी के हर कदम पर सेवा।'
+            : 'Seva through every step of the Wari.'}
       </p>
 
     </main>

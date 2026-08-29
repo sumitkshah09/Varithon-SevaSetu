@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
 import RoleSelection from "./pages/RoleSelection";
+
 import Organisers from "./pages/Organisers";
 import OrganizerDashboard from "./pages/OrganizerDashboard";
 
@@ -11,70 +12,65 @@ import VolunteerRequests from "./pages/VolunteerRequests";
 import VolunteerMap from "./pages/VolunteerMap";
 import VolunteerProfile from "./pages/VolunteerProfile";
 
+import { LanguageProvider } from "./language/languageContext";
 
 export default function App() {
   return (
-    <Routes>
+    <LanguageProvider>
+      <Routes>
 
-      {/* =========================================
-          MAIN / COMMON PAGES
-          ========================================= */}
+        {/* MAIN / COMMON PAGES */}
 
-      <Route
-        path="/"
-        element={<Home />}
-      />
+        <Route
+          path="/"
+          element={<Home />}
+        />
 
-      <Route
-        path="/role-selection"
-        element={<RoleSelection />}
-      />
+        <Route
+          path="/role-selection"
+          element={<RoleSelection />}
+        />
 
+        {/* ORGANIZER */}
 
-      {/* =========================================
-          ORGANISER
-          ========================================= */}
+        <Route
+          path="/organisers"
+          element={<Organisers />}
+        />
 
-      <Route
-        path="/organisers"
-        element={<Organisers />}
-      />
+        <Route
+          path="/organizer-dashboard"
+          element={<OrganizerDashboard />}
+        />
 
-      <Route
-        path="/organizer-dashboard"
-        element={<OrganizerDashboard />}
-      />
+        {/* VOLUNTEER */}
 
+        <Route
+          path="/volunteer-login"
+          element={<VolunteerLogin />}
+        />
 
-      {/* =========================================
-          VOLUNTEER
-          ========================================= */}
+        <Route
+          path="/volunteer-dashboard"
+          element={<VolunteerDashboard />}
+        />
 
-      <Route
-        path="/volunteer-login"
-        element={<VolunteerLogin />}
-      />
+        <Route
+          path="/volunteer-requests"
+          element={<VolunteerRequests />}
+        />
 
-      <Route
-        path="/volunteer-dashboard"
-        element={<VolunteerDashboard />}
-      />
+        <Route
+          path="/volunteer-map"
+          element={<VolunteerMap />}
+        />
 
-      <Route
-        path="/volunteer-requests"
-        element={<VolunteerRequests />}
-      />
+        <Route
+          path="/volunteer-profile"
+          element={<VolunteerProfile />}
+        />
 
-      <Route
-        path="/volunteer-map"
-        element={<VolunteerMap />}
-      />
-
-      <Route
-        path="/volunteer-profile"
-        element={<VolunteerProfile />}
-      />
-
-    </Routes>
+      </Routes>
+    </LanguageProvider>
   );
 }

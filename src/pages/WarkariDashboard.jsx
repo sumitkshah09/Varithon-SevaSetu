@@ -1,15 +1,21 @@
+
 import { useState } from 'react'
+import { useLanguage } from '../language/languageContext'
+import { translations } from "../language/translations";
 
 import YatraInformation from './YatraInformation'
 import GetHelp from './GetHelp'
 import RouteMap from './RouteMap'
-import LatestUpdates from './LatestUpdates'
 import Profile from './Profile'
 
 import './WarkariDashboard.css'
 
 export default function WarkariDashboard() {
   const [activePage, setActivePage] = useState('Home')
+
+  // LANGUAGE
+  const { language } = useLanguage()
+  const t = translations[language].warkariDashboard
 
   /* ======================================================
      PAGE NAVIGATION
@@ -39,14 +45,6 @@ export default function WarkariDashboard() {
     )
   }
 
-  if (activePage === 'Updates') {
-    return (
-      <LatestUpdates
-        onBack={() => setActivePage('Home')}
-      />
-    )
-  }
-
   if (activePage === 'Profile') {
     return (
       <Profile
@@ -71,16 +69,15 @@ export default function WarkariDashboard() {
         <div className="welcome-content">
 
           <p className="welcome-small">
-            Jai Hari Vitthal 🙏
+            {t.welcomeSmall}
           </p>
 
           <h2>
-            Welcome, Warkari!
+            {t.welcome}
           </h2>
 
           <p>
-            Your journey of seva, devotion and community
-            begins here.
+            {t.welcomeText}
           </p>
 
         </div>
@@ -103,11 +100,11 @@ export default function WarkariDashboard() {
           <div>
 
             <h2>
-              🚨 Emergency Assistance
+              {t.emergencyTitle}
             </h2>
 
             <p>
-              Get immediate assistance during your Wari journey.
+              {t.emergencyText}
             </p>
 
           </div>
@@ -126,16 +123,15 @@ export default function WarkariDashboard() {
             <div>
 
               <span className="emergency-label">
-                EMERGENCY
+                {t.emergencyLabel}
               </span>
 
               <h3>
-                Need Immediate Help?
+                {t.emergencyHelp}
               </h3>
 
               <p>
-                Request emergency assistance from available
-                Seva Setu support services.
+                {t.emergencyDescription}
               </p>
 
             </div>
@@ -148,7 +144,7 @@ export default function WarkariDashboard() {
             className="emergency-button"
             onClick={() => setActivePage('Help')}
           >
-            🆘 Get Emergency Help
+            {t.emergencyButton}
           </button>
 
         </div>
@@ -167,12 +163,11 @@ export default function WarkariDashboard() {
           <div>
 
             <h2>
-              Today's Yatra
+              {t.todaysYatra}
             </h2>
 
             <p>
-              Keep track of your journey and today's
-              important information.
+              {t.todaysYatraText}
             </p>
 
           </div>
@@ -183,7 +178,7 @@ export default function WarkariDashboard() {
             className="text-button"
             onClick={() => setActivePage('Yatra')}
           >
-            View Details →
+            {t.viewDetails}
           </button>
 
         </div>
@@ -202,15 +197,15 @@ export default function WarkariDashboard() {
             <div className="yatra-content">
 
               <span className="yatra-label">
-                Current Location
+                {t.currentLocation}
               </span>
 
               <h3>
-                Pandharpur
+                {t.location}
               </h3>
 
               <span className="yatra-status">
-                ● Location updated recently
+                {t.locationUpdated}
               </span>
 
             </div>
@@ -229,15 +224,15 @@ export default function WarkariDashboard() {
             <div className="yatra-content">
 
               <span className="yatra-label">
-                Next Destination
+                {t.nextDestination}
               </span>
 
               <h3>
-                Wari Camp
+                {t.wariCamp}
               </h3>
 
               <span className="yatra-status">
-                Upcoming destination
+                {t.upcomingDestination}
               </span>
 
             </div>
@@ -260,11 +255,11 @@ export default function WarkariDashboard() {
           <div>
 
             <h2>
-              Need Help?
+              {t.needHelp}
             </h2>
 
             <p>
-              Get assistance quickly during your Wari journey.
+              {t.needHelpText}
             </p>
 
           </div>
@@ -275,7 +270,7 @@ export default function WarkariDashboard() {
             className="text-button"
             onClick={() => setActivePage('Help')}
           >
-            View Help →
+            {t.viewHelp}
           </button>
 
         </div>
@@ -298,11 +293,11 @@ export default function WarkariDashboard() {
             <div className="help-content">
 
               <h3>
-                Medical Help
+                {t.medicalHelp}
               </h3>
 
               <p>
-                Find nearby medical assistance.
+                {t.medicalDescription}
               </p>
 
             </div>
@@ -329,11 +324,11 @@ export default function WarkariDashboard() {
             <div className="help-content">
 
               <h3>
-                Volunteer Help
+                {t.volunteerHelp}
               </h3>
 
               <p>
-                Connect with a nearby volunteer.
+                {t.volunteerDescription}
               </p>
 
             </div>
@@ -360,11 +355,11 @@ export default function WarkariDashboard() {
             <div className="help-content">
 
               <h3>
-                Food & Water
+                {t.foodWater}
               </h3>
 
               <p>
-                Find nearby food and water points.
+                {t.foodWaterDescription}
               </p>
 
             </div>
@@ -391,11 +386,11 @@ export default function WarkariDashboard() {
             <div className="help-content">
 
               <h3>
-                Nearby Facilities
+                {t.nearbyFacilities}
               </h3>
 
               <p>
-                Find toilets and rest areas nearby.
+                {t.nearbyFacilitiesDescription}
               </p>
 
             </div>
@@ -432,7 +427,7 @@ export default function WarkariDashboard() {
           </span>
 
           <span className="nav-label">
-            Home
+            {t.home}
           </span>
 
         </button>
@@ -453,28 +448,7 @@ export default function WarkariDashboard() {
           </span>
 
           <span className="nav-label">
-            Yatra
-          </span>
-
-        </button>
-
-
-        {/* UPDATES */}
-
-        <button
-          type="button"
-          className={`nav-item ${
-            activePage === 'Updates' ? 'active' : ''
-          }`}
-          onClick={() => setActivePage('Updates')}
-        >
-
-          <span className="nav-icon">
-            📢
-          </span>
-
-          <span className="nav-label">
-            Updates
+            {t.yatra}
           </span>
 
         </button>
@@ -495,7 +469,7 @@ export default function WarkariDashboard() {
           </span>
 
           <span className="nav-label">
-            Profile
+            {t.profile}
           </span>
 
         </button>
