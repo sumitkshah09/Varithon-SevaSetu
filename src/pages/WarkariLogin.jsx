@@ -1,4 +1,9 @@
 import { useState } from 'react'
+
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { doc, getDoc } from 'firebase/firestore'
+
+import { auth, db } from '../firebase'
 import WarkariDashboard from './WarkariDashboard'
 import wariImage from '../assets/wari1.jpeg'
 import './WarkariLogin.css'
@@ -8,10 +13,57 @@ export default function WarkariLogin() {
   const [password, setPassword] = useState('')
   const [loggedIn, setLoggedIn] = useState(false)
 
-  const handleLogin = (e) => {
-    e.preventDefault()
+  const handleLogin = async (e) => {
+  e.preventDefault()
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      emailOrPhone,
+      password
+    )
+
+    const user = userCredential.user
+
+    console.log("✅ Firebase login successful")
+    console.log("UID:", user.uid)
+
+    // Get user's Firestore profile
+    const userRef = doc(db, "users", user.uid)
+    const userSnapshot = await getDoc(userRef)
+
+    if (!userSnapshot.exists()) {
+      alert("User profile not found.")
+      return
+    }
+
+    const userData = userSnapshot.data()
+
+    console.log("User data:", userData)
+
+    // Check role
+    if (userData.role !== "warkari") {
+      alert("This account is not registered as a Warkari.")
+      return
+    }
+
+    // Login successful
     setLoggedIn(true)
+
+  } catch (error) {
+    console.error("❌ Login failed:", error)
+
+    if (
+      error.code === "auth/invalid-credential" ||
+      error.code === "auth/wrong-password" ||
+      error.code === "auth/user-not-found"
+    ) {
+      alert("Invalid email or password.")
+    } else {
+      alert(error.message)
+    }
   }
+}
 
   const handleGuestLogin = () => {
     setLoggedIn(true)
