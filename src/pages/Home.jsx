@@ -1,17 +1,18 @@
+
 import "./Home.css";
-
 import { useNavigate } from "react-router-dom";
-
 import wariImage from "../assets/warkari.jpeg";
 
 import { useLanguage } from "../language/languageContext";
-import { translations } from "../language.js";
+import { translations } from "../language/translations";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 
 export default function Home() {
   const navigate = useNavigate();
-
   const { language } = useLanguage();
-  const t = translations[language];
+
+  // Safe translation fallback
+  const t = translations?.[language] || translations?.en || {};
 
   return (
     <div className="home-page">
@@ -19,20 +20,19 @@ export default function Home() {
       {/* ================= HERO ================= */}
       <section className="hero-section">
 
-        {/* YOUR ORIGINAL MOVING BACKGROUND */}
+        {/* Moving Background */}
         <div
           className="hero-background"
           style={{ backgroundImage: `url(${wariImage})` }}
         ></div>
 
-        {/* DARK OVERLAY */}
+        {/* Dark Overlay */}
         <div className="hero-overlay"></div>
 
         {/* ================= NAVBAR ================= */}
         <nav className="home-navbar">
 
           <div className="home-logo">
-
             <div className="logo-icon">से</div>
 
             <div>
@@ -40,13 +40,13 @@ export default function Home() {
                 <span>सेवा</span>Setu
               </div>
 
-              <small>{t.brandSubtitle}</small>
+              <small>
+                {t.brandSubtitle || "Wari Seva Network"}
+              </small>
             </div>
-
           </div>
 
           <div className="nav-links">
-
             <a href="#services">
               {language === "mr"
                 ? "सेवा"
@@ -56,7 +56,7 @@ export default function Home() {
             </a>
 
             <a href="#map">
-              {t.nearbyHelp}
+              {t.nearbyHelp || "Nearby Help"}
             </a>
 
             <a href="#about">
@@ -66,36 +66,38 @@ export default function Home() {
                 ? "हमारे बारे में"
                 : "About"}
             </a>
-
           </div>
 
-          <button
-            className="nav-button"
-            onClick={() => navigate("/role-selection")}
-          >
-            {language === "mr"
-              ? "सुरुवात करा →"
-              : language === "hi"
-              ? "शुरू करें →"
-              : "Get Started →"}
-          </button>
+          <div className="navbar-actions">
 
+            <button
+              className="nav-button"
+              onClick={() => navigate("/role-selection")}
+            >
+              {language === "mr"
+                ? "सुरुवात करा →"
+                : language === "hi"
+                ? "शुरू करें →"
+                : "Get Started →"}
+            </button>
+
+            {/* LANGUAGE BUTTON */}
+            <LanguageSwitcher />
+
+          </div>
         </nav>
 
         {/* ================= HERO CONTENT ================= */}
         <div className="hero-content">
 
-          {/* CULTURAL BADGE */}
+          {/* Cultural Badge */}
           <div className="hero-badge">
-            {t.badge}
+            {t.badge || "॥ जय हरी विठ्ठल ॥"}
           </div>
 
-          {/* BRAND */}
+          {/* Brand */}
           <div className="brand-name">
-
-            <span className="brand-marathi">
-              {language === "en" ? "सेवा" : "सेवा"}
-            </span>
+            <span className="brand-marathi">सेवा</span>
 
             <span className="brand-setu">
               {language === "mr"
@@ -104,67 +106,57 @@ export default function Home() {
                 ? "सेतु"
                 : "Setu"}
             </span>
-
           </div>
 
-          {/* TAGLINE */}
+          {/* Tagline */}
           <h1 className="main-tagline">
-
-            {t.tagline1}
-
+            {t.tagline1 || "Connecting Helping Hands"}
             <br />
-
             <span>
-              {t.tagline2}
+              {t.tagline2 || "with Every Warkari"}
             </span>
-
           </h1>
 
-          {/* DESCRIPTION */}
+          {/* Description */}
           <p className="hero-description">
-            {t.description}
+            {t.description ||
+              "A digital platform that connects Warkaris with trusted volunteers and essential services — making every step of the Wari safer, easier and more connected."}
           </p>
 
-          {/* BUTTON */}
+          {/* Button */}
           <div className="hero-buttons">
-
             <button
               className="hero-btn primary"
               onClick={() => navigate("/role-selection")}
             >
-              {t.findService}
+              {t.findService || "🤝 Find a Service →"}
             </button>
-
           </div>
 
-          {/* QUICK TRUST INFO */}
+          {/* Quick Trust Info */}
           <div className="hero-trust">
-
             <span>
-              {t.verifiedVolunteers}
+              {t.verifiedVolunteers || "✓ Verified Volunteers"}
             </span>
 
             <span>•</span>
 
             <span>
-              {t.nearbyHelp}
+              {t.nearbyHelp || "📍 Nearby Help"}
             </span>
 
             <span>•</span>
 
             <span>
-              {t.emergencySupport}
+              {t.emergencySupport || "🚨 Emergency Support"}
             </span>
-
           </div>
-
         </div>
 
         {/* ================= LIVE STATUS BAR ================= */}
         <div className="live-status">
 
           <div className="live-indicator">
-
             <span></span>
 
             {language === "mr"
@@ -172,53 +164,38 @@ export default function Home() {
               : language === "hi"
               ? "लाइव"
               : "LIVE"}
-
           </div>
 
           <div className="status-text">
-            {t.networkActive}
+            {t.networkActive || "SevaSetu Network is Active"}
           </div>
 
           <div className="status-stat">
-
             <strong>24+</strong>
-
             <small>
-              {t.activeVolunteers}
+              {t.activeVolunteers || "Active Volunteers"}
             </small>
-
           </div>
 
           <div className="status-stat">
-
             <strong>18</strong>
-
             <small>
-              {t.nearbyServices}
+              {t.nearbyServices || "Nearby Services"}
             </small>
-
           </div>
 
           <div className="status-stat">
-
             <strong>7</strong>
-
             <small>
-              {t.medicalPoints}
+              {t.medicalPoints || "Medical Points"}
             </small>
-
           </div>
 
         </div>
-
       </section>
 
-
       {/* ================= SERVICES ================= */}
-      <section
-        className="services-section"
-        id="services"
-      >
+      <section className="services-section" id="services">
 
         <div className="services-heading">
 
@@ -231,327 +208,180 @@ export default function Home() {
           </span>
 
           <h2>
-            {t.servicesTitle}
-
+            {t.servicesTitle || "Essential"}
             <br />
-
             <strong>
-              {t.servicesTitle2}
+              {t.servicesTitle2 || "services for every Warkari."}
             </strong>
           </h2>
 
           <p>
-            {t.servicesDescription}
+            {t.servicesDescription ||
+              "Access important services and assistance during your Wari journey."}
           </p>
-
         </div>
-
 
         <div className="services-grid">
 
           <div className="service-card">
-
-            <div className="service-icon">
-              🏥
-            </div>
+            <div className="service-icon">🏥</div>
 
             <h3>
-              {t.medicalHelp}
+              {t.medicalHelp || "Medical Help"}
             </h3>
 
             <p>
-              {t.medicalDescription}
+              {t.medicalDescription ||
+                "Find medical assistance and healthcare support nearby."}
             </p>
-
           </div>
 
-
           <div className="service-card">
-
-            <div className="service-icon">
-              🍱
-            </div>
+            <div className="service-icon">🍱</div>
 
             <h3>
-              {t.foodWater}
+              {t.foodWater || "Food & Water"}
             </h3>
 
             <p>
-              {t.foodDescription}
+              {t.foodDescription ||
+                "Locate food camps and drinking water points along the route."}
             </p>
-
           </div>
 
-
           <div className="service-card">
-
-            <div className="service-icon">
-              🚻
-            </div>
+            <div className="service-icon">🚻</div>
 
             <h3>
-              {t.toilets}
+              {t.toilets || "Toilets"}
             </h3>
 
             <p>
-              {t.toiletDescription}
+              {t.toiletDescription ||
+                "Find nearby toilet and sanitation facilities."}
             </p>
-
           </div>
 
-
           <div className="service-card">
-
-            <div className="service-icon">
-              🧭
-            </div>
+            <div className="service-icon">🧭</div>
 
             <h3>
-              {t.navigation}
+              {t.navigation || "Navigation"}
             </h3>
 
             <p>
-              {t.navigationDescription}
+              {t.navigationDescription ||
+                "Get help navigating the Wari route and nearby services."}
             </p>
-
           </div>
 
         </div>
-
       </section>
-
-
-      {/* ================= MAP PREVIEW ================= */}
-      <section
-        className="map-section"
-        id="map"
-      >
-
-        <div className="map-content">
-
-          <span className="section-label">
-            {t.nearbyNetwork}
-          </span>
-
-          <h2>
-
-            {t.findHelp}
-
-            <br />
-
-            <strong>
-              {t.aroundYou}
-            </strong>
-
-          </h2>
-
-          <p>
-            {t.mapDescription}
-          </p>
-
-          <button
-            className="map-button"
-            onClick={() => navigate("/role-selection")}
-          >
-            {t.exploreServices}
-          </button>
-
-        </div>
-
-
-        {/* MAP PREVIEW */}
-        <div className="map-preview">
-
-          <div className="map-grid"></div>
-
-          <div className="map-route"></div>
-
-
-          <div className="map-pin pin-one">
-            🏥
-          </div>
-
-          <div className="map-pin pin-two">
-            🍱
-          </div>
-
-          <div className="map-pin pin-three">
-            💧
-          </div>
-
-          <div className="map-pin pin-four">
-            🤝
-          </div>
-
-
-          <div className="map-location">
-
-            <span></span>
-
-            {language === "mr"
-              ? "तुमचे स्थान"
-              : language === "hi"
-              ? "आपका स्थान"
-              : "Your Location"}
-
-          </div>
-
-
-          <div className="map-label">
-
-            {language === "mr"
-              ? "जवळची सेवा"
-              : language === "hi"
-              ? "आसपास की सेवा"
-              : "Nearby Seva"}
-
-          </div>
-
-        </div>
-
-      </section>
-
 
       {/* ================= WHY SEVASETU ================= */}
-      <section
-        className="why-section"
-        id="about"
-      >
+      <section className="why-section" id="about">
 
         <div className="why-heading">
 
           <span className="section-label">
-            {t.whySevaSetu}
+            {t.whySevaSetu || "WHY SEVASETU"}
           </span>
 
           <h2>
-
-            {t.technologyPurpose}
-
+            {t.technologyPurpose || "Technology with a"}
             <br />
-
             <strong>
-              {t.humanPurpose}
+              {t.humanPurpose || "human purpose."}
             </strong>
-
           </h2>
 
         </div>
 
-
         <div className="why-grid">
 
-          {/* CARD 1 */}
           <div className="why-card">
-
-            <div>
-              🛡️
-            </div>
+            <div>🛡️</div>
 
             <h3>
-              {t.verifiedTitle}
+              {t.verifiedTitle || "Verified Volunteers"}
             </h3>
 
             <p>
-              {t.verifiedDescription}
+              {t.verifiedDescription ||
+                "Connect with trusted volunteers who are ready to provide assistance."}
             </p>
-
           </div>
 
-
-          {/* CARD 2 */}
           <div className="why-card">
-
-            <div>
-              📍
-            </div>
+            <div>📍</div>
 
             <h3>
-              {t.locationTitle}
+              {t.locationTitle || "Location Based"}
             </h3>
 
             <p>
-              {t.locationDescription}
+              {t.locationDescription ||
+                "Find the services and support closest to your current location."}
             </p>
-
           </div>
 
-
-          {/* CARD 3 */}
           <div className="why-card">
-
-            <div>
-              🚨
-            </div>
+            <div>🚨</div>
 
             <h3>
-              {t.emergencyTitle}
+              {t.emergencyTitle || "Emergency Ready"}
             </h3>
 
             <p>
-              {t.emergencyDescription}
+              {t.emergencyDescription ||
+                "Quickly reach assistance when you need urgent support during the Wari."}
             </p>
-
           </div>
 
-
-          {/* CARD 4 */}
           <div className="why-card">
-
-            <div>
-              🌐
-            </div>
+            <div>🌐</div>
 
             <h3>
-              {t.networkTitle}
+              {t.networkTitle || "One Connected Network"}
             </h3>
 
             <p>
-              {t.networkDescription}
+              {t.networkDescription ||
+                "Bring Warkaris, volunteers and service providers onto one platform."}
             </p>
-
           </div>
 
         </div>
-
       </section>
-
 
       {/* ================= CTA ================= */}
       <section className="final-cta">
 
         <div>
 
-          <span>
-            SEVA • SAHYOG • SAMARPAN
-          </span>
+          <span>SEVA • SAHYOG • SAMARPAN</span>
 
           <h2>
-
-            {t.ctaTitle}
-
+            {t.ctaTitle || "Be a part of the"}
             <br />
-
             <strong>
-              {t.ctaTitle2}
+              {t.ctaTitle2 || "Seva Network."}
             </strong>
-
           </h2>
 
           <p>
-            {t.ctaDescription}
+            {t.ctaDescription ||
+              "Every helping hand can make someone's journey easier."}
           </p>
 
           <button
             onClick={() => navigate("/role-selection")}
           >
-            {t.join}
+            {t.join || "Join SevaSetu →"}
           </button>
 
         </div>
-
       </section>
-
 
       {/* ================= FOOTER ================= */}
       <footer className="home-footer">
@@ -559,30 +389,25 @@ export default function Home() {
         <div>
 
           <strong>
-
-            <span>
-              सेवा
-            </span>
+            <span>सेवा</span>
 
             {language === "mr"
               ? "सेतू"
               : language === "hi"
               ? "सेतु"
               : "Setu"}
-
           </strong>
 
           <p>
-            {t.footerText}
+            {t.footerText ||
+              "Connecting Helping Hands with Every Warkari."}
           </p>
 
         </div>
 
-
         <div className="footer-center">
-          {t.badge}
+          {t.badge || "॥ जय हरी विठ्ठल ॥"}
         </div>
-
 
         <small>
           © 2026 SevaSetu
