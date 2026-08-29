@@ -11,69 +11,75 @@ import VolunteerRequests from "./pages/VolunteerRequests";
 import VolunteerMap from "./pages/VolunteerMap";
 import VolunteerProfile from "./pages/VolunteerProfile";
 
+import { LanguageProvider } from "./language/languageContext";
+
 export default function App() {
-  return (
-    <Routes>
+return ( <LanguageProvider>
 
-      {/* =========================================
-          MAIN / COMMON PAGES
-          ========================================= */}
+```
+  <Routes>
 
-      <Route
-        path="/"
-        element={<Home />}
-      />
+    {/* =========================================
+        MAIN / COMMON PAGES
+        ========================================= */}
 
-      <Route
-        path="/role-selection"
-        element={<RoleSelection />}
-      />
+    <Route
+      path="/"
+      element={<Home />}
+    />
 
-
-      {/* =========================================
-          ORGANISER
-          ========================================= */}
-
-      <Route
-        path="/organisers"
-        element={<Organisers />}
-      />
-
-      <Route
-        path="/organizer-dashboard"
-        element={<OrganizerDashboard />}
-      />
+    <Route
+      path="/role-selection"
+      element={<RoleSelection />}
+    />
 
 
-      {/* =========================================
-          VOLUNTEER
-          ========================================= */}
+    {/* =========================================
+        ORGANISER
+        ========================================= */}
 
-      <Route
-        path="/volunteer-login"
-        element={<VolunteerLogin />}
-      />
+    <Route
+      path="/organisers"
+      element={<Organisers />}
+    />
 
-      <Route
-        path="/volunteer-dashboard"
-        element={<VolunteerDashboard />}
-      />
+    <Route
+      path="/organizer-dashboard"
+      element={<OrganizerDashboard />}
+    />
 
-      <Route
-        path="/volunteer-requests"
-        element={<VolunteerRequests />}
-      />
 
-      <Route
-        path="/volunteer-map"
-        element={<VolunteerMap />}
-      />
+    {/* =========================================
+        VOLUNTEER
+        ========================================= */}
 
-      <Route
-        path="/volunteer-profile"
-        element={<VolunteerProfile />}
-      />
+    <Route
+      path="/volunteer-login"
+      element={<VolunteerLogin />}
+    />
 
-    </Routes>
-  );
+    <Route
+      path="/volunteer-dashboard"
+      element={<VolunteerDashboard />}
+    />
+
+    <Route
+      path="/volunteer-requests"
+      element={<VolunteerRequests />}
+    />
+
+    <Route
+      path="/volunteer-map"
+      element={<VolunteerMap />}
+    />
+
+    <Route
+      path="/volunteer-profile"
+      element={<VolunteerProfile />}
+    />
+
+  </Routes>
+
+</LanguageProvider>
+);
 }

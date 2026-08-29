@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 
 import { auth, db } from '../firebase'
+import { useLanguage } from '../language/languageContext'
 import WarkariDashboard from './WarkariDashboard'
 import wariImage from '../assets/wari1.jpeg'
 import './WarkariLogin.css'
@@ -13,57 +14,59 @@ export default function WarkariLogin() {
   const [password, setPassword] = useState('')
   const [loggedIn, setLoggedIn] = useState(false)
 
+  const { language } = useLanguage()
+
   const handleLogin = async (e) => {
-  e.preventDefault()
+    e.preventDefault()
 
-  try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      emailOrPhone,
-      password
-    )
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        emailOrPhone,
+        password
+      )
 
-    const user = userCredential.user
+      const user = userCredential.user
 
-    console.log("✅ Firebase login successful")
-    console.log("UID:", user.uid)
+      console.log('✅ Firebase login successful')
+      console.log('UID:', user.uid)
 
-    // Get user's Firestore profile
-    const userRef = doc(db, "users", user.uid)
-    const userSnapshot = await getDoc(userRef)
+      // Get user's Firestore profile
+      const userRef = doc(db, 'users', user.uid)
+      const userSnapshot = await getDoc(userRef)
 
-    if (!userSnapshot.exists()) {
-      alert("User profile not found.")
-      return
-    }
+      if (!userSnapshot.exists()) {
+        alert('User profile not found.')
+        return
+      }
 
-    const userData = userSnapshot.data()
+      const userData = userSnapshot.data()
 
-    console.log("User data:", userData)
+      console.log('User data:', userData)
 
-    // Check role
-    if (userData.role !== "warkari") {
-      alert("This account is not registered as a Warkari.")
-      return
-    }
+      // Check role
+      if (userData.role !== 'warkari') {
+        alert('This account is not registered as a Warkari.')
+        return
+      }
 
-    // Login successful
-    setLoggedIn(true)
+      // Login successful
+      setLoggedIn(true)
 
-  } catch (error) {
-    console.error("❌ Login failed:", error)
+    } catch (error) {
+      console.error('❌ Login failed:', error)
 
-    if (
-      error.code === "auth/invalid-credential" ||
-      error.code === "auth/wrong-password" ||
-      error.code === "auth/user-not-found"
-    ) {
-      alert("Invalid email or password.")
-    } else {
-      alert(error.message)
+      if (
+        error.code === 'auth/invalid-credential' ||
+        error.code === 'auth/wrong-password' ||
+        error.code === 'auth/user-not-found'
+      ) {
+        alert('Invalid email or password.')
+      } else {
+        alert(error.message)
+      }
     }
   }
-}
 
   const handleGuestLogin = () => {
     setLoggedIn(true)
@@ -86,8 +89,13 @@ export default function WarkariLogin() {
 
         <div className="image-overlay">
           <h2>Jai Hari Vitthal 🙏</h2>
+
           <p>
-            Your journey of seva, devotion and community begins here.
+            {language === 'mr'
+              ? 'तुमचा सेवा, भक्ती आणि समाजाच्या प्रवासाची सुरुवात इथून होते.'
+              : language === 'hi'
+                ? 'आपकी सेवा, भक्ति और समुदाय की यात्रा यहाँ से शुरू होती है।'
+                : 'Your journey of seva, devotion and community begins here.'}
           </p>
         </div>
       </section>
@@ -100,10 +108,20 @@ export default function WarkariLogin() {
           <div className="login-header">
             <div className="login-logo">🙏</div>
 
-            <h1>Welcome, Warkari</h1>
+            <h1>
+              {language === 'mr'
+                ? 'स्वागत आहे, वारकरी'
+                : language === 'hi'
+                  ? 'स्वागत है, वारकरी'
+                  : 'Welcome, Warkari'}
+            </h1>
 
             <p>
-              Sign in to continue your Seva Setu journey.
+              {language === 'mr'
+                ? 'तुमचा सेवा सेतू प्रवास सुरू ठेवण्यासाठी साइन इन करा.'
+                : language === 'hi'
+                  ? 'अपनी सेवा सेतु यात्रा जारी रखने के लिए साइन इन करें।'
+                  : 'Sign in to continue your Seva Setu journey.'}
             </p>
           </div>
 
@@ -112,13 +130,23 @@ export default function WarkariLogin() {
             {/* Email / Phone */}
             <div className="form-group">
               <label htmlFor="emailOrPhone">
-                Email or Phone Number
+                {language === 'mr'
+                  ? 'ईमेल किंवा फोन नंबर'
+                  : language === 'hi'
+                    ? 'ईमेल या फोन नंबर'
+                    : 'Email or Phone Number'}
               </label>
 
               <input
                 id="emailOrPhone"
                 type="text"
-                placeholder="Enter your email or phone number"
+                placeholder={
+                  language === 'mr'
+                    ? 'तुमचा ईमेल किंवा फोन नंबर टाका'
+                    : language === 'hi'
+                      ? 'अपना ईमेल या फोन नंबर दर्ज करें'
+                      : 'Enter your email or phone number'
+                }
                 value={emailOrPhone}
                 onChange={(e) => setEmailOrPhone(e.target.value)}
                 required
@@ -128,13 +156,23 @@ export default function WarkariLogin() {
             {/* Password */}
             <div className="form-group">
               <label htmlFor="password">
-                Password
+                {language === 'mr'
+                  ? 'पासवर्ड'
+                  : language === 'hi'
+                    ? 'पासवर्ड'
+                    : 'Password'}
               </label>
 
               <input
                 id="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder={
+                  language === 'mr'
+                    ? 'तुमचा पासवर्ड टाका'
+                    : language === 'hi'
+                      ? 'अपना पासवर्ड दर्ज करें'
+                      : 'Enter your password'
+                }
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -146,7 +184,14 @@ export default function WarkariLogin() {
 
               <label className="remember-me">
                 <input type="checkbox" />
-                <span>Remember me</span>
+
+                <span>
+                  {language === 'mr'
+                    ? 'मला लक्षात ठेवा'
+                    : language === 'hi'
+                      ? 'मुझे याद रखें'
+                      : 'Remember me'}
+                </span>
               </label>
 
               <button
@@ -154,7 +199,11 @@ export default function WarkariLogin() {
                 className="forgot-password"
                 onClick={() => alert('Password reset coming soon.')}
               >
-                Forgot Password?
+                {language === 'mr'
+                  ? 'पासवर्ड विसरलात?'
+                  : language === 'hi'
+                    ? 'पासवर्ड भूल गए?'
+                    : 'Forgot Password?'}
               </button>
 
             </div>
@@ -164,14 +213,24 @@ export default function WarkariLogin() {
               type="submit"
               className="login-button"
             >
-              Login
+              {language === 'mr'
+                ? 'लॉगिन'
+                : language === 'hi'
+                  ? 'लॉगिन'
+                  : 'Login'}
             </button>
 
           </form>
 
           {/* Divider */}
           <div className="divider">
-            <span>OR</span>
+            <span>
+              {language === 'mr'
+                ? 'किंवा'
+                : language === 'hi'
+                  ? 'या'
+                  : 'OR'}
+            </span>
           </div>
 
           {/* Google Login */}
@@ -181,7 +240,12 @@ export default function WarkariLogin() {
             onClick={() => alert('Google login will be connected with Firebase later.')}
           >
             <span className="google-icon">G</span>
-            Continue with Google
+
+            {language === 'mr'
+              ? 'Google सह सुरू ठेवा'
+              : language === 'hi'
+                ? 'Google के साथ जारी रखें'
+                : 'Continue with Google'}
           </button>
 
           {/* Guest Login */}
@@ -190,18 +254,31 @@ export default function WarkariLogin() {
             className="guest-login-button"
             onClick={handleGuestLogin}
           >
-            Continue as Guest
+            {language === 'mr'
+              ? 'अतिथी म्हणून सुरू ठेवा'
+              : language === 'hi'
+                ? 'अतिथि के रूप में जारी रखें'
+                : 'Continue as Guest'}
           </button>
 
           {/* Register */}
           <p className="register-text">
-            Don't have an account?{' '}
+            {language === 'mr'
+              ? 'खाते नाही? '
+              : language === 'hi'
+                ? 'खाता नहीं है? '
+                : "Don't have an account? "}
+
             <button
               type="button"
               className="register-button"
               onClick={() => alert('Registration coming soon.')}
             >
-              Create Account
+              {language === 'mr'
+                ? 'खाते तयार करा'
+                : language === 'hi'
+                  ? 'खाता बनाएं'
+                  : 'Create Account'}
             </button>
           </p>
 
@@ -211,7 +288,11 @@ export default function WarkariLogin() {
             className="back-button"
             onClick={() => window.history.back()}
           >
-            ← Back to Role Selection
+            {language === 'mr'
+              ? '← भूमिका निवडीवर परत जा'
+              : language === 'hi'
+                ? '← भूमिका चयन पर वापस जाएं'
+                : '← Back to Role Selection'}
           </button>
 
         </div>
