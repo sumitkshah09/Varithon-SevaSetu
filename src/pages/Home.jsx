@@ -5,7 +5,7 @@ import wariImage from "../assets/warkari.jpeg";
 
 import { useLanguage } from "../language/languageContext";
 import { translations } from "../language/translations";
-import LanguageSwitcher from "../components/LanguageSwitcher";
+import LanguageSwitcher from "../components/languageSwitcher";
 
 export default function Home() {
   const navigate = useNavigate();
