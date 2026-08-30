@@ -1,120 +1,27 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+
 import { useNavigate } from 'react-router-dom'
-import "../styles/VolunteerRequests.css";
+
+import {
+  collection,
+  onSnapshot,
+  doc,
+  runTransaction,
+  updateDoc,
+  arrayUnion,
+  serverTimestamp,
+} from 'firebase/firestore'
+
+import { auth, db } from '../firebase'
+
+import "../styles/VolunteerRequests.css"
+
 
 /*
   ============================================================
-  MOCK SHARED REQUEST STORE
+  VOLUNTEER CONSTANTS
   ============================================================
-
-  This lives outside the component so the request state is
-  shared between renders/components in this browser session.
-
-  Later, replace acceptRequest() with a Firestore transaction.
 */
-
-const mockRequests = [
-  {
-    id: 'SOS-104',
-    type: 'Medical Assistance',
-    priority: 'HIGH',
-    description: 'Warkari needs immediate medical assistance.',
-    distance: 1.2,
-    time: '2 min ago',
-    skills: ['Medical Assistance', 'First Aid'],
-    location: 'Request location',
-    status: 'available',
-    assignedVolunteerId: null,
-    assignedAt: null,
-  },
-  {
-    id: 'SOS-108',
-    type: 'Water Assistance',
-    priority: 'MEDIUM',
-    description: 'Group of Warkaris needs drinking water nearby.',
-    distance: 1.7,
-    time: '5 min ago',
-    skills: ['Water Distribution'],
-    location: 'Request location',
-    status: 'available',
-    assignedVolunteerId: null,
-    assignedAt: null,
-  },
-  {
-    id: 'SOS-112',
-    type: 'Navigation Help',
-    priority: 'NORMAL',
-    description: 'An elderly pilgrim needs help finding the main camp.',
-    distance: 2.4,
-    time: '8 min ago',
-    skills: ['Navigation'],
-    location: 'Request location',
-    status: 'available',
-    assignedVolunteerId: null,
-    assignedAt: null,
-  },
-  {
-    id: 'SOS-117',
-    type: 'Food Assistance',
-    priority: 'HIGH',
-    description: 'Family needs food assistance near the seva centre.',
-    distance: 3.1,
-    time: '11 min ago',
-    skills: ['Food Distribution'],
-    location: 'Request location',
-    status: 'available',
-    assignedVolunteerId: null,
-    assignedAt: null,
-  },
-]
-
-/*
-  Shared mock state.
-
-  The object itself is intentionally kept outside the component.
-  This makes acceptRequest() the single place where assignment
-  decisions happen.
-*/
-const requestStore = mockRequests
-
-const CURRENT_VOLUNTEER_ID = 'volunteer-demo-001'
-
-export function acceptRequest(requestId, volunteerId) {
-  const request = requestStore.find(
-    (item) => item.id === requestId
-  )
-
-  if (!request) {
-    return {
-      success: false,
-      reason: 'not_found',
-    }
-  }
-
-  // IMPORTANT:
-  // This is the mock equivalent of:
-  //
-  // Firestore transaction:
-  // READ → CHECK available → ASSIGN → COMMIT
-  //
-  // The second volunteer cannot overwrite an assigned request.
-
-  if (request.status !== 'available') {
-    return {
-      success: false,
-      reason: 'already_assigned',
-    }
-  }
-
-  request.status = 'assigned'
-  request.assignedVolunteerId = volunteerId
-  request.assignedAt = new Date().toISOString()
-
-  return {
-    success: true,
-    request,
-  }
-}
 
 const rejectionReasons = [
   'Too far away',
@@ -127,28 +34,249 @@ const rejectionReasons = [
   'Other',
 ]
 
+
+/*
+  ============================================================
+  TIME FORMATTER
+  ============================================================
+*/
+
+const formatRequestTime = (createdAt) => {
+
+  if (!createdAt) {
+    return 'Just now'
+  }
+
+  let date
+
+  if (createdAt?.toDate) {
+    date = createdAt.toDate()
+  } else if (createdAt instanceof Date) {
+    date = createdAt
+  } else {
+    date = new Date(createdAt)
+  }
+
+  if (Number.isNaN(date.getTime())) {
+    return 'Just now'
+  }
+
+  const diffMs = Date.now() - date.getTime()
+
+  const diffMinutes = Math.floor(
+    diffMs / 60000
+  )
+
+  if (diffMinutes < 1) {
+    return 'Just now'
+  }
+
+  if (diffMinutes === 1) {
+    return '1 min ago'
+  }
+
+  if (diffMinutes < 60) {
+    return `${diffMinutes} min ago`
+  }
+
+  const diffHours = Math.floor(
+    diffMinutes / 60
+  )
+
+  if (diffHours === 1) {
+    return '1 hr ago'
+  }
+
+  if (diffHours < 24) {
+    return `${diffHours} hrs ago`
+  }
+
+  const diffDays = Math.floor(
+    diffHours / 24
+  )
+
+  if (diffDays === 1) {
+    return '1 day ago'
+  }
+
+  return `${diffDays} days ago`
+}
+
+
+/*
+  ============================================================
+  FIRESTORE REQUEST → UI REQUEST
+  ============================================================
+*/
+
+const convertFirestoreRequest = (docSnap) => {
+
+  const data = docSnap.data()
+
+  return {
+    id: docSnap.id,
+
+    type: data.type || 'General Assistance',
+
+    priority: data.priority || 'NORMAL',
+
+    description:
+      data.description ||
+      'Warkari needs assistance.',
+
+    distance:
+      typeof data.distance === 'number'
+        ? data.distance
+        : 1.0,
+
+    time: formatRequestTime(
+      data.createdAt
+    ),
+
+    skills:
+      Array.isArray(data.skills)
+        ? data.skills
+        : [],
+
+    location:
+      data.location ||
+      'Request location',
+
+    status:
+      data.status ||
+      'available',
+
+    warkariId:
+      data.warkariId || null,
+
+    assignedVolunteerId:
+      data.assignedVolunteerId ||
+      null,
+
+    assignedAt:
+      data.assignedAt || null,
+
+    rejectedBy:
+      Array.isArray(data.rejectedBy)
+        ? data.rejectedBy
+        : [],
+
+    createdAt:
+      data.createdAt || null,
+  }
+}
+
+
+/*
+  ============================================================
+  COMPONENT
+  ============================================================
+*/
+
 export default function VolunteerRequests() {
+
   const navigate = useNavigate()
 
-  const [requests, setRequests] = useState([...requestStore])
 
-  const [typeFilter, setTypeFilter] = useState('All')
-  const [priorityFilter, setPriorityFilter] = useState('All')
-  const [distanceFilter, setDistanceFilter] = useState('Within 5 km')
-  const [sortBy, setSortBy] = useState('Nearest')
+  /*
+    ============================================================
+    STATE
+    ============================================================
+  */
 
-  const [selectedRequest, setSelectedRequest] = useState(null)
+  const [requests, setRequests] = useState([])
 
-  const [availability, setAvailability] = useState(true)
+  const [typeFilter, setTypeFilter] =
+    useState('All')
 
-  const [accepting, setAccepting] = useState(false)
-  const [acceptResult, setAcceptResult] = useState(null)
+  const [priorityFilter, setPriorityFilter] =
+    useState('All')
 
-  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false)
-  const [rejectRequest, setRejectRequest] = useState(null)
-  const [selectedReason, setSelectedReason] = useState('')
-  const [note, setNote] = useState('')
-  const [rejectError, setRejectError] = useState('')
+  const [distanceFilter, setDistanceFilter] =
+    useState('Within 5 km')
+
+  const [sortBy, setSortBy] =
+    useState('Nearest')
+
+  const [selectedRequest, setSelectedRequest] =
+    useState(null)
+
+  const [availability, setAvailability] =
+    useState(true)
+
+  const [accepting, setAccepting] =
+    useState(false)
+
+  const [acceptResult, setAcceptResult] =
+    useState(null)
+
+  const [isRejectModalOpen, setIsRejectModalOpen] =
+    useState(false)
+
+  const [rejectRequest, setRejectRequest] =
+    useState(null)
+
+  const [selectedReason, setSelectedReason] =
+    useState('')
+
+  const [note, setNote] =
+    useState('')
+
+  const [rejectError, setRejectError] =
+    useState('')
+
+
+  /*
+    ============================================================
+    CURRENT VOLUNTEER
+    ============================================================
+  */
+
+  const volunteerId =
+    auth.currentUser?.uid || null
+
+
+  /*
+    ============================================================
+    FIRESTORE REAL-TIME REQUESTS
+    ============================================================
+  */
+
+  useEffect(() => {
+
+    const requestsRef =
+      collection(db, 'helpRequests')
+
+    const unsubscribe =
+      onSnapshot(
+
+        requestsRef,
+
+        (snapshot) => {
+
+          const firebaseRequests =
+            snapshot.docs.map(
+              convertFirestoreRequest
+            )
+
+          setRequests(firebaseRequests)
+
+        },
+
+        (error) => {
+
+          console.error(
+            '🔥 Error loading help requests:',
+            error
+          )
+
+        }
+      )
+
+    return () => unsubscribe()
+
+  }, [])
+
 
   /*
     ============================================================
@@ -157,21 +285,62 @@ export default function VolunteerRequests() {
   */
 
   const filteredRequests = useMemo(() => {
+
     let result = requests.filter(
-      (request) => request.status === 'available'
+      (request) =>
+        request.status === 'available'
     )
 
-    if (typeFilter !== 'All') {
+
+    /*
+      Don't show requests that this volunteer
+      has personally rejected.
+    */
+
+    if (volunteerId) {
+
       result = result.filter(
-        (request) => request.type === typeFilter
+        (request) =>
+          !request.rejectedBy?.includes(
+            volunteerId
+          )
       )
+
     }
 
-    if (priorityFilter !== 'All') {
+
+    /*
+      TYPE FILTER
+    */
+
+    if (typeFilter !== 'All') {
+
       result = result.filter(
-        (request) => request.priority === priorityFilter.toUpperCase()
+        (request) =>
+          request.type === typeFilter
       )
+
     }
+
+
+    /*
+      PRIORITY FILTER
+    */
+
+    if (priorityFilter !== 'All') {
+
+      result = result.filter(
+        (request) =>
+          request.priority ===
+          priorityFilter.toUpperCase()
+      )
+
+    }
+
+
+    /*
+      DISTANCE FILTER
+    */
 
     const maxDistance =
       distanceFilter === 'Within 1 km'
@@ -181,19 +350,41 @@ export default function VolunteerRequests() {
           : 5
 
     result = result.filter(
-      (request) => request.distance <= maxDistance
+      (request) =>
+        request.distance <= maxDistance
     )
 
+
+    /*
+      SORT — NEAREST
+    */
+
     if (sortBy === 'Nearest') {
-      result.sort((a, b) => a.distance - b.distance)
+
+      result.sort(
+        (a, b) =>
+          a.distance - b.distance
+      )
+
     }
 
+
+    /*
+      SORT — PRIORITY
+    */
+
     if (sortBy === 'Highest Priority') {
+
       const priorityOrder = {
+
         CRITICAL: 0,
+
         HIGH: 1,
+
         MEDIUM: 2,
+
         NORMAL: 3,
+
       }
 
       result.sort(
@@ -201,25 +392,55 @@ export default function VolunteerRequests() {
           priorityOrder[a.priority] -
           priorityOrder[b.priority]
       )
+
     }
+
+
+    /*
+      SORT — NEWEST
+    */
 
     if (sortBy === 'Newest') {
-      result.sort((a, b) => {
-        const aMinutes = parseInt(a.time)
-        const bMinutes = parseInt(b.time)
 
-        return aMinutes - bMinutes
+      result.sort((a, b) => {
+
+        const getTime = (request) => {
+
+          if (
+            request.createdAt?.toMillis
+          ) {
+            return request.createdAt.toMillis()
+          }
+
+          if (
+            request.createdAt?.toDate
+          ) {
+            return request.createdAt
+              .toDate()
+              .getTime()
+          }
+
+          return 0
+        }
+
+        return getTime(b) - getTime(a)
+
       })
+
     }
 
+
     return result
+
   }, [
     requests,
     typeFilter,
     priorityFilter,
     distanceFilter,
     sortBy,
+    volunteerId,
   ])
+
 
   /*
     ============================================================
@@ -227,55 +448,263 @@ export default function VolunteerRequests() {
     ============================================================
   */
 
-  const openRequestDetails = (request) => {
-    setSelectedRequest(request)
-    setAcceptResult(null)
-  }
+  const openRequestDetails =
+    (request) => {
+
+      setSelectedRequest(request)
+
+      setAcceptResult(null)
+
+    }
+
 
   /*
     ============================================================
-    ACCEPT
+    ACCEPT REQUEST
     ============================================================
   */
 
-  const handleAccept = (request) => {
-    if (!availability || accepting) return
+  const handleAccept =
+    async (request) => {
 
-    setAccepting(true)
-    setAcceptResult(null)
-
-    setTimeout(() => {
-      const result = acceptRequest(
-        request.id,
-        CURRENT_VOLUNTEER_ID
-      )
-
-      setAccepting(false)
-
-      if (!result.success) {
-        setAcceptResult({
-          success: false,
-          message: 'Request no longer available.',
-          description:
-            'This request has already been accepted by another volunteer.',
-        })
-
-        setRequests([...requestStore])
+      if (
+        !availability ||
+        accepting
+      ) {
         return
       }
 
-      setRequests([...requestStore])
 
-      setSelectedRequest({
-        ...result.request,
-      })
+      if (!volunteerId) {
 
-      setAcceptResult({
-        success: true,
-        message: 'Request accepted successfully.',
-      })
-    }, 700)
-  }
+        setAcceptResult({
+
+          success: false,
+
+          message:
+            'Please login again.',
+
+          description:
+            'Your volunteer account could not be found.',
+
+        })
+
+        return
+
+      }
+
+
+      setAccepting(true)
+
+      setAcceptResult(null)
+
+
+      try {
+
+        const requestRef =
+          doc(
+            db,
+            'helpRequests',
+            request.id
+          )
+
+
+        /*
+          ========================================================
+          FIRESTORE TRANSACTION
+
+          READ
+          ↓
+          CHECK AVAILABLE
+          ↓
+          ASSIGN VOLUNTEER
+          ↓
+          COMMIT
+
+          This prevents two volunteers from
+          accepting the same request.
+          ========================================================
+        */
+
+        const result =
+          await runTransaction(
+            db,
+            async (transaction) => {
+
+              const requestSnap =
+                await transaction.get(
+                  requestRef
+                )
+
+
+              if (!requestSnap.exists()) {
+
+                throw new Error(
+                  'not_found'
+                )
+
+              }
+
+
+              const currentData =
+                requestSnap.data()
+
+
+              /*
+                Someone already accepted it.
+              */
+
+              if (
+                currentData.status !==
+                'available'
+              ) {
+
+                throw new Error(
+                  'already_assigned'
+                )
+
+              }
+
+
+              /*
+                Assign this volunteer.
+              */
+
+              transaction.update(
+                requestRef,
+                {
+
+                  status: 'assigned',
+
+                  assignedVolunteerId:
+                    volunteerId,
+
+                  assignedAt:
+                    serverTimestamp(),
+
+                }
+              )
+
+
+              return true
+
+            }
+          )
+
+
+        if (result) {
+
+          const updatedRequest = {
+
+            ...request,
+
+            status: 'assigned',
+
+            assignedVolunteerId:
+              volunteerId,
+
+          }
+
+
+          setSelectedRequest(
+            updatedRequest
+          )
+
+
+          setAcceptResult({
+
+            success: true,
+
+            message:
+              'Request accepted successfully.',
+
+          })
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          '🔥 Error accepting request:',
+          error
+        )
+
+
+        /*
+          Request was already taken.
+        */
+
+        if (
+          error.message ===
+          'already_assigned'
+        ) {
+
+          setAcceptResult({
+
+            success: false,
+
+            message:
+              'Request no longer available.',
+
+            description:
+              'This request has already been accepted by another volunteer.',
+
+          })
+
+        }
+
+        /*
+          Request does not exist.
+        */
+
+        else if (
+          error.message ===
+          'not_found'
+        ) {
+
+          setAcceptResult({
+
+            success: false,
+
+            message:
+              'Request no longer available.',
+
+            description:
+              'This request could not be found.',
+
+          })
+
+        }
+
+        /*
+          Other Firebase error.
+        */
+
+        else {
+
+          setAcceptResult({
+
+            success: false,
+
+            message:
+              'Unable to accept request.',
+
+            description:
+              error.message ||
+              'Please try again.',
+
+          })
+
+        }
+
+      } finally {
+
+        setAccepting(false)
+
+      }
+
+    }
+
 
   /*
     ============================================================
@@ -283,83 +712,205 @@ export default function VolunteerRequests() {
     ============================================================
   */
 
-  const openRejectModal = (request) => {
-    setRejectRequest(request)
-    setSelectedReason('')
-    setNote('')
-    setRejectError('')
-    setIsRejectModalOpen(true)
-  }
+  const openRejectModal =
+    (request) => {
 
-  const closeRejectModal = () => {
-    setIsRejectModalOpen(false)
-    setRejectRequest(null)
-    setSelectedReason('')
-    setNote('')
-    setRejectError('')
-  }
+      setRejectRequest(request)
 
-  const confirmRejection = () => {
-    if (!selectedReason) {
-      setRejectError(
-        'Please select a reason for rejecting this request.'
-      )
-      return
+      setSelectedReason('')
+
+      setNote('')
+
+      setRejectError('')
+
+      setIsRejectModalOpen(true)
+
     }
 
-    if (
-      selectedReason === 'Other' &&
-      !note.trim()
-    ) {
-      setRejectError(
-        'Please provide an explanation.'
-      )
-      return
-    }
-
-    /*
-      IMPORTANT:
-
-      Rejection is stored only for this volunteer.
-
-      The request itself stays AVAILABLE for other volunteers.
-    */
-
-    const rejectionData = {
-      volunteerId: CURRENT_VOLUNTEER_ID,
-      reason: selectedReason,
-      note: note.trim(),
-      rejectedAt: new Date().toISOString(),
-    }
-
-    console.log(
-      'Mock rejection data:',
-      rejectionData
-    )
-
-    // Remove only from this volunteer's visible list.
-    const remaining = requests.filter(
-      (request) => request.id !== rejectRequest.id
-    )
-
-    setRequests(remaining)
-
-    if (
-      selectedRequest?.id === rejectRequest.id
-    ) {
-      setSelectedRequest(null)
-    }
-
-    closeRejectModal()
-  }
 
   /*
     ============================================================
-    NAVIGATION
+    CLOSE REJECT MODAL
+    ============================================================
+  */
+
+  const closeRejectModal =
+    () => {
+
+      setIsRejectModalOpen(false)
+
+      setRejectRequest(null)
+
+      setSelectedReason('')
+
+      setNote('')
+
+      setRejectError('')
+
+    }
+
+
+  /*
+    ============================================================
+    CONFIRM REJECTION
+    ============================================================
+  */
+
+  const confirmRejection =
+    async () => {
+
+      if (!selectedReason) {
+
+        setRejectError(
+          'Please select a reason for rejecting this request.'
+        )
+
+        return
+
+      }
+
+
+      if (
+        selectedReason === 'Other' &&
+        !note.trim()
+      ) {
+
+        setRejectError(
+          'Please provide an explanation.'
+        )
+
+        return
+
+      }
+
+
+      if (!volunteerId) {
+
+        setRejectError(
+          'Please login again before rejecting a request.'
+        )
+
+        return
+
+      }
+
+
+      try {
+
+        /*
+          ========================================================
+          STORE REJECTION IN FIRESTORE
+
+          The request remains AVAILABLE.
+
+          Only this volunteer is added to rejectedBy.
+          ========================================================
+        */
+
+        const requestRef =
+          doc(
+            db,
+            'helpRequests',
+            rejectRequest.id
+          )
+
+
+        const rejectionData = {
+
+          volunteerId:
+
+            volunteerId,
+
+          reason:
+
+            selectedReason,
+
+          note:
+
+            note.trim(),
+
+          rejectedAt:
+
+            new Date().toISOString(),
+
+        }
+
+
+        await updateDoc(
+          requestRef,
+          {
+
+            rejectedBy:
+              arrayUnion(
+                rejectionData
+              ),
+
+          }
+        )
+
+
+        console.log(
+          '✅ Request rejected:',
+          rejectionData
+        )
+
+
+        /*
+          Remove it immediately from
+          this volunteer's visible list.
+        */
+
+        setRequests(
+          (currentRequests) =>
+            currentRequests.filter(
+              (request) =>
+                request.id !==
+                rejectRequest.id
+            )
+        )
+
+
+        /*
+          Close details if it is open.
+        */
+
+        if (
+          selectedRequest?.id ===
+          rejectRequest.id
+        ) {
+
+          setSelectedRequest(null)
+
+        }
+
+
+        closeRejectModal()
+
+      } catch (error) {
+
+        console.error(
+          '🔥 Error rejecting request:',
+          error
+        )
+
+        setRejectError(
+          error.message ||
+          'Unable to reject this request. Please try again.'
+        )
+
+      }
+
+    }
+
+
+  /*
+    ============================================================
+    RENDER
     ============================================================
   */
 
   return (
+
     <main className="volunteer-requests-page">
 
       {/* =====================================================
@@ -374,9 +925,17 @@ export default function VolunteerRequests() {
             navigate('/volunteer-dashboard')
           }
         >
-          <span className="brand-mark">S</span>
-          <span>SevaSetu</span>
+
+          <span className="brand-mark">
+            S
+          </span>
+
+          <span>
+            SevaSetu
+          </span>
+
         </button>
+
 
         <nav className="volunteer-nav">
 
@@ -388,9 +947,11 @@ export default function VolunteerRequests() {
             Dashboard
           </button>
 
+
           <button className="active">
             Requests
           </button>
+
 
           <button
             onClick={() =>
@@ -400,6 +961,7 @@ export default function VolunteerRequests() {
             My Tasks
           </button>
 
+
           <button
             onClick={() =>
               alert('Map coming soon!')
@@ -407,6 +969,7 @@ export default function VolunteerRequests() {
           >
             Map
           </button>
+
 
           <button
             onClick={() =>
@@ -418,36 +981,52 @@ export default function VolunteerRequests() {
 
         </nav>
 
+
         <div className="header-right">
 
           <button
             className="notification-button"
             onClick={() =>
-              alert('Notifications coming soon!')
+              alert(
+                'Notifications coming soon!'
+              )
             }
             aria-label="Notifications"
           >
             🔔
           </button>
 
+
           <button
-            className={`availability-pill ${
-              availability ? 'online' : 'offline'
-            }`}
+            className={
+              `availability-pill ${
+                availability
+                  ? 'online'
+                  : 'offline'
+              }`
+            }
             onClick={() =>
-              setAvailability(!availability)
+              setAvailability(
+                !availability
+              )
             }
           >
+
             <span></span>
+
             {availability
               ? 'Available'
               : 'Offline'}
+
           </button>
+
 
           <button
             className="profile-avatar"
             onClick={() =>
-              alert('Profile coming soon!')
+              alert(
+                'Profile coming soon!'
+              )
             }
           >
             V
@@ -456,6 +1035,7 @@ export default function VolunteerRequests() {
         </div>
 
       </header>
+
 
       {/* =====================================================
           PAGE CONTENT
@@ -466,23 +1046,32 @@ export default function VolunteerRequests() {
         <div className="requests-heading">
 
           <div>
+
             <span className="eyebrow">
               VOLUNTEER SEVA
             </span>
 
-            <h1>Seva Requests</h1>
+            <h1>
+              Seva Requests
+            </h1>
 
             <p>
               Find people who need help near you.
             </p>
+
           </div>
 
+
           <div className="live-status">
+
             <span></span>
+
             Live updates
+
           </div>
 
         </div>
+
 
         {/* ===================================================
             FILTER BAR
@@ -491,82 +1080,173 @@ export default function VolunteerRequests() {
         <section className="filter-card">
 
           <div className="filter-group">
-            <label>Type</label>
+
+            <label>
+              Type
+            </label>
 
             <select
               value={typeFilter}
               onChange={(e) =>
-                setTypeFilter(e.target.value)
+                setTypeFilter(
+                  e.target.value
+                )
               }
             >
-              <option>All</option>
-              <option>Medical Assistance</option>
-              <option>Food Assistance</option>
-              <option>Water Assistance</option>
-              <option>Navigation Help</option>
-              <option>Shelter Assistance</option>
-              <option>Crowd Management</option>
+
+              <option>
+                All
+              </option>
+
+              <option>
+                Medical Assistance
+              </option>
+
+              <option>
+                Food Assistance
+              </option>
+
+              <option>
+                Water Assistance
+              </option>
+
+              <option>
+                Navigation Help
+              </option>
+
+              <option>
+                Shelter Assistance
+              </option>
+
+              <option>
+                Crowd Management
+              </option>
+
             </select>
+
           </div>
 
+
           <div className="filter-group">
-            <label>Priority</label>
+
+            <label>
+              Priority
+            </label>
 
             <select
               value={priorityFilter}
               onChange={(e) =>
-                setPriorityFilter(e.target.value)
+                setPriorityFilter(
+                  e.target.value
+                )
               }
             >
-              <option>All</option>
-              <option>Critical</option>
-              <option>High</option>
-              <option>Medium</option>
-              <option>Normal</option>
+
+              <option>
+                All
+              </option>
+
+              <option>
+                Critical
+              </option>
+
+              <option>
+                High
+              </option>
+
+              <option>
+                Medium
+              </option>
+
+              <option>
+                Normal
+              </option>
+
             </select>
+
           </div>
 
+
           <div className="filter-group">
-            <label>Distance</label>
+
+            <label>
+              Distance
+            </label>
 
             <select
               value={distanceFilter}
               onChange={(e) =>
-                setDistanceFilter(e.target.value)
+                setDistanceFilter(
+                  e.target.value
+                )
               }
             >
-              <option>Within 1 km</option>
-              <option>Within 2 km</option>
-              <option>Within 5 km</option>
+
+              <option>
+                Within 1 km
+              </option>
+
+              <option>
+                Within 2 km
+              </option>
+
+              <option>
+                Within 5 km
+              </option>
+
             </select>
+
           </div>
 
+
           <div className="filter-group">
-            <label>Sort</label>
+
+            <label>
+              Sort
+            </label>
 
             <select
               value={sortBy}
               onChange={(e) =>
-                setSortBy(e.target.value)
+                setSortBy(
+                  e.target.value
+                )
               }
             >
-              <option>Nearest</option>
-              <option>Highest Priority</option>
-              <option>Newest</option>
+
+              <option>
+                Nearest
+              </option>
+
+              <option>
+                Highest Priority
+              </option>
+
+              <option>
+                Newest
+              </option>
+
             </select>
+
           </div>
 
         </section>
+
 
         {/* ===================================================
             OFFLINE NOTICE
         =================================================== */}
 
         {!availability && (
+
           <div className="offline-notice">
-            <span className="offline-icon">●</span>
+
+            <span className="offline-icon">
+              ●
+            </span>
 
             <div>
+
               <strong>
                 You're currently offline
               </strong>
@@ -574,6 +1254,7 @@ export default function VolunteerRequests() {
               <p>
                 Go available to accept requests.
               </p>
+
             </div>
 
             <button
@@ -583,22 +1264,32 @@ export default function VolunteerRequests() {
             >
               Go available
             </button>
+
           </div>
+
         )}
+
 
         {/* ===================================================
             REQUEST COUNT
         =================================================== */}
 
         <div className="results-row">
+
           <span>
+
             {filteredRequests.length}{' '}
+
             {filteredRequests.length === 1
               ? 'request'
               : 'requests'}{' '}
+
             nearby
+
           </span>
+
         </div>
+
 
         {/* ===================================================
             REQUEST CARDS
@@ -627,96 +1318,111 @@ export default function VolunteerRequests() {
 
           <div className="requests-list">
 
-            {filteredRequests.map((request) => (
+            {filteredRequests.map(
+              (request) => (
 
-              <article
-                className="request-card"
-                key={request.id}
-                onClick={() =>
-                  openRequestDetails(request)
-                }
-              >
-
-                <div className="request-card-main">
-
-                  <div className="request-card-top">
-
-                    <span
-                      className={`priority-badge priority-${request.priority.toLowerCase()}`}
-                    >
-                      {request.priority}
-                    </span>
-
-                    <span className="request-id">
-                      {request.id}
-                    </span>
-
-                  </div>
-
-                  <h2>
-                    {request.type}
-                  </h2>
-
-                  <p className="request-description">
-                    {request.description}
-                  </p>
-
-                  <div className="request-meta">
-
-                    <span>
-                      📍 {request.distance} km away
-                    </span>
-
-                    <span>
-                      🕐 {request.time}
-                    </span>
-
-                    <span>
-                      🩺{' '}
-                      {request.skills[0]}
-                    </span>
-
-                  </div>
-
-                </div>
-
-                <div
-                  className="request-card-actions"
-                  onClick={(e) =>
-                    e.stopPropagation()
+                <article
+                  className="request-card"
+                  key={request.id}
+                  onClick={() =>
+                    openRequestDetails(
+                      request
+                    )
                   }
                 >
 
-                  <button
-                    className="accept-button"
-                    disabled={!availability}
-                    onClick={() =>
-                      handleAccept(request)
+                  <div className="request-card-main">
+
+                    <div className="request-card-top">
+
+                      <span
+                        className={
+                          `priority-badge priority-${request.priority.toLowerCase()}`
+                        }
+                      >
+                        {request.priority}
+                      </span>
+
+                      <span className="request-id">
+                        {request.id}
+                      </span>
+
+                    </div>
+
+
+                    <h2>
+                      {request.type}
+                    </h2>
+
+
+                    <p className="request-description">
+                      {request.description}
+                    </p>
+
+
+                    <div className="request-meta">
+
+                      <span>
+                        📍 {request.distance} km away
+                      </span>
+
+                      <span>
+                        🕐 {request.time}
+                      </span>
+
+                      <span>
+                        🩺{' '}
+                        {request.skills[0] ||
+                          'General Assistance'}
+                      </span>
+
+                    </div>
+
+                  </div>
+
+
+                  <div
+                    className="request-card-actions"
+                    onClick={(e) =>
+                      e.stopPropagation()
                     }
                   >
-                    Accept Request
-                  </button>
 
-                  <button
-                    className="reject-button"
-                    onClick={() =>
-                      openRejectModal(request)
-                    }
-                  >
-                    Reject
-                  </button>
+                    <button
+                      className="accept-button"
+                      disabled={!availability}
+                      onClick={() =>
+                        handleAccept(request)
+                      }
+                    >
+                      Accept Request
+                    </button>
 
-                </div>
 
-              </article>
+                    <button
+                      className="reject-button"
+                      onClick={() =>
+                        openRejectModal(
+                          request
+                        )
+                      }
+                    >
+                      Reject
+                    </button>
 
-            ))}
+                  </div>
+
+                </article>
+
+              )
+            )}
 
           </div>
 
         )}
 
       </div>
+
 
       {/* =====================================================
           REQUEST DETAILS MODAL
@@ -747,9 +1453,11 @@ export default function VolunteerRequests() {
               ×
             </button>
 
+
             <div className="details-header">
 
               <div>
+
                 <span className="eyebrow">
                   SEVA REQUEST
                 </span>
@@ -757,41 +1465,61 @@ export default function VolunteerRequests() {
                 <h2>
                   {selectedRequest.type}
                 </h2>
+
               </div>
 
+
               <span
-                className={`priority-badge priority-${selectedRequest.priority.toLowerCase()}`}
+                className={
+                  `priority-badge priority-${selectedRequest.priority.toLowerCase()}`
+                }
               >
                 {selectedRequest.priority}
               </span>
 
             </div>
 
+
             <div className="details-id">
               {selectedRequest.id}
             </div>
 
+
             <div className="details-info-grid">
 
               <div>
-                <span>Distance</span>
+
+                <span>
+                  Distance
+                </span>
+
                 <strong>
                   📍 {selectedRequest.distance} km away
                 </strong>
+
               </div>
 
+
               <div>
-                <span>Requested</span>
+
+                <span>
+                  Requested
+                </span>
+
                 <strong>
                   🕐 {selectedRequest.time}
                 </strong>
+
               </div>
 
             </div>
 
+
             <div className="details-section">
 
-              <h3>Description</h3>
+              <h3>
+                Description
+              </h3>
 
               <p>
                 {selectedRequest.description}
@@ -799,20 +1527,26 @@ export default function VolunteerRequests() {
 
             </div>
 
+
             <div className="details-section">
 
-              <h3>Required assistance</h3>
+              <h3>
+                Required assistance
+              </h3>
+
 
               <div className="skill-list">
 
                 {selectedRequest.skills.map(
                   (skill) => (
+
                     <span
                       className="skill-tag"
                       key={skill}
                     >
                       {skill}
                     </span>
+
                   )
                 )}
 
@@ -820,9 +1554,13 @@ export default function VolunteerRequests() {
 
             </div>
 
+
             <div className="details-section">
 
-              <h3>Location</h3>
+              <h3>
+                Location
+              </h3>
+
 
               <div className="request-map">
 
@@ -831,6 +1569,7 @@ export default function VolunteerRequests() {
                 </span>
 
                 <div className="map-label">
+
                   <strong>
                     Request location
                   </strong>
@@ -839,11 +1578,13 @@ export default function VolunteerRequests() {
                     {selectedRequest.distance} km
                     away
                   </span>
+
                 </div>
 
               </div>
 
             </div>
+
 
             {/* =============================================
                 ACCEPTING
@@ -852,9 +1593,13 @@ export default function VolunteerRequests() {
             {accepting && (
 
               <div className="accepting-message">
-                <span>⏳</span>
+
+                <span>
+                  ⏳
+                </span>
 
                 <div>
+
                   <strong>
                     Accepting request...
                   </strong>
@@ -863,10 +1608,13 @@ export default function VolunteerRequests() {
                     Checking whether this request
                     is still available.
                   </p>
+
                 </div>
+
               </div>
 
             )}
+
 
             {/* =============================================
                 ASSIGNMENT FAILURE
@@ -878,17 +1626,19 @@ export default function VolunteerRequests() {
                 <div className="unavailable-message">
 
                   <strong>
-                    Request no longer available.
+                    {acceptResult.message ||
+                      'Request no longer available.'}
                   </strong>
 
                   <p>
-                    This request has already been
-                    accepted by another volunteer.
+                    {acceptResult.description ||
+                      'This request has already been accepted by another volunteer.'}
                   </p>
 
                 </div>
 
               )}
+
 
             {/* =============================================
                 ASSIGNMENT SUCCESS
@@ -904,6 +1654,7 @@ export default function VolunteerRequests() {
                   </div>
 
                   <div>
+
                     <strong>
                       Request accepted successfully.
                     </strong>
@@ -912,17 +1663,20 @@ export default function VolunteerRequests() {
                       This request has been added
                       to your active tasks.
                     </p>
+
                   </div>
 
                 </div>
 
               )}
 
+
             <div className="details-actions">
 
               {acceptResult?.success ? (
 
                 <>
+
                   <button
                     className="accept-button"
                     onClick={() =>
@@ -934,6 +1688,7 @@ export default function VolunteerRequests() {
                     View Task
                   </button>
 
+
                   <button
                     className="secondary-button"
                     onClick={() =>
@@ -944,6 +1699,7 @@ export default function VolunteerRequests() {
                   >
                     Open Navigation
                   </button>
+
                 </>
 
               ) : acceptResult?.success === false ? (
@@ -960,10 +1716,12 @@ export default function VolunteerRequests() {
               ) : (
 
                 <>
+
                   <button
                     className="accept-button"
                     disabled={
-                      !availability || accepting
+                      !availability ||
+                      accepting
                     }
                     onClick={() =>
                       handleAccept(
@@ -971,34 +1729,44 @@ export default function VolunteerRequests() {
                       )
                     }
                   >
+
                     {accepting
                       ? 'Accepting...'
                       : 'Accept Request'}
+
                   </button>
+
 
                   <button
                     className="reject-button"
                     disabled={accepting}
                     onClick={() => {
+
                       setSelectedRequest(null)
+
                       openRejectModal(
                         selectedRequest
                       )
+
                     }}
                   >
                     Reject
                   </button>
+
                 </>
 
               )}
 
             </div>
 
+
             {!availability &&
               !acceptResult && (
+
                 <p className="modal-offline-message">
                   Go available to accept requests.
                 </p>
+
               )}
 
           </section>
@@ -1006,131 +1774,162 @@ export default function VolunteerRequests() {
         </div>
 
       )}
+
 
       {/* =====================================================
           REJECT MODAL
       ===================================================== */}
 
-      {isRejectModalOpen && rejectRequest && (
+      {isRejectModalOpen &&
+        rejectRequest && (
 
-        <div
-          className="details-overlay"
-          onMouseDown={closeRejectModal}
-        >
-
-          <section
-            className="reject-modal"
-            onMouseDown={(e) =>
-              e.stopPropagation()
+          <div
+            className="details-overlay"
+            onMouseDown={
+              closeRejectModal
             }
           >
 
-            <button
-              className="details-close"
-              onClick={closeRejectModal}
+            <section
+              className="reject-modal"
+              onMouseDown={(e) =>
+                e.stopPropagation()
+              }
             >
-              ×
-            </button>
 
-            <div className="reject-modal-icon">
-              !
-            </div>
+              <button
+                className="details-close"
+                onClick={
+                  closeRejectModal
+                }
+              >
+                ×
+              </button>
 
-            <h2>
-              Reject this request?
-            </h2>
 
-            <p className="reject-modal-subtitle">
-              Please tell us why you are unable to
-              accept this request.
-            </p>
-
-            <div className="reason-list">
-
-              {rejectionReasons.map(
-                (reason) => (
-
-                  <label
-                    className={`reason-option ${
-                      selectedReason === reason
-                        ? 'selected'
-                        : ''
-                    }`}
-                    key={reason}
-                  >
-
-                    <input
-                      type="radio"
-                      name="rejectReason"
-                      value={reason}
-                      checked={
-                        selectedReason === reason
-                      }
-                      onChange={(e) => {
-                        setSelectedReason(
-                          e.target.value
-                        )
-                        setRejectError('')
-                      }}
-                    />
-
-                    <span>
-                      {reason}
-                    </span>
-
-                  </label>
-
-                )
-              )}
-
-            </div>
-
-            <label className="note-label">
-              Additional note
-            </label>
-
-            <textarea
-              value={note}
-              onChange={(e) => {
-                setNote(e.target.value)
-                setRejectError('')
-              }}
-              placeholder="Add any additional information..."
-              rows={3}
-            />
-
-            {rejectError && (
-
-              <div className="validation-error">
-                {rejectError}
+              <div className="reject-modal-icon">
+                !
               </div>
 
-            )}
 
-            <div className="reject-modal-actions">
+              <h2>
+                Reject this request?
+              </h2>
 
-              <button
-                className="secondary-button"
-                onClick={closeRejectModal}
-              >
-                Cancel
-              </button>
 
-              <button
-                className="confirm-reject"
-                onClick={confirmRejection}
-              >
-                Confirm Rejection
-              </button>
+              <p className="reject-modal-subtitle">
+                Please tell us why you are unable to
+                accept this request.
+              </p>
 
-            </div>
 
-          </section>
+              <div className="reason-list">
 
-        </div>
+                {rejectionReasons.map(
+                  (reason) => (
 
-      )}
+                    <label
+                      className={
+                        `reason-option ${
+                          selectedReason === reason
+                            ? 'selected'
+                            : ''
+                        }`
+                      }
+                      key={reason}
+                    >
+
+                      <input
+                        type="radio"
+                        name="rejectReason"
+                        value={reason}
+                        checked={
+                          selectedReason === reason
+                        }
+                        onChange={(e) => {
+
+                          setSelectedReason(
+                            e.target.value
+                          )
+
+                          setRejectError('')
+
+                        }}
+                      />
+
+                      <span>
+                        {reason}
+                      </span>
+
+                    </label>
+
+                  )
+                )}
+
+              </div>
+
+
+              <label className="note-label">
+                Additional note
+              </label>
+
+
+              <textarea
+                value={note}
+                onChange={(e) => {
+
+                  setNote(
+                    e.target.value
+                  )
+
+                  setRejectError('')
+
+                }}
+                placeholder="Add any additional information..."
+                rows={3}
+              />
+
+
+              {rejectError && (
+
+                <div className="validation-error">
+                  {rejectError}
+                </div>
+
+              )}
+
+
+              <div className="reject-modal-actions">
+
+                <button
+                  className="secondary-button"
+                  onClick={
+                    closeRejectModal
+                  }
+                >
+                  Cancel
+                </button>
+
+
+                <button
+                  className="confirm-reject"
+                  onClick={
+                    confirmRejection
+                  }
+                >
+                  Confirm Rejection
+                </button>
+
+              </div>
+
+            </section>
+
+          </div>
+
+        )}
 
     </main>
+
   )
+
 }

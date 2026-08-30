@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { auth, db } from '../firebase'
 import './GetHelp.css'
 
 export default function GetHelp({ onBack }) {
@@ -6,11 +8,14 @@ export default function GetHelp({ onBack }) {
   /* ======================================================
      SOS POPUP
   ====================================================== */
-
+  
   const [showEmergency, setShowEmergency] = useState(true)
 
   const [selectedAssistance, setSelectedAssistance] = useState(null)
   const [requestSent, setRequestSent] = useState(false)
+  const [sendingRequest, setSendingRequest] = useState(false)
+  const [requestError, setRequestError] = useState('')
+  const [createdRequestId, setCreatedRequestId] = useState(null)
 
 
   /* ======================================================
@@ -81,14 +86,61 @@ export default function GetHelp({ onBack }) {
      REQUEST HELP
   ====================================================== */
 
-  const handleRequestHelp = () => {
+  const handleRequestHelp = async () => {
+  if (!selectedAssistance || sendingRequest) {
+    return
+  }
 
-    if (!selectedAssistance) {
-      return
+  setSendingRequest(true)
+  setRequestError('')
+
+  try {
+    const user = auth.currentUser
+
+    const requestData = {
+      type: selectedAssistance.title,
+      priority: 'HIGH',
+
+      description: `Warkari needs ${selectedAssistance.title.toLowerCase()}.`,
+
+      skills: [selectedAssistance.title],
+
+      location: 'Request location',
+
+      distance: 1.0,
+
+      status: 'available',
+
+      warkariId: user ? user.uid : null,
+
+      assignedVolunteerId: null,
+
+      assignedAt: null,
+
+      rejectedBy: [],
+
+      createdAt: serverTimestamp(),
     }
 
+    const requestRef = await addDoc(
+      collection(db, 'helpRequests'),
+      requestData
+    )
+
+    setCreatedRequestId(requestRef.id)
     setRequestSent(true)
+
+  } catch (error) {
+    console.error('Error creating help request:', error)
+
+    setRequestError(
+      'Unable to send your request. Please try again.'
+    )
+
+  } finally {
+    setSendingRequest(false)
   }
+}
 
 
   /* ======================================================

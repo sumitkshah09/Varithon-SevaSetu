@@ -11,7 +11,7 @@ import Profile from './Profile'
 import './WarkariDashboard.css'
 
 export default function WarkariDashboard() {
-  const [activePage, setActivePage] = useState('Home')
+  const [activePage, setActivePage] = useState('RoleSelection')
 
   // LANGUAGE
   const { language } = useLanguage()
@@ -24,7 +24,7 @@ export default function WarkariDashboard() {
   if (activePage === 'Yatra') {
     return (
       <YatraInformation
-        onBack={() => setActivePage('Home')}
+        onBack={() => setActivePage('WakrakriDashboard')}
       />
     )
   }
@@ -32,7 +32,7 @@ export default function WarkariDashboard() {
   if (activePage === 'Help') {
     return (
       <GetHelp
-        onBack={() => setActivePage('Home')}
+        onBack={() => setActivePage('WarkariDashboard')}
       />
     )
   }
@@ -40,7 +40,8 @@ export default function WarkariDashboard() {
   if (activePage === 'RouteMap') {
     return (
       <RouteMap
-        onBack={() => setActivePage('Home')}
+        onBack={() => setActivePage('WarkariDashboard')}
+        
       />
     )
   }
@@ -48,7 +49,7 @@ export default function WarkariDashboard() {
   if (activePage === 'Profile') {
     return (
       <Profile
-        onBack={() => setActivePage('Home')}
+        onBack={() => setActivePage('WarkariDashboard')}
       />
     )
   }
